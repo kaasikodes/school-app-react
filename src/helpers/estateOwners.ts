@@ -14,7 +14,7 @@ interface ICreateProps {
   password: string;
 }
 
-export const createEstateOwner = async (props: ICreateProps) => {
+export const addEstateOwner = async (props: ICreateProps) => {
   const url = `${process.env.REACT_APP_BASE_URL}/estate-owner`;
 
   const data = props;
@@ -27,6 +27,30 @@ export const createEstateOwner = async (props: ICreateProps) => {
   const response = await axios.post(url, data, config);
   return response;
 };
+interface IEditProps {
+  ownerId: string;
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  phoneNumber?: string;
+  gender?: string;
+  address?: string;
+  password?: string;
+}
+
+export const updateEstateOwner = async (props: IEditProps) => {
+  const url = `${process.env.REACT_APP_BASE_URL}/estate-owner/${props.ownerId}`;
+
+  const data = props;
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.patch(url, data, config);
+  return response;
+};
 interface IGetProps {
   limit?: string;
   offset?: string;
@@ -36,6 +60,21 @@ export const getEstateOwners = async ({
   offset = "",
 }: IGetProps) => {
   const url = `${process.env.REACT_APP_BASE_URL}/estate-owner?limit=${limit}&offset=${offset}`;
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.get(url, config);
+  return response;
+};
+interface ISingleGetProps {
+  ownerId: string;
+}
+export const getEstateOwner = async ({ ownerId }: ISingleGetProps) => {
+  const url = `${process.env.REACT_APP_BASE_URL}/estate-owner/${ownerId}`;
 
   const config = {
     headers: {
