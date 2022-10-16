@@ -13,7 +13,7 @@ import { MenuProps, Modal } from "antd";
 import { Layout, Menu } from "antd";
 
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -22,10 +22,9 @@ type Props = {
 };
 
 const DashboardLayout: React.FC<Props> = ({ children }) => {
+  const navigate = useNavigate();
   const handleLogout = () => {
-    Modal.confirm({
-      title: "You are about to logout",
-    });
+    navigate("/login");
   };
   const menuLinks = [
     {
@@ -74,10 +73,13 @@ const DashboardLayout: React.FC<Props> = ({ children }) => {
       ) : null,
     onClick: (e) => {
       if (item.link === "/logout") {
+        if (window.confirm("Are you sure?")) {
+          handleLogout();
+        }
+
         // should open up modal to confirm logout
         // also make call to api to delete the token
         // dispatch({ type: EAuthOps.LOGOUT_USER });
-        handleLogout();
         // alert("logout");
       }
     },
