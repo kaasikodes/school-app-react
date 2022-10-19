@@ -1,10 +1,8 @@
 import axios from "axios";
 
-const token = JSON.parse(
-  localStorage.getItem("cpaat_auth") as unknown as string
-);
+const token = localStorage.getItem("cpaat_auth") as unknown as string;
 
-interface IAddProps {
+export interface IAddProps {
   estateOwnerId: string;
   name: string;
   description: string;
@@ -67,9 +65,10 @@ interface IGetProps {
 export const getEstates = async ({
   limit = "",
   offset = "",
-  status = "",
-  isDeleted = "",
+  status = "active",
+  isDeleted = "false",
 }: IGetProps) => {
+  // const url = `${process.env.REACT_APP_BASE_URL}/estate`;
   const url = `${process.env.REACT_APP_BASE_URL}/estate?limit=${limit}&offset=${offset}&status=${status}&isDeleted=${isDeleted}`;
 
   const config = {

@@ -1,10 +1,11 @@
 import axios from "axios";
 
-const token = JSON.parse(
-  localStorage.getItem("cpaat_auth") as unknown as string
-);
+const token = localStorage.getItem("cpaat_auth") as unknown as string;
 
-interface ICreateProps {
+// const token = "red";
+// console.log(localStorage.getItem("cpaat_auth"), "POPIPO");
+
+export interface ICreateProps {
   email: string;
   firstName: string;
   lastName: string;
