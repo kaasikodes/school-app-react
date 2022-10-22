@@ -32,9 +32,9 @@ function App() {
                 </RequireAuth>
               }
             >
-              <Route index element={<Home />} />
+              <Route index element={<EstateOwners />} />
               <Route path="estates" element={<Estates />} />
-              <Route path="estate-owners" element={<EstateOwners />} />
+              {/* <Route path="estate-owners" element={<EstateOwners />} /> */}
               <Route path="/staff" element={<Staff />} />
             </Route>
           </Routes>

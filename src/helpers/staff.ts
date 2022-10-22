@@ -1,8 +1,6 @@
 import axios from "axios";
 
-const token = JSON.parse(
-  localStorage.getItem("cpaat_auth") as unknown as string
-);
+const token = localStorage.getItem("cpaat_auth") as unknown as string;
 
 export interface ICreateStaffProps {
   email: string;
@@ -148,13 +146,13 @@ export const getOneStaff = ({ staffId, estateId }: IGetSingleProps) => {
 
 // refactor
 interface IPaginationProps {
-  limit?: number;
-  offset?: number;
+  limit?: string;
+  offset?: string;
 }
 interface IGetProps {
   query?: string;
   pagProps?: IPaginationProps;
-  searchQuery: string;
+  searchQuery?: string;
   timeQuery?: string;
   estateId: string;
 }
@@ -168,17 +166,8 @@ export const getOneEstateStaff = ({
   const limit = pagProps?.limit ?? 10;
   const offset = pagProps?.offset ?? 0;
 
-  const url = query
-    ? `${
-        process.env.NEXT_PUBLIC_APP_URL
-      }/staff/estate/${estateId}/?role=${query}&limit=${limit}&offset=${offset}&${searchQuery}${
-        timeQuery ? timeQuery : ""
-      }`
-    : `${
-        process.env.NEXT_PUBLIC_APP_URL
-      }/staff/estate/${estateId}?limit=${limit}&offset=${offset}&${searchQuery}${
-        timeQuery ? timeQuery : ""
-      }`;
+  const url = `${process.env.REACT_APP_BASE_URL}/staff/estate/${estateId}?limit=${limit}&offset=${offset}
+      `;
   const config = {
     headers: {
       estateId: estateId,

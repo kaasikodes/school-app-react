@@ -5,7 +5,6 @@ import AddEstate from "../components/estates/AddEstate";
 import EstateTable from "../components/estates/EstateTable";
 
 const Estates = () => {
-  const auth = useAuthUser();
   const [showD, setShowD] = useState(false);
   return (
     <div>

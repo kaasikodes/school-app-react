@@ -1,18 +1,16 @@
 import {
   ApartmentOutlined,
   HomeOutlined,
-  CalculatorOutlined,
   LogoutOutlined,
   UserAddOutlined,
-  CheckSquareOutlined,
-  UserOutlined,
   UsergroupAddOutlined,
 } from "@ant-design/icons";
 
 import { MenuProps, Modal } from "antd";
 import { Layout, Menu } from "antd";
+import React from "react";
 
-import React, { useEffect, useState } from "react";
+import { useSignOut } from "react-auth-kit";
 import { Link, useNavigate } from "react-router-dom";
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -22,8 +20,10 @@ type Props = {
 };
 
 const DashboardLayout: React.FC<Props> = ({ children }) => {
+  const signOut = useSignOut();
   const navigate = useNavigate();
   const handleLogout = () => {
+    signOut();
     navigate("/login");
   };
   const menuLinks = [
@@ -32,15 +32,15 @@ const DashboardLayout: React.FC<Props> = ({ children }) => {
       label: "Gatehouse",
       link: "/",
     },
-    {
-      icon: HomeOutlined,
-      label: "Home",
-      link: "/",
-    },
+    // {
+    //   icon: HomeOutlined,
+    //   label: "Home",
+    //   link: "/",
+    // },
     {
       icon: UserAddOutlined,
       label: "Estate Owners",
-      link: "/estate-owners",
+      link: "/",
     },
     { icon: ApartmentOutlined, label: "Estates", link: "/estates" },
     {
@@ -69,7 +69,11 @@ const DashboardLayout: React.FC<Props> = ({ children }) => {
     disabled: item.label === "Gatehouse",
     label:
       item.label !== "Gatehouse" ? (
-        <Link to={item.link}>{item.label}</Link>
+        item.link === "/logout" ? (
+          <span>{item.label}</span>
+        ) : (
+          <Link to={item.link}>{item.label}</Link>
+        )
       ) : null,
     onClick: (e) => {
       if (item.link === "/logout") {

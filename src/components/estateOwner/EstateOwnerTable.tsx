@@ -1,8 +1,15 @@
-import { Table } from "antd";
-import React from "react";
+import { Drawer, Dropdown, Menu, Space, Table } from "antd";
+import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { getEstateOwners } from "../../helpers/estateOwners";
 import { openNotification } from "../utils/notifcations";
+import { MoreOutlined } from "@ant-design/icons";
+import EditEstateOwner from "./EditEstateOwner";
+
+enum EAction {
+  NO_COMP = "",
+  EDIT = "Edit Estate Owner Details",
+}
 
 const EstateOwnerTable = () => {
   const columns = [
@@ -27,11 +34,37 @@ const EstateOwnerTable = () => {
       dataIndex: "gender",
       key: "gender",
     },
+    // {
+    //   title: "Archived",
+    //   dataIndex: "isArchived",
+    //   key: "isArchived",
+    //   render: (_: any, record: any) => `${record.isArchived ? "Yes" : "No"} `,
+    // },
     {
-      title: "Archived",
-      dataIndex: "isArchived",
-      key: "isArchived",
-      render: (_: any, record: any) => `${record.isArchived ? "Yes" : "No"} `,
+      title: "Action",
+      key: "action",
+      width: 100,
+      render: (val: string, item: any) => (
+        <Space align="center" className="cursor-pointer">
+          <Dropdown
+            overlay={
+              <Menu>
+                <Menu.Item
+                  key="3"
+                  onClick={() =>
+                    handleComp({ id: item["_id"], action: EAction.EDIT })
+                  }
+                >
+                  Edit
+                </Menu.Item>
+              </Menu>
+            }
+            trigger={["click", "hover"]}
+          >
+            <MoreOutlined />
+          </Dropdown>
+        </Space>
+      ),
     },
   ];
   const { data, isError, isFetching, isSuccess } = useQuery(
@@ -63,8 +96,19 @@ const EstateOwnerTable = () => {
       },
     }
   );
+  const [showD, setShowD] = useState(false);
+  const [action, setAction] = useState<EAction>(EAction.NO_COMP);
+  const [id, setId] = useState("");
+  const handleComp = ({ id, action }: { id: string; action: EAction }) => {
+    setAction(action);
+    setId(id);
+    setShowD(true);
+  };
   return (
     <div>
+      <Drawer visible={showD} onClose={() => setShowD(false)} title={action}>
+        {action === EAction.EDIT && <EditEstateOwner id={id} />}
+      </Drawer>
       <Table dataSource={data} loading={isFetching} columns={columns} />
     </div>
   );

@@ -17,42 +17,6 @@ interface DataType {
 }
 
 const EstateTable = () => {
-  const columns: ColumnsType<DataType> = [
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-    },
-
-    {
-      title: "Address",
-      dataIndex: "location",
-      key: "location",
-      ellipsis: true,
-    },
-    {
-      title: "Owner Name",
-      dataIndex: "ownerId",
-      key: "ownerId",
-      onFilter: (value: any, record) => record.ownerId.indexOf(value) !== -1,
-      render: (value: any, record: any) =>
-        `${record.estateOwnerId.firstName} ${record.estateOwnerId.lastName}`,
-    },
-    {
-      title: "Next Renewal Date",
-      dataIndex: "nextRenewalDate",
-      key: "nextRenewalDate",
-      render: (value: any, record: any) =>
-        `${moment(record.nextRenewalDate).format("YYYY-MM-DD")}`,
-    },
-    {
-      title: "Owner Phone",
-      dataIndex: "ownerPhone",
-      key: "ownerPhone",
-      render: (value: any, record: any) =>
-        `${record.estateOwnerId.phoneNumber}`,
-    },
-  ];
   const { data, isError, isFetching, isSuccess } = useQuery(
     "estates",
     () => getEstates({ limit: "10", offset: "0" }),
@@ -93,6 +57,82 @@ const EstateTable = () => {
       },
     }
   );
+  const {
+    data: owners,
+
+    isSuccess: oIsSuccess,
+  } = useQuery(
+    "estate-owners",
+    () => getEstateOwners({ limit: "10", offset: "0" }),
+    {
+      refetchInterval: false,
+      refetchIntervalInBackground: false,
+      refetchOnWindowFocus: false,
+      onError: (err: any) => {
+        // show notification
+        openNotification({
+          state: "error",
+          title: "Error Occured",
+          description:
+            err?.response.data.message ?? err?.response.data.error.message,
+        });
+      },
+      select: (res) => {
+        const result = res.data.data;
+        // openNotification({
+        //   state: "success",
+
+        //   title: "Success",
+        //   description: "Estate Owners Fetched !",
+        //   // duration: 0.4,
+        // });
+        return result.result;
+      },
+    }
+  );
+  const columns: ColumnsType<DataType> = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+
+    {
+      title: "Address",
+      dataIndex: "location",
+      key: "location",
+      ellipsis: true,
+    },
+    {
+      title: "Owner Name",
+      dataIndex: "ownerId",
+      key: "ownerId",
+      filters: oIsSuccess
+        ? owners.map((item: any) => ({
+            text: `${item.firstName} ${item.lastName}`,
+            value: item["_id"],
+          }))
+        : [],
+      onFilter: (value: any, record) => record.ownerId.indexOf(value) !== -1,
+      render: (value: any, record: any) =>
+        `${record.estateOwnerId.firstName} ${record.estateOwnerId.lastName}`,
+    },
+    {
+      title: "Next Renewal Date",
+      dataIndex: "nextRenewalDate",
+      key: "nextRenewalDate",
+      render: (value: any, record: any) =>
+        `${moment(record.nextRenewalDate).format("YYYY-MM-DD")}`,
+    },
+    {
+      title: "Owner Phone",
+      dataIndex: "ownerPhone",
+      key: "ownerPhone",
+      render: (value: any, record: any) =>
+        `${record.estateOwnerId.phoneNumber}`,
+    },
+  ];
+
   const onChange: TableProps<DataType>["onChange"] = (
     pagination,
     filters,

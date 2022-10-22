@@ -28,6 +28,7 @@ const LoginForm = () => {
         },
         onSuccess: (res) => {
           const result = res.data.data;
+          console.log("result login", result);
           if (!result.user.isCpaatAdmin) {
             return openNotification({
               state: "error",
@@ -48,8 +49,8 @@ const LoginForm = () => {
             openNotification({
               state: "success",
 
-              title: result.status,
-              description: result.message,
+              title: "Login Successfull!",
+              description: "Welcome to Gatehouse, Cpaat Admin",
               // duration: 0.4,
             });
             navigate("/");
