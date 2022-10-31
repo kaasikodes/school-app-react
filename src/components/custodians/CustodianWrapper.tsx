@@ -1,0 +1,37 @@
+import { Button, Drawer, Tabs, Typography } from "antd";
+import React, { useState } from "react";
+import CustodianTable from "./CustodianTable";
+import AddCustodianForm from "./AddCustodianForm";
+
+const CustodianWrapper = () => {
+  const [showD, setShowD] = useState(false);
+  return (
+    <>
+      <Drawer
+        visible={showD}
+        title={`Add Custodian`}
+        onClose={() => setShowD(false)}
+      >
+        <Tabs>
+          <Tabs.TabPane tab="Single Custodian" key="item-1">
+            <AddCustodianForm />
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="Bulk Upload" key="item-2">
+            Bulk Upload of custodians
+          </Tabs.TabPane>
+        </Tabs>
+      </Drawer>
+      <div className="flex flex-col gap-4">
+        <Typography.Title level={3}>Custodians</Typography.Title>
+
+        <div className="flex justify-end ">
+          <Button type="primary" onClick={() => setShowD(true)}>
+            Add Custodian
+          </Button>
+        </div>
+        <CustodianTable />
+      </div>
+    </>
+  );
+};
+export default CustodianWrapper;

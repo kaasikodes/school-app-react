@@ -1,0 +1,15 @@
+export const routes = {
+  index: "/",
+  login: "/login",
+  schools: "/schools/",
+  departments: "/departments/",
+  courses: "/courses/",
+  classes: "/classes/",
+  staff: "/staff/",
+  sessions: "/sessions/",
+  assessments: "/assessments/",
+  custodians: "/custodians/",
+  students: "/students/",
+  classCourses: `/classes/:classId/courses/:courseId`,
+  singleClass: `/classes/:classId`,
+};

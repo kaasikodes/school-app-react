@@ -1,0 +1,246 @@
+import {
+  Space,
+  Table,
+  Menu,
+  Dropdown,
+  Button,
+  Drawer,
+  Modal,
+  Typography,
+  PaginationProps,
+  TablePaginationConfig,
+} from "antd";
+import React, { useEffect, useState } from "react";
+
+import { EllipsisOutlined } from "@ant-design/icons";
+import EditDepartmentForm from "./EditDepartmentForm";
+import ViewClass from "./ViewDepartment";
+import { openNotification } from "../../helpers/notifications";
+import { ExclamationCircleOutlined, LoadingOutlined } from "@ant-design/icons";
+
+import { getDepartments } from "../../helpers/department";
+import { useAuthUser } from "react-auth-kit";
+import { IAuthDets } from "../../appTypes/auth";
+import OfflineComponent from "../errors/OfflineComponent";
+import ViewDepartment from "./ViewDepartment";
+
+export interface IDepartmentEntry {
+  id: number;
+  name: string;
+
+  courseCount: number;
+  studentCount: number;
+  staffCount: number;
+
+  description?: string;
+}
+enum EAction {
+  VIEW = "View Department",
+  EDIT = "Edit Department",
+  NO_COMP = "NO COMP",
+}
+
+interface IProps {
+  refresh: boolean;
+  setRefresh: Function;
+  searchTerm?: string;
+}
+
+const DepartmentsTable = ({ refresh, setRefresh, searchTerm }: IProps) => {
+  const [departments, setdepartments] = useState<IDepartmentEntry[]>([]);
+  const [fetching, setFetching] = useState(false);
+  const [error, setError] = useState(false);
+  const auth = useAuthUser();
+
+  const authDetails = auth() as unknown as IAuthDets;
+
+  const user = authDetails.user;
+  const token = authDetails.userToken;
+  const schoolId = authDetails.choosenSchoolId;
+  const [showDrawer, setShowDrawer] = useState(false);
+  const [deptId, setDeptId] = useState("");
+  const [action, setAction] = useState<EAction>(EAction.NO_COMP);
+
+  // pheripherals
+  const handleEdit = (id: string) => {
+    setAction(EAction.EDIT);
+    setDeptId(id);
+    setShowDrawer(true);
+  };
+  const handleView = (id: string) => {
+    setAction(EAction.VIEW);
+    setDeptId(id);
+    setShowDrawer(true);
+  };
+
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+
+    {
+      title: "No of Courses",
+      dataIndex: "courseCount",
+      key: "courseCount",
+    },
+    {
+      title: "Class Students",
+      dataIndex: "studentCount",
+      key: "studentCount",
+    },
+    {
+      title: "Total Staff",
+      dataIndex: "staffCount",
+      key: "staffCount",
+    },
+
+    {
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
+      render: (_: any, record: any) => (
+        <Dropdown
+          overlay={
+            <Menu
+              items={[
+                {
+                  key: "1",
+                  label: (
+                    <button
+                      onClick={() => handleEdit(record.id)}
+                      className="w-full text-left"
+                    >
+                      Edit
+                    </button>
+                  ),
+                },
+                {
+                  key: "2",
+                  label: (
+                    <button
+                      onClick={() => handleView(record.id)}
+                      className="w-full text-left"
+                    >
+                      View
+                    </button>
+                  ),
+                },
+              ]}
+            />
+          }
+          trigger={["click"]}
+        >
+          <Space>
+            <Button icon={<EllipsisOutlined />} type="text" />
+          </Space>
+        </Dropdown>
+      ),
+    },
+  ];
+  const [pagination, setPagination] = useState<TablePaginationConfig>({
+    current: 1,
+    pageSize: 5,
+    showSizeChanger: false,
+  });
+
+  const loaddepartments = async (
+    newPagination: TablePaginationConfig,
+    searchTerm?: string
+  ) => {
+    if (token) {
+      try {
+        setFetching(true);
+
+        if (schoolId) {
+          const res = await getDepartments({
+            token,
+            schoolId: schoolId,
+            page: newPagination.current,
+            limit: newPagination.pageSize,
+            searchTerm,
+          });
+          console.log("department", res);
+          const result = res.data.data;
+          setPagination((pagination) => ({
+            ...pagination,
+            total: res.data.total,
+          }));
+
+          const fdepartments: IDepartmentEntry[] = result.map((item: any) => {
+            return {
+              id: item.id,
+              name: item.name,
+
+              levelCount: 0,
+              courseCount: 0,
+              parentCount: 0,
+              studentCount: 0,
+              staffCount: 0,
+              ends: item.ends,
+            };
+          });
+          setdepartments(fdepartments);
+          setFetching(false);
+        }
+      } catch (err: any) {
+        console.log(err);
+        setFetching(false);
+        setError(true);
+      }
+    }
+  };
+  const onChange = (newPagination: TablePaginationConfig) => {
+    setPagination((pagination) => ({
+      ...newPagination,
+    }));
+    loaddepartments(newPagination);
+  };
+  // pheripherals
+  useEffect(() => {
+    // const token = localStorage.getItem(LOCAL_USER_TOKEN_KEY);
+    loaddepartments(
+      {
+        current: pagination.current,
+        pageSize: pagination.pageSize,
+      },
+      searchTerm
+    );
+  }, [token, refresh, searchTerm]);
+  return (
+    <div>
+      {error ? (
+        <OfflineComponent />
+      ) : (
+        <div>
+          <Table
+            rowKey={(record) => record.id}
+            dataSource={departments}
+            columns={columns}
+            onChange={onChange}
+            pagination={pagination}
+            loading={fetching}
+            size="small"
+          />
+          <Drawer
+            visible={showDrawer}
+            onClose={() => setShowDrawer(false)}
+            title={action}
+          >
+            {action === EAction.EDIT && (
+              <EditDepartmentForm
+                closeDrawer={() => setShowDrawer(false)}
+                setRefresh={setRefresh}
+                id={deptId}
+              />
+            )}
+            {action === EAction.VIEW && <ViewDepartment id={deptId} />}
+          </Drawer>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default DepartmentsTable;

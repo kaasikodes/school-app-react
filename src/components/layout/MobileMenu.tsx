@@ -1,14 +1,8 @@
 import { Button, Drawer, Menu, MenuProps } from "antd";
-import { CloseOutlined } from "@ant-design/icons";
-
 import React from "react";
+import { ILink } from "../../data/dashboard";
+import { IoMdClose } from "react-icons/io";
 import { Link } from "react-router-dom";
-
-export interface ILink {
-  icon: any;
-  label: string;
-  link: string;
-}
 
 interface IProps {
   links: ILink[];
@@ -25,7 +19,7 @@ const MobileMenu = ({ links, onClose, show, handleLogOut }: IProps) => {
           <Button
             onClick={() => onClose()}
             type="text"
-            icon={<CloseOutlined color="#ffffff" size={25} />}
+            icon={<IoMdClose color="#ffffff" size={25} />}
           />
         </div>
       }
