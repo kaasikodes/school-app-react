@@ -19,7 +19,7 @@ import { HiOutlineSwitchHorizontal } from "react-icons/hi";
 import { MdSettings } from "react-icons/md";
 import { RiParentLine } from "react-icons/ri";
 import { HiOutlineUserGroup } from "react-icons/hi";
-import { IoIosNotifications } from "react-icons/io";
+import { IoIosNotifications, IoIosHammer } from "react-icons/io";
 import { DiYeoman } from "react-icons/di";
 import { TbSchool } from "react-icons/tb";
 import { FaSchool } from "react-icons/fa";
@@ -51,6 +51,7 @@ const ADMIN_LINKS: ILink[] = [
     link: "/classes",
   },
   { icon: ApartmentOutlined as IconType, label: "Staff", link: "/staff" },
+  { icon: IoIosHammer as IconType, label: "Policies", link: "/policies" },
 
   {
     icon: AuditOutlined as IconType,

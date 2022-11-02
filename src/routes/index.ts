@@ -6,10 +6,12 @@ export const routes = {
   courses: "/courses/",
   classes: "/classes/",
   staff: "/staff/",
+  singleStaff: "/staff/:staffId",
   sessions: "/sessions/",
   assessments: "/assessments/",
   custodians: "/custodians/",
   students: "/students/",
-  classCourses: `/classes/:classId/courses/:courseId`,
+  singleClassCourse: `/classes/:classId/courses/:courseId`,
   singleClass: `/classes/:classId`,
+  policies: `/policies`,
 };

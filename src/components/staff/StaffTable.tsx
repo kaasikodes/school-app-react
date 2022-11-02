@@ -141,7 +141,7 @@ const StaffTable = ({ searchTerm }: IProps) => {
       dataIndex: "name",
       key: "name",
       render: (_: string, record: any) => (
-        <Link to={`staff/${record.id}`}>{record.name}</Link>
+        <Link to={`/staff/${record.id}`}>{record.name}</Link>
       ),
     },
     {

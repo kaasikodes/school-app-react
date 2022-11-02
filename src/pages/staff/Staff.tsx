@@ -1,5 +1,5 @@
 import React from "react";
-import StaffWrapper from "../components/staff/StaffWrapper";
+import StaffWrapper from "../../components/staff/StaffWrapper";
 
 const Staff = () => {
   return (

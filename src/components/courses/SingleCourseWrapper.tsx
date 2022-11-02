@@ -21,8 +21,8 @@ import CourseRecordAssessmentTable from "./CourseRecordAssessmentTable";
 import CoursesTable from "./SchoolSessionCoursesTable";
 
 interface IProps {
-  courseId: string;
-  classId: string;
+  courseId?: string;
+  classId?: string;
 }
 
 const SingleCourseWrapper = ({ courseId, classId }: IProps) => {

@@ -10,13 +10,17 @@ import Schools from "./pages/Schools";
 import Departments from "./pages/Departments";
 import { routes } from "./routes";
 import Courses from "./pages/Courses";
-import Classes from "./pages/Classes/Classes";
-import Staff from "./pages/Staff";
+import Classes from "./pages/classes/Classes";
+import Staff from "./pages/staff/Staff";
 import Sessions from "./pages/Sessions";
 import Custodians from "./pages/Custodians";
 import Assessments from "./pages/Assessments";
 import Students from "./pages/Students";
-import SingleClass from "./pages/Classes/[classId].tsx/SingleClass";
+import SingleClass from "./pages/classes/singleClass/SingleClass";
+import SingleClassCourse from "./pages/classes/singleClass/courses/SingleClassCourse";
+import ClassCourses from "./pages/classes/singleClass/courses/ClassCourses";
+import SingleStaff from "./pages/staff/SingleStaff";
+import Policies from "./pages/policies/Policies";
 
 const queryClient = new QueryClient();
 
@@ -46,14 +50,19 @@ function App() {
               <Route path={routes.courses} element={<Courses />} />
               <Route path={routes.classes} element={<Classes />} />
               <Route path={routes.staff} element={<Staff />} />
+              <Route path={routes.singleStaff} element={<SingleStaff />} />
               <Route path={routes.sessions} element={<Sessions />} />
               <Route path={routes.students} element={<Students />} />
               <Route path={routes.assessments} element={<Assessments />} />
               <Route path={routes.custodians} element={<Custodians />} />
+              <Route path={routes.policies} element={<Policies />} />
 
               {/* classes */}
-              <Route path={routes.classCourses} element={<Classes />} />
-              <Route path={routes.singleClass} element={<SingleClass />} />
+              <Route path={routes.singleClass} element={<ClassCourses />} />
+              <Route
+                path={routes.singleClassCourse}
+                element={<SingleClassCourse />}
+              />
             </Route>
           </Routes>
         </Router>
