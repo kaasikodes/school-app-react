@@ -1,6 +1,7 @@
 import { Typography, Input, Button, Drawer, Tabs } from "antd";
 import React, { useState } from "react";
 import AddStaffForm from "../staff/AddStaffForm";
+import AssessmentTemplateContainer from "./AssessmentTemplateContainer";
 import CourseEnrollmentPolicyContainer from "./CourseEnrollmentPolicyContainer";
 import GradingPolicyContainer from "./GradingPolicyContainer";
 import StudentEnrollmentPolicyContainer from "./StudentEnrollmentPolicyContainer";
@@ -27,7 +28,9 @@ const PoliciesWrapper = () => {
           <Tabs.TabPane tab="Student Promotion" key="item-4">
             <StudentPromotionPolicyContainer />
           </Tabs.TabPane>
-          <Tabs.TabPane tab="Assessment Template" key="item-5"></Tabs.TabPane>
+          <Tabs.TabPane tab="Assessment Template" key="item-5">
+            <AssessmentTemplateContainer />
+          </Tabs.TabPane>
         </Tabs>
       </div>
       <div className="mt-8 flex flex-col gap-2"></div>
