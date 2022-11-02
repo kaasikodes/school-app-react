@@ -13,7 +13,7 @@ const Login = () => {
     } else {
       // Redirect to Login
     }
-  }, []);
+  }, [isAuthenticated, navigate]);
 
   return (
     <>
