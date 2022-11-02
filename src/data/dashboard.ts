@@ -1,4 +1,3 @@
-import { MenuProps } from "antd";
 import { ERole } from "../appTypes/roles";
 import {
   ApartmentOutlined,
@@ -8,25 +7,18 @@ import {
   BookOutlined,
   CheckSquareOutlined,
   UserOutlined,
-  LoadingOutlined,
   NotificationOutlined,
-  MenuOutlined,
-  SearchOutlined,
 } from "@ant-design/icons";
-import { BsFillCalendarCheckFill, BsFileEarmarkPostFill } from "react-icons/bs";
-import { GiTeacher, GiSchoolOfFish } from "react-icons/gi";
+import { BsFileEarmarkPostFill } from "react-icons/bs";
+import { GiTeacher } from "react-icons/gi";
 import { HiOutlineSwitchHorizontal } from "react-icons/hi";
-import { MdSettings } from "react-icons/md";
-import { RiParentLine } from "react-icons/ri";
-import { HiOutlineUserGroup } from "react-icons/hi";
-import { IoIosNotifications, IoIosHammer } from "react-icons/io";
-import { DiYeoman } from "react-icons/di";
+
+import { IoIosHammer } from "react-icons/io";
+
 import { TbSchool } from "react-icons/tb";
 import { FaSchool } from "react-icons/fa";
 import { AiOutlineSchedule } from "react-icons/ai";
 import { IconType } from "react-icons";
-import React from "react";
-import Link from "react-router-dom";
 
 interface IDSMProps {
   role: ERole;

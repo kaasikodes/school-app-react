@@ -1,12 +1,8 @@
 import { Button, Drawer, Input, Typography } from "antd";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAuthUser } from "react-auth-kit";
-import { useQuery } from "react-query";
 import { IAuthDets } from "../../appTypes/auth";
 
-import { openNotification } from "../../helpers/notifications";
-import { getAllStaff } from "../../helpers/staff";
-import PageLoader from "../loaders/PageLoader";
 import AddStaffForm from "./AddStaffForm";
 import StaffTable from "./StaffTable";
 

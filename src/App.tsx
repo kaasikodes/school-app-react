@@ -16,7 +16,6 @@ import Sessions from "./pages/Sessions";
 import Custodians from "./pages/Custodians";
 import Assessments from "./pages/Assessments";
 import Students from "./pages/Students";
-import SingleClass from "./pages/classes/singleClass/SingleClass";
 import SingleClassCourse from "./pages/classes/singleClass/courses/SingleClassCourse";
 import ClassCourses from "./pages/classes/singleClass/courses/ClassCourses";
 import SingleStaff from "./pages/staff/SingleStaff";
