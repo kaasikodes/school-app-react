@@ -1,11 +1,9 @@
-import { Form, Input, Select, Spin, Switch, Button } from "antd";
-import React, { useState } from "react";
+import { Form, Select, Spin, Button } from "antd";
 import { useAuthUser } from "react-auth-kit";
 import { useQuery } from "react-query";
 import { IAuthDets } from "../../appTypes/auth";
 import { IStaffEntry } from "../../appTypes/staff";
 import { getClasses } from "../../helpers/classes";
-import { getCourses } from "../../helpers/courses";
 import { getAllStaff } from "../../helpers/staff";
 
 import { ICourseEntry } from "../settings/courses/SchoolCoursesTable";
@@ -18,13 +16,7 @@ const AssignCourseTeacher = () => {
   const user = authDetails.user;
   const token = authDetails.userToken;
   const schoolId = authDetails.choosenSchoolId;
-  const {
-    data: staff,
-    isLoading,
-    isError,
-    error,
-    refetch,
-  } = useQuery<any, any, any, any>(
+  const { data: staff, isLoading } = useQuery<any, any, any, any>(
     ["staff"],
     () => {
       return getAllStaff({

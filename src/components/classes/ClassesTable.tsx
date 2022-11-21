@@ -5,12 +5,9 @@ import {
   Dropdown,
   Button,
   Drawer,
-  Modal,
-  Typography,
-  PaginationProps,
   TablePaginationConfig,
 } from "antd";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { getClasses } from "../../helpers/classes";
 import { EllipsisOutlined } from "@ant-design/icons";

@@ -1,12 +1,9 @@
-import { Form, Input, Button, DatePicker, Select } from "antd";
-import React, { useState } from "react";
+import { Form, Input, Button } from "antd";
+import { useState } from "react";
 
 import { openNotification } from "../../helpers/notifications";
-import { saveSchool } from "../../helpers/schools";
 
 import { LoadingOutlined } from "@ant-design/icons";
-import moment from "moment";
-import { addSchoolSession } from "../../helpers/sessions";
 import { saveSchoolClass } from "../../helpers/classes";
 import { IAuthDets } from "../../appTypes/auth";
 import { useAuthUser } from "react-auth-kit";
@@ -14,11 +11,6 @@ import { useAuthUser } from "react-auth-kit";
 interface IProps {
   closeDrawer: Function;
   setRefresh: Function;
-}
-interface IDepartment {
-  id: string;
-  name: string;
-  description?: string;
 }
 
 const AddClassForm = ({ closeDrawer, setRefresh }: IProps) => {
@@ -30,7 +22,7 @@ const AddClassForm = ({ closeDrawer, setRefresh }: IProps) => {
   const token = authDetails.userToken;
   const schoolId = authDetails.choosenSchoolId;
 
-  const [departments, setDepartments] = useState([]);
+  // const [departments, setDepartments] = useState([]);
 
   const handleFinish = (data: any) => {
     openNotification({

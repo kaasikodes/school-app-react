@@ -1,6 +1,6 @@
 import { Button, Form, Input, InputNumber, Space, Typography } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import { saveSchoolCRTemplate } from "../../../helpers/schoolCRecordTemplates";
 

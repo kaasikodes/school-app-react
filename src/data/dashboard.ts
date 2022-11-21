@@ -30,7 +30,7 @@ export interface ILink {
 }
 const ADMIN_LINKS: ILink[] = [
   { icon: FaSchool as IconType, label: "Home", link: "/" },
-  { icon: TbSchool as IconType, label: "Schools", link: "/schools" },
+  // { icon: TbSchool as IconType, label: "Schools", link: "/schools" },
   {
     icon: ApartmentOutlined as IconType,
     label: "Departments",
@@ -77,7 +77,7 @@ const ADMIN_LINKS: ILink[] = [
 
 const STAFF_LINKS: ILink[] = [
   { icon: FaSchool as IconType, label: "Home", link: "/" },
-  { icon: TbSchool as IconType, label: "Schools", link: "/schools" },
+  // { icon: TbSchool as IconType, label: "Schools", link: "/schools" },
 
   { icon: AuditOutlined as IconType, label: "Classes", link: "/classes" },
   {
@@ -112,7 +112,7 @@ const STAFF_LINKS: ILink[] = [
 
 const CUSTODIAN_LINKS: ILink[] = [
   { icon: FaSchool as IconType, label: "Home", link: "/" },
-  { icon: TbSchool as IconType, label: "Schools", link: "/schools" },
+  // { icon: TbSchool as IconType, label: "Schools", link: "/schools" },
 
   { icon: AuditOutlined as IconType, label: "My Children", link: "/students" },
 
@@ -140,7 +140,7 @@ const CUSTODIAN_LINKS: ILink[] = [
 ];
 const STUDENT_LINKS: ILink[] = [
   { icon: FaSchool as IconType, label: "Home", link: "/" },
-  { icon: TbSchool as IconType, label: "Schools", link: "/schools" },
+  // { icon: TbSchool as IconType, label: "Schools", link: "/schools" },
 
   {
     icon: AuditOutlined as IconType,

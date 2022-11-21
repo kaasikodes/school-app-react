@@ -1,23 +1,5 @@
-import {
-  AutoComplete,
-  Button,
-  Form,
-  Input,
-  InputNumber,
-  message,
-  Select,
-  Typography,
-  Upload,
-  Collapse,
-  Col,
-  Row,
-  Switch,
-  Checkbox,
-} from "antd";
-import React, { useState } from "react";
-import { ICustodianEntry } from "./CustodianTable";
+import { Button, Form, Input } from "antd";
 
-import { getCourses } from "../../helpers/courses";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";
 

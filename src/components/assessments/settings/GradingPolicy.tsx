@@ -1,5 +1,4 @@
-import { Form, Switch, Button, Input, InputNumber, Col, Row } from "antd";
-import React from "react";
+import { Form, Button, Input, InputNumber, Col, Row } from "antd";
 
 const GradingPolicy = () => {
   const handleFinish = (data: any) => {

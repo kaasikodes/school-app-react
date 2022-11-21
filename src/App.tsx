@@ -20,6 +20,7 @@ import SingleClassCourse from "./pages/classes/singleClass/courses/SingleClassCo
 import ClassCourses from "./pages/classes/singleClass/courses/ClassCourses";
 import SingleStaff from "./pages/staff/SingleStaff";
 import Policies from "./pages/policies/Policies";
+import Payments from "./pages/Payments";
 
 const queryClient = new QueryClient();
 
@@ -44,7 +45,7 @@ function App() {
               }
             >
               <Route index element={<div>ok</div>} />
-              <Route path={routes.schools} element={<Schools />} />
+              {/* <Route path={routes.schools} element={<Schools />} /> */}
               <Route path={routes.departments} element={<Departments />} />
               <Route path={routes.courses} element={<Courses />} />
               <Route path={routes.classes} element={<Classes />} />
@@ -55,6 +56,7 @@ function App() {
               <Route path={routes.assessments} element={<Assessments />} />
               <Route path={routes.custodians} element={<Custodians />} />
               <Route path={routes.policies} element={<Policies />} />
+              <Route path={routes.payments} element={<Payments />} />
 
               {/* classes */}
               <Route path={routes.singleClass} element={<ClassCourses />} />

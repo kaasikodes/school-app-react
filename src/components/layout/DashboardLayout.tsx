@@ -305,12 +305,17 @@ const DashboardLayout: React.FC<Props> = ({ children }) => {
                 icon={<MenuOutlined />}
                 onClick={() => setShowMobileMenu(true)}
               />
-              <Space size={"large"} align="center">
+              <Space align="center">
                 <div className="hidden md:block">
-                  <Input.Search
-                    placeholder="What are you looking for?"
-                    className=" hidden md:block md:mr-6"
-                  ></Input.Search>
+                  <Select
+                    defaultValue={"1"}
+                    options={[
+                      { label: "Session 1", value: "1" },
+                      { label: "Session 2", value: "2" },
+                    ]}
+                    placeholder="Select a session"
+                    className=" hidden md:block md:mr-2 w-52"
+                  />
                 </div>
                 <div className="block md:hidden">
                   <Button type="text" icon={<SearchOutlined />} />

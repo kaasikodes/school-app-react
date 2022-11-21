@@ -1,5 +1,4 @@
 import { Button, Dropdown, Menu, Space, Table } from "antd";
-import React from "react";
 import { EllipsisOutlined } from "@ant-design/icons";
 
 const CourseRecordAssessmentTable = () => {

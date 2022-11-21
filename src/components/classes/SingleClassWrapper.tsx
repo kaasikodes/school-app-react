@@ -7,10 +7,8 @@ import {
   Card,
   Statistic,
 } from "antd";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import AddClassForm from "./AddClassForm";
-import ClassesTable from "./ClassesTable";
 
 interface IProps {
   classId?: string;

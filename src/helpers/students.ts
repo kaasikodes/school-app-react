@@ -2,47 +2,34 @@ import axios from "axios";
 import moment from "moment";
 import { IAuthProps } from "./auth";
 
+const token = localStorage.getItem("inokpa") as unknown as string;
+
 export interface IStudentAuthProps extends IAuthProps {
   schoolId: string;
 }
 
-interface ISaveStaffProps extends IStudentAuthProps {
-  staffNo: string;
-  id?: string;
+export interface IEnrollStudentProps extends IStudentAuthProps {
+  idNo: string;
+  name: string;
+  email?: string;
+  phone?: string;
   userId?: string;
-  email: string;
-  name?: string;
-  password?: string;
+  currentClassId: string;
+  currentSessionId: string;
+  schoolFeeAmountPaid: string;
+  popDocumentUrl: string;
+  sessionCourses: { levelId: string; courseId: string }[];
 }
-export const saveSchoolStaff = ({
-  token,
-  schoolId,
-  staffNo,
-  userId,
-  id,
-  email,
-  name,
-  password,
-}: ISaveStaffProps) => {
-  const url = `${process.env.REACT_APP_APP_URL}/api/staff/save-profile`;
+export const enrollStudent = (props: IEnrollStudentProps) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/student/save-profile`;
 
   const config = {
     headers: {
       Accept: "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${props.token}`,
     },
   };
-  let data: any = {
-    userId,
-    staffNo,
-    schoolId,
-    name,
-    email,
-    password,
-  };
-  if (id) {
-    data = { ...data, id };
-  }
+  let data = props;
 
   const res: any = axios.post(url, data, config);
   return res;

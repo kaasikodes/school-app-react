@@ -1,7 +1,7 @@
 export const routes = {
   index: "/",
   login: "/login",
-  schools: "/schools/",
+  // schools: "/schools/",
   departments: "/departments/",
   courses: "/courses/",
   classes: "/classes/",
@@ -14,4 +14,5 @@ export const routes = {
   singleClassCourse: `/classes/:classId/courses/:courseId`,
   singleClass: `/classes/:classId`,
   policies: `/policies`,
+  payments: `/payments`,
 };

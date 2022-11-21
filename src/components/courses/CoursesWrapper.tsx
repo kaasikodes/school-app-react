@@ -1,19 +1,10 @@
-import {
-  Typography,
-  Input,
-  Button,
-  Drawer,
-  Breadcrumb,
-  TablePaginationConfig,
-} from "antd";
+import { Typography, Input, Button, Drawer, Breadcrumb } from "antd";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { useAuthUser } from "react-auth-kit";
-import { useMutation, useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import { IAuthDets } from "../../appTypes/auth";
 
-import { getCourses, saveSchoolCourse } from "../../helpers/courses";
 import AddSchoolCourse from "../settings/courses/AddSchoolCourse";
 import CoursesTable from "./SchoolSessionCoursesTable";
 

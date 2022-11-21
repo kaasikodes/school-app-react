@@ -39,7 +39,7 @@ const StudentsTable = () => {
     any,
     any
   >(
-    ["staff", pagination.current],
+    ["students", pagination.current],
     () => {
       return getAllStudents({
         token,
@@ -59,13 +59,9 @@ const StudentsTable = () => {
           description: `Oops, an err occured: ${err?.message}`,
         });
       },
-      onSuccess: (res: any) => {
+      select: (res: any) => {
         const result = res.data.data;
-        setPagination((pagination) => ({
-          ...pagination,
-          total: res.data.total,
-        }));
-        console.log("staff", result);
+
         const fStaff = result.map(
           (item: any): IStudentEntry => ({
             id: item.id,
@@ -78,7 +74,6 @@ const StudentsTable = () => {
         return {
           data: fStaff,
           limit: 4,
-          offset: data.offset,
         };
       },
     }
@@ -116,15 +111,17 @@ const StudentsTable = () => {
   ];
   return (
     <div>
-      <Table
-        rowKey={(record) => record.id}
-        dataSource={isSuccess ? data?.data : []}
-        columns={columns}
-        onChange={onChange}
-        pagination={pagination}
-        loading={isLoading}
-        size="small"
-      />
+      {isSuccess && (
+        <Table
+          rowKey={(record) => record.id}
+          dataSource={data?.data}
+          columns={columns}
+          onChange={onChange}
+          pagination={pagination}
+          loading={isLoading}
+          size="small"
+        />
+      )}
     </div>
   );
 };

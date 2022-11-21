@@ -26,6 +26,7 @@ export interface IAuthDets {
   user: IUser;
   userToken: string;
   choosenSchoolId?: string;
+  choosenSchoolCurrentSessionId?: string;
   currentUserRoleInChoosenSchool?: ERole;
   possibleUserRolesInChoosenSchool?: ERole[];
 

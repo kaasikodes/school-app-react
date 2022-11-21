@@ -24,6 +24,7 @@ import { useQuery } from "react-query";
 import { getCourses } from "../../helpers/courses";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";
+import { IEnrollStudentProps } from "../../helpers/students";
 
 const { Dragger } = Upload;
 
@@ -52,6 +53,14 @@ const formItemLayoutWithOutLabel = {
   },
 };
 const EnrollStudentForm = () => {
+  const auth = useAuthUser();
+
+  const authDetails = auth() as unknown as IAuthDets;
+
+  const user = authDetails.user;
+  const token = authDetails.userToken;
+  const schoolId = authDetails.choosenSchoolId;
+  const sessionId = authDetails.choosenSchoolCurrentSessionId;
   const [form] = Form.useForm();
   const [exStudent, setExStudent] = useState(false);
   const handleExStudentSelect = (val: any, option: any) => {
@@ -73,6 +82,22 @@ const EnrollStudentForm = () => {
   };
   const handleSubmit = (data: any) => {
     console.log("Data ", data);
+    const props: IEnrollStudentProps = {
+      name: `${data.firstName} ${data.middleName + " "}${data.lastName}`,
+      currentClassId: data.currentClassId,
+      // for now
+      sessionCourses: data.courses.map((item: any) => ({
+        levelId: data.currentClassId,
+        courseId: item,
+      })),
+      schoolFeeAmountPaid: data.amountPaid,
+      currentSessionId: sessionId ?? "1", //this should always be created by default when school is created
+      popDocumentUrl: "state url",
+      idNo: "34",
+      schoolId: schoolId as unknown as string,
+      token: token as unknown as string,
+    };
+    console.log("Data ", props);
   };
 
   const props: UploadProps = {
@@ -95,13 +120,6 @@ const EnrollStudentForm = () => {
     },
   };
 
-  const auth = useAuthUser();
-
-  const authDetails = auth() as unknown as IAuthDets;
-
-  const user = authDetails.user;
-  const token = authDetails.userToken;
-  const schoolId = authDetails.choosenSchoolId;
   const {
     data: courses,
     isLoading,
@@ -165,7 +183,12 @@ const EnrollStudentForm = () => {
       {/* fill out the form ne student */}
       {/* 1.) name, class, Payment Info, custodian info 2.) select the courses student offers or skip process 3.) Confirm info(show all) */}
       <div className="flex flex-col gap-4">
-        <Form labelCol={{ span: 24 }} form={form} onFinish={handleSubmit}>
+        <Form
+          labelCol={{ span: 24 }}
+          form={form}
+          onFinish={handleSubmit}
+          size="small"
+        >
           <div className="flex flex-col gap-4">
             <Collapse defaultActiveKey={["1"]} accordion>
               <Panel header="Student Information" key="1" disabled={exStudent}>
@@ -176,10 +199,19 @@ const EnrollStudentForm = () => {
                   <Form.Item label="Last Name" name="lastName">
                     <Input disabled={exStudent} />
                   </Form.Item>
-                  <Form.Item label="Middle Name" name="middleName">
+                  <Form.Item label="Middle Name (optional)" name="middleName">
                     <Input disabled={exStudent} />
                   </Form.Item>
-                  <Form.Item label="Select a Class" name="classId">
+                  <Form.Item label="ID Number" name="idNo">
+                    <Input disabled={exStudent} />
+                  </Form.Item>
+                  <Form.Item label="Email (optional)" name="email">
+                    <Input disabled={exStudent} />
+                  </Form.Item>
+                  <Form.Item label="Phone (optional)" name="phone">
+                    <Input disabled={exStudent} />
+                  </Form.Item>
+                  <Form.Item label="Select Current Class" name="currentClassId">
                     <Select disabled={exStudent}>
                       <Select.Option key="Jss 1a" value={12}>
                         Jss 1a
@@ -193,7 +225,23 @@ const EnrollStudentForm = () => {
               </Panel>
 
               <Panel header="Payment Information" key="2">
-                <div className="grid grid-cols-1 gap-2">
+                <div className="grid md:grid-cols-2 gap-2">
+                  <Form.Item
+                    label="Payment Category"
+                    name="feeCategory"
+                    className="w-full"
+                  >
+                    <Select
+                      options={[{ label: "Science Students", value: "1" }]}
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    label="Class to enroll"
+                    name="classToEnrollId"
+                    className="w-full"
+                  >
+                    <Select options={[{ label: "SS1A", value: "1" }]} />
+                  </Form.Item>
                   <Form.Item
                     label="Amount"
                     name="amountPaid"
@@ -204,7 +252,18 @@ const EnrollStudentForm = () => {
                       style={{ width: "100%" }}
                     />
                   </Form.Item>
-                  <Form.Item label="Document for Proof" name="document">
+                  <Form.Item
+                    label="Note(optional)"
+                    name="note"
+                    className="w-full"
+                  >
+                    <Input placeholder="Extra note" style={{ width: "100%" }} />
+                  </Form.Item>
+                  <Form.Item
+                    label="Document for Proof"
+                    name="document"
+                    className="col-span-2"
+                  >
                     <Dragger {...props}>
                       <p className="ant-upload-drag-icon">
                         <InboxOutlined />
@@ -221,6 +280,23 @@ const EnrollStudentForm = () => {
                 </div>
               </Panel>
               <Panel header="Select Courses" key="3">
+                <div className="my-2 flex justify-end">
+                  {/* should be a policy to prevent this field from showing */}
+                  <Form.Item label="Fliter By Class">
+                    <Select
+                      size="small"
+                      placeholder="Select courses by class"
+                      disabled
+                    >
+                      <Select.Option key="Jss 1a" value={12}>
+                        Jss 1a
+                      </Select.Option>
+                      <Select.Option key="Jss 2a" value={13}>
+                        Jss 2a
+                      </Select.Option>
+                    </Select>
+                  </Form.Item>
+                </div>
                 <div className="grid grid-cols-1 gap-2">
                   <Form.Item
                     name={"courses"}

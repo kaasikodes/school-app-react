@@ -1,5 +1,4 @@
 import { Table } from "antd";
-import React from "react";
 
 const CourseLessonTable = () => {
   const columns = [

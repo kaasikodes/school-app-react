@@ -1,9 +1,5 @@
-import React, { useState } from "react";
-import {
-  ExclamationCircleOutlined,
-  LoadingOutlined,
-  EllipsisOutlined,
-} from "@ant-design/icons";
+import { useState } from "react";
+import { EllipsisOutlined } from "@ant-design/icons";
 import {
   Button,
   Drawer,
