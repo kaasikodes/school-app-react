@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ClassSchoolFeesContainer from "../components/payments/ClassSchoolFeesContainer";
 import PaymentCategoriesContainer from "../components/payments/PaymentCategoriesContainer";
+import PaymentRecordsContainer from "../components/payments/PaymentRecordsContainer";
 
 const Payments = () => {
   return (
@@ -32,7 +33,7 @@ const Payments = () => {
           <ClassSchoolFeesContainer />
         </Tabs.TabPane>
         <Tabs.TabPane tab="Records" key="item-3">
-          Payments made{" "}
+          <PaymentRecordsContainer />
         </Tabs.TabPane>
       </Tabs>
     </div>

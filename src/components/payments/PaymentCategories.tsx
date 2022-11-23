@@ -7,9 +7,6 @@ import { openNotification } from "../../helpers/notifications";
 import { getPaymentCategories } from "../../helpers/payments";
 import PaymentCategory from "./PaymentCategory";
 
-let data = Array(4)
-  .fill(0)
-  .map((_, id) => ({ id: `${id}`, name: "Science Students" }));
 const PaymentCategories = () => {
   const auth = useAuthUser();
 

@@ -25,7 +25,11 @@ import { useMutation, useQuery } from "react-query";
 import { getCourses } from "../../helpers/courses";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";
-import { enrollStudent, IEnrollStudentProps } from "../../helpers/students";
+import {
+  enrollStudent,
+  getStudent,
+  IEnrollStudentProps,
+} from "../../helpers/students";
 import { UploadOutlined } from "@ant-design/icons";
 import { TPaymentCategry } from "../../appTypes/payments";
 import { getClasses } from "../../helpers/classes";
@@ -57,7 +61,12 @@ const formItemLayoutWithOutLabel = {
     sm: { span: 20, offset: 4 },
   },
 };
-const EnrollStudentForm = () => {
+
+interface IProps {
+  handleClose: Function;
+  studentId: string;
+}
+const EnrollExistingStudentForm = ({ handleClose, studentId }: IProps) => {
   const auth = useAuthUser();
 
   const authDetails = auth() as unknown as IAuthDets;
@@ -65,10 +74,55 @@ const EnrollStudentForm = () => {
   const user = authDetails.user;
   const token = authDetails.userToken;
   const schoolId = authDetails.choosenSchoolId;
-  const sessionId = authDetails.choosenSchoolCurrentSessionId ?? "0";
+  const sessionId = authDetails.choosenSchoolCurrentSessionId ?? "1";
   const [form] = Form.useForm();
   const [exStudent, setExStudent] = useState(false);
 
+  // student
+  const {
+    data: student,
+
+    isSuccess: isStSuccess,
+  } = useQuery(
+    ["student", studentId],
+    () =>
+      getStudent({ schoolId: schoolId as string, token, studentId, sessionId }),
+    {
+      refetchInterval: false,
+      refetchIntervalInBackground: false,
+      refetchOnWindowFocus: false,
+      onError: (err: any) => {
+        // show notification
+        openNotification({
+          state: "error",
+          title: "Error Occured",
+          description:
+            err?.response.data.message ?? err?.response.data.error.message,
+        });
+      },
+      onSuccess: (res: any) => {
+        const data = res.data;
+        // console.log("QUIL", data, res.data);
+        // return;
+        const firstName = data.user.name.split(" ")[0];
+        const lastName = data.user.name.split(" ")[1];
+        const middleName = data.user.name.split(" ")[2];
+        const email = data.user.email;
+        const idNo = data.data.id_number;
+        const phone = data.data.alt_phone;
+        const student = {
+          firstName,
+          lastName,
+          middleName,
+          idNo,
+          email,
+          phone,
+        };
+        console.log("STUDENT", student);
+        form.setFieldsValue({ ...student });
+      },
+    }
+  );
   // classes
   const {
     data: levels,
@@ -232,7 +286,7 @@ const EnrollStudentForm = () => {
       {/* fill out the form ne student */}
       {/* 1.) name, class, Payment Info, custodian info 2.) select the courses student offers or skip process 3.) Confirm info(show all) */}
       <div className="flex flex-col gap-4">
-        {isLSuccess && isPCSuccess ? (
+        {isLSuccess && isPCSuccess && isStSuccess ? (
           <Form
             labelCol={{ span: 24 }}
             form={form}
@@ -241,29 +295,25 @@ const EnrollStudentForm = () => {
           >
             <div className="flex flex-col gap-4">
               <Collapse defaultActiveKey={["1"]} accordion>
-                <Panel
-                  header="Student Information"
-                  key="1"
-                  disabled={exStudent}
-                >
+                <Panel header="Student Information" key="1">
                   <div className="grid grid-cols-2 gap-4">
                     <Form.Item label="First Name" name="firstName">
-                      <Input disabled={exStudent} />
+                      <Input disabled />
                     </Form.Item>
                     <Form.Item label="Last Name" name="lastName">
-                      <Input disabled={exStudent} />
+                      <Input disabled />
                     </Form.Item>
                     <Form.Item label="Middle Name (optional)" name="middleName">
-                      <Input disabled={exStudent} />
+                      <Input disabled />
                     </Form.Item>
                     <Form.Item label="ID Number" name="idNo">
-                      <Input disabled={exStudent} />
+                      <Input disabled />
                     </Form.Item>
                     <Form.Item label="Email" name="email">
-                      <Input disabled={exStudent} />
+                      <Input disabled />
                     </Form.Item>
                     <Form.Item label="Phone (optional)" name="phone">
-                      <Input disabled={exStudent} />
+                      <Input disabled />
                     </Form.Item>
                   </div>
                 </Panel>
@@ -355,4 +405,4 @@ const EnrollStudentForm = () => {
   );
 };
 
-export default EnrollStudentForm;
+export default EnrollExistingStudentForm;

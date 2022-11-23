@@ -27,7 +27,7 @@ const StudentsWrapper = () => {
 
         <div className="flex justify-end ">
           <Button type="primary" onClick={() => setShowD(true)}>
-            Enroll Student
+            Enroll New Student
           </Button>
         </div>
         <StudentsTable />
