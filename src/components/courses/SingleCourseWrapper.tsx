@@ -87,7 +87,7 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
         </Tabs.TabPane>
         <Tabs.TabPane tab="Participants" key="item-1">
           <div className="flex flex-col gap-4">
-            <div className="flex md:justify-between">
+            <div className="flex flex-col gap-4 items-center md:flex-row  md:justify-between">
               <div>
                 <Input.Search
                   placeholder="Search participant"
@@ -96,9 +96,17 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
                   onChange={(e) => e.target.value === "" && setSearchTerm("")}
                 />
               </div>
-              <Button onClick={() => setShowDrawer(true)} type="primary">
-                Add Participant
-              </Button>
+              <div className="flex gap-4">
+                <Button onClick={() => setShowDrawer(true)} type="text">
+                  Add Participant
+                </Button>
+                <Button onClick={() => setShowDrawer(true)} type="ghost">
+                  Upload Assessment
+                </Button>
+                <Button onClick={() => setShowDrawer(true)} type="primary">
+                  Submit Assessment
+                </Button>
+              </div>
             </div>
             <div>
               <CourseParticipantTable />
@@ -123,7 +131,22 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
             <CourseLessonTable />
           </div>
         </Tabs.TabPane>
-        <Tabs.TabPane tab="Assessment Records" key="item-3">
+        <Tabs.TabPane tab="Resources" key="item-3">
+          <div className="flex flex-col gap-4">
+            <div className="flex md:justify-between">
+              <div>
+                <Input.Search
+                  placeholder="Search assessment"
+                  onSearch={(val) => setSearchTerm(val)}
+                  allowClear
+                  onChange={(e) => e.target.value === "" && setSearchTerm("")}
+                />
+              </div>
+            </div>
+            <CourseRecordAssessmentTable />
+          </div>
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="Assessments" key="item-20">
           <div className="flex flex-col gap-4">
             <div className="flex md:justify-between">
               <div>
@@ -135,11 +158,21 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
                 />
               </div>
               <Button onClick={() => setShowDrawer(true)} type="primary">
-                Record Assessment
+                Add Assessment (mcq, submission, exam)
               </Button>
             </div>
+
             <CourseRecordAssessmentTable />
           </div>
+          <p>
+            assessment | no of submissions (out of ...) | link to see
+            submissions i.e breakdown | in future should be able to grade a
+            student single submission and assign to an assessment in CA
+          </p>
+          <p>
+            student submissions (include assessment their submitting for - also
+            dropdown to chooose the assessment teacher wishes to see)
+          </p>
         </Tabs.TabPane>
       </Tabs>
       <div className="mt-8 flex flex-col gap-2">

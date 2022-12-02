@@ -52,6 +52,7 @@ const StudentsTable = () => {
   const [pagination, setPagination] = useState<TablePaginationConfig>({
     current: 1,
     pageSize: 4,
+    total: 0,
     showSizeChanger: false,
   });
   const { data, isLoading, isSuccess, error, refetch } = useQuery<
@@ -80,11 +81,14 @@ const StudentsTable = () => {
           description: `Oops, an err occured: ${err?.message}`,
         });
       },
+      onSuccess: (data) => {
+        setPagination((pag) => ({ ...pag, total: data.total }));
+      },
       select: (res: any) => {
         const result = res.data.data;
         console.log("student", result);
 
-        const fStaff = result.map(
+        const data = result.map(
           (item: any): IStudentEntry => ({
             id: item.data.id,
             name: item.user.name,
@@ -96,8 +100,9 @@ const StudentsTable = () => {
           })
         );
         return {
-          data: fStaff,
+          data: data,
           limit: 4,
+          total: res.data.meta.total,
         };
       },
     }
@@ -181,11 +186,17 @@ const StudentsTable = () => {
                       Enroll Student for Session
                     </button>
                   ),
+                  disabled: record.enrollmentStatus,
                 },
                 {
                   key: "1",
                   label: (
-                    <button className="w-full text-left">Assign Courses</button>
+                    <Link
+                      className="w-full text-left"
+                      to={`/students/${record.id}/assign-course`}
+                    >
+                      Assign Courses
+                    </Link>
                   ),
                   disabled: record.enrollmentStatus ? false : true,
                 },

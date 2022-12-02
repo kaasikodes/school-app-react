@@ -15,4 +15,5 @@ export const routes = {
   singleClass: `/classes/:classId`,
   policies: `/policies`,
   payments: `/payments`,
+  assignSessionCoursesToStudent: `/students/:studentId/assign-course`,
 };

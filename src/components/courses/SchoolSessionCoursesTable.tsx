@@ -19,7 +19,7 @@ import { IAuthDets } from "../../appTypes/auth";
 import { Link } from "react-router-dom";
 
 export interface ICourseEntry {
-  id: string;
+  id: number | string;
   name: string;
   description?: string;
   department?: string;
@@ -29,6 +29,7 @@ export interface ICourseEntry {
   teacherCount: number;
   addedBy: string;
   createdAt: string;
+  levelId?: number;
 }
 enum EAction {
   VIEW = "View Course",

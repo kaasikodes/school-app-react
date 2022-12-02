@@ -15,12 +15,13 @@ import Staff from "./pages/staff/Staff";
 import Sessions from "./pages/Sessions";
 import Custodians from "./pages/Custodians";
 import Assessments from "./pages/Assessments";
-import Students from "./pages/Students";
+import Students from "./pages/Students/Students";
 import SingleClassCourse from "./pages/classes/singleClass/courses/SingleClassCourse";
 import ClassCourses from "./pages/classes/singleClass/courses/ClassCourses";
 import SingleStaff from "./pages/staff/SingleStaff";
 import Policies from "./pages/policies/Policies";
 import Payments from "./pages/Payments";
+import AssignSessionCoursesToStudent from "./pages/Students/AssignSessionCoursesToStudent";
 
 const queryClient = new QueryClient();
 
@@ -52,11 +53,17 @@ function App() {
               <Route path={routes.staff} element={<Staff />} />
               <Route path={routes.singleStaff} element={<SingleStaff />} />
               <Route path={routes.sessions} element={<Sessions />} />
-              <Route path={routes.students} element={<Students />} />
               <Route path={routes.assessments} element={<Assessments />} />
               <Route path={routes.custodians} element={<Custodians />} />
               <Route path={routes.policies} element={<Policies />} />
               <Route path={routes.payments} element={<Payments />} />
+
+              {/* /students/${record.id}/assign-course */}
+              <Route path={routes.students} element={<Students />} />
+              <Route
+                path={routes.assignSessionCoursesToStudent}
+                element={<AssignSessionCoursesToStudent />}
+              />
 
               {/* classes */}
               <Route path={routes.singleClass} element={<ClassCourses />} />

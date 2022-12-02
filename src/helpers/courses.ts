@@ -12,6 +12,37 @@ interface ISaveCourseProps extends ICourseAuthProps {
   isActive?: boolean;
   description?: boolean;
 }
+export interface IASCParticipant extends ICourseAuthProps {
+  courses: { courseId: string; levelId: string }[];
+  sessionId: string;
+  studentId: string;
+}
+
+export const addSessionCourseParticipant = ({
+  token,
+  schoolId,
+  studentId,
+  courses,
+  sessionId,
+}: IASCParticipant) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/courses/addSessionCourseParticipant`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  let data: any = {
+    schoolId,
+    studentId,
+    courses,
+    sessionId,
+  };
+
+  const res: any = axios.post(url, data, config);
+  return res;
+};
 
 export const saveSchoolCourse = ({
   token,
@@ -61,6 +92,31 @@ export const getCourses = ({
   const url = `${
     process.env.REACT_APP_APP_URL
   }/api/schools/${schoolId}/courses?${
+    searchTerm ? "searchTerm=" + searchTerm : ""
+  }&limit=${(limit as number) > 0 ? limit : ""}&page=${
+    (page as number) > 0 ? page : ""
+  }`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const res: any = axios.get(url, config);
+  return res;
+};
+export const getCoursesGroupedByLevel = ({
+  token,
+  schoolId,
+  searchTerm,
+  limit,
+  page,
+}: IGetCoursesProps) => {
+  const url = `${
+    process.env.REACT_APP_APP_URL
+  }/api/schools/${schoolId}/coursesGroupedByLevel?${
     searchTerm ? "searchTerm=" + searchTerm : ""
   }&limit=${(limit as number) > 0 ? limit : ""}&page=${
     (page as number) > 0 ? page : ""

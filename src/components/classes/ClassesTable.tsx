@@ -20,12 +20,12 @@ import { IAuthDets } from "../../appTypes/auth";
 import { useAuthUser } from "react-auth-kit";
 
 export interface IClassEntry {
-  id: string;
+  id: number | string;
   name: string;
 
-  courseCount: number;
-  studentCount: number;
-  teacherCount: number;
+  courseCount?: number;
+  studentCount?: number;
+  teacherCount?: number;
 
   description?: string;
 }
