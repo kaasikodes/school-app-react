@@ -1,6 +1,12 @@
 import { useMutation } from "react-query";
-import { addSessionCourseParticipant } from "../helpers/courses";
+import {
+  addSessionCourseParticipant,
+  addSessionCourseTeacher,
+} from "../helpers/courses";
 
 export const useAddSessionCourseParticipantHook = () => {
   return useMutation(addSessionCourseParticipant);
+};
+export const useAddSessionCourseTeacher = () => {
+  return useMutation(addSessionCourseTeacher);
 };

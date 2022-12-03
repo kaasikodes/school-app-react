@@ -16,4 +16,5 @@ export const routes = {
   policies: `/policies`,
   payments: `/payments`,
   assignSessionCoursesToStudent: `/students/:studentId/assign-course`,
+  assignSessionCoursesToStaff: `/staff/:staffId/assign-course`,
 };

@@ -43,6 +43,37 @@ export const addSessionCourseParticipant = ({
   const res: any = axios.post(url, data, config);
   return res;
 };
+export interface IASCTeacher extends ICourseAuthProps {
+  courses: { courseId: string; levelId: string }[];
+  sessionId: string;
+  staffId: string;
+}
+
+export const addSessionCourseTeacher = ({
+  token,
+  schoolId,
+  staffId,
+  courses,
+  sessionId,
+}: IASCTeacher) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/courses/addSessionCourseTeacher`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  let data: any = {
+    schoolId,
+    staffId,
+    courses,
+    sessionId,
+  };
+
+  const res: any = axios.post(url, data, config);
+  return res;
+};
 
 export const saveSchoolCourse = ({
   token,

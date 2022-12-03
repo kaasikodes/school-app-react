@@ -12,6 +12,7 @@ import { useAuthUser } from "react-auth-kit";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { IAuthDets } from "../../appTypes/auth";
+import { IStaffEntry } from "../../appTypes/staff";
 import { IClassEntry } from "../../components/classes/ClassesTable";
 import { ICourseEntry } from "../../components/courses/SchoolSessionCoursesTable";
 import { IStudentEntry } from "../../components/students/StudentsTable";
@@ -19,13 +20,18 @@ import { generalValidationRules } from "../../formValidation";
 import {
   getCoursesGroupedByLevel,
   IASCParticipant,
+  IASCTeacher,
 } from "../../helpers/courses";
 import { openNotification } from "../../helpers/notifications";
+import { getSingleStaff } from "../../helpers/staff";
 import { getStudent } from "../../helpers/students";
-import { useAddSessionCourseParticipantHook } from "../../helpersAPIHooks/courses";
+import {
+  useAddSessionCourseParticipantHook,
+  useAddSessionCourseTeacher,
+} from "../../helpersAPIHooks/courses";
 
-const AssignSessionCoursesToStudent = () => {
-  let { studentId } = useParams();
+const AssignSessionCoursesToStaff = () => {
+  let { staffId } = useParams();
 
   const auth = useAuthUser();
 
@@ -35,7 +41,7 @@ const AssignSessionCoursesToStudent = () => {
   const token = authDetails.userToken;
   const schoolId = authDetails.choosenSchoolId;
   const sessionId = authDetails.choosenSchoolCurrentSessionId ?? "1";
-  const [_, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [form] = Form.useForm();
 
@@ -50,23 +56,22 @@ const AssignSessionCoursesToStudent = () => {
   };
 
   const {
-    data: student,
+    data: staff,
     isSuccess,
-    error,
-    refetch,
+
     isFetching,
   } = useQuery<any, any, any, any>(
-    ["single-student", studentId],
+    ["single-staff", staffId],
     () => {
-      return getStudent({
+      return getSingleStaff({
         token,
         schoolId: schoolId as string,
-        studentId: studentId as string,
+        staffId: staffId as string,
         sessionId,
       });
     },
     {
-      refetchOnWindowFocus: false,
+      // refetchOnWindowFocus: false,
       onError: (err) => {
         openNotification({
           state: "error",
@@ -78,14 +83,12 @@ const AssignSessionCoursesToStudent = () => {
       select: (res: any) => {
         const item = res.data;
 
-        const data: IStudentEntry = {
+        const data: IStaffEntry = {
           id: item.data.id,
           name: item.user.name,
-          studentNo: item.data.id_number,
+          staffNo: item.staff_no,
+          enrollmentStatus: true,
           photo: item.user.profile_photo_url ?? "",
-          currentClass: item.currentLevel.name,
-          sessionPaymentStatus: "not paid",
-          enrollmentStatus: item.currentSessionEnrollmentStatus,
         };
 
         return data;
@@ -172,15 +175,14 @@ const AssignSessionCoursesToStudent = () => {
 
   // student info from url
   // courses in the school as per each class
-  const { mutate, isLoading: isASCPLoading } =
-    useAddSessionCourseParticipantHook();
+  const { mutate, isLoading: isASCPLoading } = useAddSessionCourseTeacher();
 
   const handleSubmit = (data: any) => {
-    if (sessionId && studentId && schoolId) {
-      const props: IASCParticipant = {
+    if (sessionId && staffId && schoolId) {
+      const props: IASCTeacher = {
         sessionId,
         token,
-        studentId,
+        staffId,
         courses: data.courses,
         schoolId,
       };
@@ -201,8 +203,6 @@ const AssignSessionCoursesToStudent = () => {
           });
         },
         onSuccess: (res: any) => {
-          const result = res.data.data;
-
           openNotification({
             state: "success",
 
@@ -223,13 +223,13 @@ const AssignSessionCoursesToStudent = () => {
           <>
             <div className="flex flex-col gap-4">
               <div>
-                <p>Assign session courses to</p>
-                <Typography.Title level={3}>{student.name}</Typography.Title>
+                <p>Assign session courses to Staff</p>
+                <Typography.Title level={3}>{staff.name}</Typography.Title>
               </div>
 
               {/* body */}
               <div>
-                {student.enrollmentStatus ? (
+                {staff.enrollmentStatus ? (
                   <div>
                     <Form form={form} onFinish={handleSubmit}>
                       <div className="flex flex-col gap-4">
@@ -313,7 +313,7 @@ const AssignSessionCoursesToStudent = () => {
                   </div>
                 ) : (
                   <div>
-                    The Student is not enrolled for this acaedemic session
+                    The Staff is not enrolled for this acaedemic session
                   </div>
                 )}
               </div>
@@ -325,4 +325,4 @@ const AssignSessionCoursesToStudent = () => {
   );
 };
 
-export default AssignSessionCoursesToStudent;
+export default AssignSessionCoursesToStaff;

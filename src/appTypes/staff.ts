@@ -4,6 +4,7 @@ export interface IStaffEntry {
   staffNo: string;
   photo?: string;
 
-  courseCount: number;
-  groupCount: number;
+  courseCount?: number;
+  groupCount?: number;
+  enrollmentStatus?: boolean;
 }

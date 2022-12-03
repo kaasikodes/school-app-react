@@ -210,16 +210,19 @@ const StaffTable = ({ searchTerm }: IProps) => {
                   key: "5",
                   label: (
                     <Link to={`/staff/${record.id}`}>
-                      <a className="w-full text-left">Staff Profile</a>
+                      <span className="w-full text-left">Staff Profile</span>
                     </Link>
                   ),
                 },
                 {
                   key: "3",
                   label: (
-                    <button className="w-full text-left">
-                      Assign course to staff(1class, 2courses in class)
-                    </button>
+                    <Link
+                      className="w-full text-left"
+                      to={`/staff/${record.id}/assign-course`}
+                    >
+                      Assign Courses
+                    </Link>
                   ),
                 },
               ]}

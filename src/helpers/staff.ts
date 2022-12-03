@@ -77,3 +77,28 @@ export const getAllStaff = ({
   const res: any = axios.get(url, config);
   return res;
 };
+
+interface IGetSingleStaffProps extends IStaffAuthProps {
+  staffId: string;
+  sessionId?: string;
+}
+export const getSingleStaff = ({
+  token,
+  schoolId,
+  staffId,
+  sessionId,
+}: IGetSingleStaffProps) => {
+  const url = `${
+    process.env.REACT_APP_APP_URL
+  }/api/schools/${schoolId}/staff/${staffId}?sessionId=${sessionId ?? ""}`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const res: any = axios.get(url, config);
+  return res;
+};
