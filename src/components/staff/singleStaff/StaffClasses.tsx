@@ -1,4 +1,4 @@
-import { Button, Dropdown, Menu, Space, Table } from "antd";
+import { Button, Dropdown, List, Menu, Space, Table, Typography } from "antd";
 
 import React from "react";
 import {
@@ -7,38 +7,124 @@ import {
   EllipsisOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { useAuthUser } from "react-auth-kit";
+import { useQuery } from "react-query";
+import { IAuthDets } from "../../../appTypes/auth";
+import { openNotification } from "../../../helpers/notifications";
+import { getStaffSessionLevelsAndCourses } from "../../../helpers/staff";
+import { IStaffEntry } from "../StaffTable";
+import { ColumnsType, TablePaginationConfig, TableProps } from "antd/lib/table";
 
-const StaffClasses = () => {
-  const data = [
-    {
-      id: "erere",
-      name: "JSS 3A",
-      courseCount: 23,
-      classTeacher: true,
+interface IProps {
+  staffId: string;
+}
+interface IReturnProps {
+  coursesGroupedByLevel: ICGByLevels[];
+  classesGroupedBySession: ICGBySess[];
+}
+
+interface ICGByLevels {
+  levelId: number;
+  levelName: string;
+  levelCoursesTeaching: {
+    id: number;
+    name: string;
+    canRecordAssessment: boolean;
+  }[];
+  levelCoursesTeachingCount: number;
+}
+
+interface ICGBySess {
+  id: number;
+  name: string;
+  canCompileAssessment: boolean;
+}
+
+const StaffClasses = ({ staffId }: IProps) => {
+  const auth = useAuthUser();
+
+  const authDetails = auth() as unknown as IAuthDets;
+
+  const user = authDetails.user;
+  const token = authDetails.userToken;
+  const schoolId = authDetails.choosenSchoolId;
+  const { data: levelsAndCourses, isFetching } = useQuery(
+    ["getStaffSessionLevelsAndCourses", staffId],
+    () => {
+      return getStaffSessionLevelsAndCourses({
+        token,
+        schoolId: schoolId as string,
+        staffId,
+        levelId: 2,
+        sessionId: 1,
+      });
     },
-  ];
-  const columns = [
+    {
+      onError: (err: any) => {
+        openNotification({
+          state: "error",
+          title: "Error occures",
+          description: `Oops, an err occured: ${err?.message}`,
+        });
+      },
+      onSuccess: (res: any) => {
+        // const result = res.data.data;
+
+        console.log("staff concern", res);
+      },
+      select: (res: any) => {
+        const result = res.data.data;
+
+        const coursesGroupedByLevel: ICGByLevels[] =
+          result.coursesGroupedByLevel.map(
+            (courses: any): ICGByLevels => ({
+              levelId: courses[0]?.level?.id,
+              levelName: courses[0]?.level?.name,
+              levelCoursesTeaching: courses?.map((item: any) => ({
+                id: item?.course?.id,
+                name: item?.course?.name,
+                canRecordAssessment: item?.can_record === 1 ? true : false,
+              })),
+              levelCoursesTeachingCount: courses?.length ?? 0,
+            })
+          );
+
+        const classesGroupedBySession: ICGBySess[] =
+          result.classesGroupedBySession.map(
+            (item: any): ICGBySess => ({
+              id: item?.level?.id,
+              name: item?.level?.name,
+              canCompileAssessment:
+                item?.can_compile_assessment === 1 ? true : false,
+            })
+          );
+
+        const ans: IReturnProps = {
+          coursesGroupedByLevel,
+          classesGroupedBySession,
+        };
+        return ans;
+      },
+    }
+  );
+
+  const columns: ColumnsType<ICGByLevels> = [
     {
       title: "Name",
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "levelName",
+      key: "levelName",
       render: (_: string, record: any) => (
-        <Link to={`/classes/${record.id}`}>{record.name}</Link>
+        <Link to={`/classes/${record.levelId}/staff/${staffId}`}>
+          {record.levelName}
+        </Link>
       ),
     },
     {
       title: "Courses teaching",
-      dataIndex: "courseCount",
-      key: "courseCount",
+      dataIndex: "levelCoursesTeachingCount",
+      key: "levelCoursesTeachingCount",
     },
-    {
-      title: "Class Teacher",
-      dataIndex: "classTeacher",
-      key: "classTeacher",
-      render: (_: string, record: any) => (
-        <span>{record.classTeacher ? "Yes" : "No"}</span>
-      ),
-    },
+
     {
       title: "Action",
       dataIndex: "action",
@@ -78,8 +164,30 @@ const StaffClasses = () => {
     },
   ];
   return (
-    <div className="mt-4">
-      <Table columns={columns} size="small" dataSource={data} />
+    <div className="mt-4 flex flex-col gap-4">
+      <div className="flex flex-col gap-4">
+        <Typography.Title level={5}>Classes I'm Teaching</Typography.Title>
+
+        <Table
+          columns={columns}
+          loading={isFetching}
+          size="small"
+          dataSource={levelsAndCourses?.coursesGroupedByLevel}
+        />
+      </div>
+      <div>
+        <List
+          size="small"
+          split
+          header={
+            <Typography.Title level={5}>Classes I'm Managing</Typography.Title>
+          }
+          loading={isFetching}
+          bordered
+          dataSource={levelsAndCourses?.classesGroupedBySession}
+          renderItem={(item) => <List.Item>{item.name}</List.Item>}
+        />
+      </div>
     </div>
   );
 };

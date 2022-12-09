@@ -7,7 +7,9 @@ import {
   Menu,
   Popconfirm,
   Space,
+  Spin,
   Table,
+  TablePaginationConfig,
   Typography,
 } from "antd";
 import React, { useState } from "react";
@@ -15,9 +17,13 @@ import { EllipsisOutlined, EditOutlined } from "@ant-design/icons";
 import { getCRTemplate } from "../../helpers/schoolCRecordTemplates";
 
 import { openNotification } from "../../helpers/notifications";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";
+import {
+  getSessionCourseParticipants,
+  saveCourseParticipantAssessment,
+} from "../../helpers/courses";
 
 const backUpDropdown = () => (
   <Dropdown
@@ -118,6 +124,8 @@ const EditableCell: React.FC<EditableCellProps> = ({
 };
 
 const CourseParticipantTable = () => {
+  const queryClient = useQueryClient();
+
   const [form] = Form.useForm();
   const auth = useAuthUser();
 
@@ -126,6 +134,12 @@ const CourseParticipantTable = () => {
   const user = authDetails.user;
   const token = authDetails.userToken;
   const schoolId = authDetails.choosenSchoolId;
+  const [pagination, setPagination] = useState<TablePaginationConfig>({
+    current: 1,
+    pageSize: 4,
+    showSizeChanger: false,
+  });
+  const [searchTerm, setSearchTerm] = useState("");
 
   const [breakDownKeys, setbreakDownKeys] = useState<string[]>([]);
 
@@ -139,13 +153,55 @@ const CourseParticipantTable = () => {
     form.setFieldsValue({ ...record });
     setEditingKey(record.key);
   };
+
   const handleSave = async (key: React.Key) => {
     try {
       const row = (await form.validateFields()) as IParticipantEntry;
+      console.log(row, "..............");
+      openNotification({
+        state: "info",
+        title: "Wait a minute",
+        description: <Spin />,
+      });
+      const participant = participants.find(
+        (item: any) => item.id === editingKey
+      );
+
+      if (schoolId) {
+        saveCourseParticipantAssessment({
+          participantId: participant.id,
+          breakDown: row,
+          total: participant.total,
+          grade: participant.grade,
+          schoolId: schoolId,
+          token,
+        })
+          .then((res: any) => {
+            const result = res.data;
+            console.log(result, "res");
+
+            openNotification({
+              state: "success",
+              title: "Success",
+              description: `Record saved!`,
+            });
+            queryClient.invalidateQueries({
+              queryKey: ["course-participants"],
+            });
+          })
+          .catch((err: any) => {
+            console.log(err);
+            openNotification({
+              state: "error",
+              title: "Error occures",
+              description: `Error occured!`,
+            });
+          });
+      }
 
       // upadate backend b4 you can do anything here
 
-      const newData = [...data];
+      const newData = [...participants];
       const index = newData.findIndex((item) => key === item.key);
       if (index > -1) {
         console.log("Tab is here");
@@ -221,13 +277,10 @@ const CourseParticipantTable = () => {
       },
     },
   ];
-
   const {
-    data: mergedColumns,
-    isLoading,
+    data: templateData,
+
     isSuccess,
-    error,
-    refetch,
   } = useQuery<any, any, any, any>(
     ["course-record-templates", 2],
     () => {
@@ -257,6 +310,7 @@ const CourseParticipantTable = () => {
 
         console.log("CRT", JSON.parse(result.break_down));
         const columns = JSON.parse(result.break_down);
+        const templateColumns = columns;
 
         const fcolumns = columns
           .map((item: any) => ({
@@ -305,7 +359,60 @@ const CourseParticipantTable = () => {
         ];
         console.log("ANSWERS +>", mergedColumns);
 
-        return mergedColumns;
+        return { mergedColumns, templateColumns };
+      },
+    }
+  );
+
+  const {
+    data: participants,
+    isFetching: isPLoading,
+    isSuccess: isPSuccess,
+  } = useQuery<any, any, any, any>(
+    ["course-participants", pagination.current],
+    () => {
+      return getSessionCourseParticipants({
+        token,
+        schoolId: schoolId as string,
+        page: pagination.current,
+        limit: pagination.pageSize,
+        courseId: 1,
+        levelId: 1,
+        sessionId: 1,
+
+        searchTerm,
+      });
+    },
+    {
+      // cacheTime: 5000, // def->5min && isIndicated by isFetching , its how long data will be in cache if im not on the page
+      //   staleTime: 30000, //def -> 0s && is the amount of time before your data is considered stale
+      // refetchOnMount: false, def->true
+      // refetchOnWindowFocus: true, def->true
+      // Polling : fetching data at reqular intervals
+      // refetchInterval: 2000, // def -> false
+      // refetchIntervalInBackground: true, //wll still refetfch data if window loses focus
+      // enabled:false && refetch  --> to allow fetching data based on events such as onClick
+      onError: (err) => {
+        openNotification({
+          state: "error",
+          title: "Error occures",
+          description: `Oops, an err occured: ${err?.message}`,
+        });
+      },
+      select: (res: any) => {
+        const result = res.data.data;
+
+        const ans = result.map((item: any) => ({
+          key: item.data.id,
+          id: item.data.id,
+          studentName: item.user.name,
+          ...JSON.parse(item.data.break_down),
+
+          grade: item.data.grade,
+          total: item.data.total,
+        }));
+
+        return ans;
       },
     }
   );
@@ -320,7 +427,7 @@ const CourseParticipantTable = () => {
         Or the primary teacher can allow for a course teacher to be able to edit
         (although copies cant be case in case)
       </p> */}
-      {isSuccess && (
+      {isSuccess && isPSuccess && (
         <Form form={form} component={false}>
           <Table
             components={{
@@ -329,12 +436,12 @@ const CourseParticipantTable = () => {
               },
             }}
             bordered
-            columns={mergedColumns}
+            columns={templateData.mergedColumns}
             pagination={{
               onChange: handleCancel,
             }}
-            loading={isLoading}
-            dataSource={data}
+            loading={isPLoading}
+            dataSource={participants}
             scroll={{ x: "max-content" }}
             size="small"
           />

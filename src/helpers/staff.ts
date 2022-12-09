@@ -53,7 +53,30 @@ interface IGetMultipleStaffProps extends IStaffAuthProps {
   page?: number;
   limit?: number;
 }
+interface IGGSSLC extends IStaffAuthProps {
+  sessionId: number;
+  staffId: string;
+  levelId: number;
+}
+export const getStaffSessionLevelsAndCourses = ({
+  token,
+  schoolId,
+  sessionId,
+  staffId,
+  levelId,
+}: IGGSSLC) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/staff/${staffId}/staffSessionLevelsAndCourses?sessionId=${sessionId}&levelId=${levelId}`;
 
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const res: any = axios.get(url, config);
+  return res;
+};
 export const getAllStaff = ({
   token,
   schoolId,

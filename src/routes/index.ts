@@ -13,6 +13,7 @@ export const routes = {
   students: "/students/",
   singleClassCourse: `/classes/:classId/courses/:courseId`,
   singleClass: `/classes/:classId`,
+  singleStaffClass: `/classes/:classId/staff/:staffId`,
   policies: `/policies`,
   payments: `/payments`,
   assignSessionCoursesToStudent: `/students/:studentId/assign-course`,

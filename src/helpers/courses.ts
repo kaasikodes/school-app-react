@@ -12,6 +12,39 @@ interface ISaveCourseProps extends ICourseAuthProps {
   isActive?: boolean;
   description?: boolean;
 }
+interface ISaveCoursePartAssProps extends ICourseAuthProps {
+  participantId: string;
+  total: number;
+  grade: string;
+  breakDown: any;
+}
+export const saveCourseParticipantAssessment = ({
+  token,
+  schoolId,
+  participantId,
+  grade,
+  breakDown,
+  total,
+}: ISaveCoursePartAssProps) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/save-participant-record`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  let data: any = {
+    schoolId,
+    participantId,
+    grade,
+    breakDown,
+    total,
+  };
+
+  const res: any = axios.post(url, data, config);
+  return res;
+};
 export interface IASCParticipant extends ICourseAuthProps {
   courses: { courseId: string; levelId: string }[];
   sessionId: string;
@@ -138,6 +171,44 @@ export const getCourses = ({
   const res: any = axios.get(url, config);
   return res;
 };
+interface IGetCoursePsProps extends ICourseAuthProps {
+  searchTerm?: string;
+  page?: number;
+  limit?: number;
+  sessionId: number;
+  levelId: number;
+  courseId: number;
+}
+
+export const getSessionCourseParticipants = ({
+  token,
+  schoolId,
+  searchTerm,
+  limit,
+  page,
+  sessionId,
+  courseId,
+  levelId,
+}: IGetCoursePsProps) => {
+  const url = `${
+    process.env.REACT_APP_APP_URL
+  }/api/courses/sessionCourseParticipants?sessionId=${sessionId}&courseId=${courseId}&levelId=${levelId}${
+    searchTerm ? "searchTerm=" + searchTerm : ""
+  }&limit=${(limit as number) > 0 ? limit : ""}&page=${
+    (page as number) > 0 ? page : ""
+  }`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const res: any = axios.get(url, config);
+  return res;
+};
+
 export const getCoursesGroupedByLevel = ({
   token,
   schoolId,

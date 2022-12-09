@@ -23,6 +23,7 @@ import Policies from "./pages/policies/Policies";
 import Payments from "./pages/Payments";
 import AssignSessionCoursesToStudent from "./pages/Students/AssignSessionCoursesToStudent";
 import AssignSessionCoursesToStaff from "./pages/staff/AssignSessionCoursesToStaff";
+import StaffClassCourses from "./pages/classes/singleClass/courses/StaffClassCourses";
 
 const queryClient = new QueryClient();
 
@@ -74,6 +75,10 @@ function App() {
 
               {/* classes */}
               <Route path={routes.singleClass} element={<ClassCourses />} />
+              <Route
+                path={routes.singleStaffClass}
+                element={<StaffClassCourses />}
+              />
               <Route
                 path={routes.singleClassCourse}
                 element={<SingleClassCourse />}

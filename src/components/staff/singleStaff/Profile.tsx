@@ -1,7 +1,11 @@
 import { Avatar, Divider, Rate, Space, Table, Tag, Typography } from "antd";
 import React from "react";
 
-const Profile = () => {
+interface IProps {
+  staffId: string;
+}
+
+const Profile = ({ staffId }: IProps) => {
   const columns = [
     {
       title: "Name",

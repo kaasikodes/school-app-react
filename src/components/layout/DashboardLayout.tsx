@@ -345,7 +345,7 @@ const DashboardLayout: React.FC<Props> = ({ children }) => {
           </div>
 
           <Layout
-            className={`site-layout      ${
+            className={`site-layout   bg-stone-50   ${
               (!!localStorage.getItem("isMenuCollapsed") &&
                 JSON.parse(
                   localStorage.getItem("isMenuCollapsed") as string

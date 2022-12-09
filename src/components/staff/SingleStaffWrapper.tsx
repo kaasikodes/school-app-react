@@ -11,19 +11,31 @@ import StaffClasses from "./singleStaff/StaffClasses";
 // skills & Proficiencies(that is courses capable of teaching)
 // Rating of teacher in each course
 // groups part of
-
-const SingleStaffWrapper = () => {
+interface IProps {
+  staffId?: string;
+}
+const SingleStaffWrapper = ({ staffId }: IProps) => {
   return (
     <div>
       {/* header */}
-      <Tabs>
-        <Tabs.TabPane tab="Profile" key="item-1">
-          <Profile />
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="Classes" key="item-2">
-          <StaffClasses />
-        </Tabs.TabPane>
-      </Tabs>
+      Back & Breadcrumbs for admin
+      {staffId ? (
+        <Tabs>
+          <Tabs.TabPane tab="Profile" key="item-1">
+            <Profile staffId={staffId} />
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="Classes" key="item-2">
+            <StaffClasses staffId={staffId} />
+          </Tabs.TabPane>
+
+          {/* for admin */}
+          <Tabs.TabPane tab="Activities" key="item-3">
+            Staff recorded scores of student in SS3A Physics
+          </Tabs.TabPane>
+        </Tabs>
+      ) : (
+        "not found"
+      )}
     </div>
   );
 };
