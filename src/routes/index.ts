@@ -7,6 +7,7 @@ export const routes = {
   classes: "/classes/",
   staff: "/staff/",
   singleStaff: "/staff/:staffId",
+  singleStudent: "/students/:studentId",
   sessions: "/sessions/",
   assessments: "/assessments/",
   custodians: "/custodians/",

@@ -136,7 +136,7 @@ const StudentsTable = () => {
       dataIndex: "name",
       key: "name",
       render: (_: string, record: IStudentEntry) => (
-        <Link to={`students/${record.id}`}>{record.name}</Link>
+        <Link to={`/students/${record.id}`}>{record.name}</Link>
       ),
     },
     {

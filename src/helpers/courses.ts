@@ -15,14 +15,14 @@ interface ISaveCourseProps extends ICourseAuthProps {
 interface ISaveCoursePartAssProps extends ICourseAuthProps {
   participantId: string;
   total: number;
-  grade: string;
+
   breakDown: any;
 }
 export const saveCourseParticipantAssessment = ({
   token,
   schoolId,
   participantId,
-  grade,
+
   breakDown,
   total,
 }: ISaveCoursePartAssProps) => {
@@ -37,7 +37,7 @@ export const saveCourseParticipantAssessment = ({
   let data: any = {
     schoolId,
     participantId,
-    grade,
+
     breakDown,
     total,
   };

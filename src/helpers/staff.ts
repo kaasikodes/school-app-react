@@ -111,9 +111,7 @@ export const getSingleStaff = ({
   staffId,
   sessionId,
 }: IGetSingleStaffProps) => {
-  const url = `${
-    process.env.REACT_APP_APP_URL
-  }/api/schools/${schoolId}/staff/${staffId}?sessionId=${sessionId ?? ""}`;
+  const url = `${process.env.REACT_APP_APP_URL}/api/schools/${schoolId}/staff/${staffId}`;
 
   const config = {
     headers: {

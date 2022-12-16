@@ -17,12 +17,13 @@ import {
   getSingleStaff,
   getStaffSessionLevelsAndCourses,
 } from "../../../helpers/staff";
+import { getStudent } from "../../../helpers/students";
 
 interface IProps {
-  staffId: string;
+  studentId: string;
 }
 
-const Profile = ({ staffId }: IProps) => {
+const Profile = ({ studentId }: IProps) => {
   const columns = [
     {
       title: "Name",
@@ -59,13 +60,13 @@ const Profile = ({ staffId }: IProps) => {
   const user = authDetails.user;
   const token = authDetails.userToken;
   const schoolId = authDetails.choosenSchoolId;
-  const { data: staff, isFetching } = useQuery(
-    ["single-staff", staffId],
+  const { data: student, isFetching } = useQuery(
+    ["single-student", studentId],
     () => {
-      return getSingleStaff({
+      return getStudent({
         token,
         schoolId: schoolId as string,
-        staffId,
+        studentId,
       });
     },
     {
@@ -90,7 +91,7 @@ const Profile = ({ staffId }: IProps) => {
           name: string;
           photo?: string;
           email: string;
-          staffNo: string;
+          studentNo: string;
           isActive: boolean;
         }
 
@@ -99,7 +100,7 @@ const Profile = ({ staffId }: IProps) => {
           name: result.user.name,
           photo: result.user.profile_photo_url,
           email: result.user.email,
-          staffNo: result.data.staff_no,
+          studentNo: result.data.id_number,
           isActive: result.data.isActive,
         };
         return ans;
@@ -117,7 +118,7 @@ const Profile = ({ staffId }: IProps) => {
           {/* info */}
           <div className="flex flex-col gap-6 col-span-4">
             <div>
-              <h4 className="text-4xl text-sky-800 mb-0">{staff?.name}</h4>
+              <h4 className="text-4xl text-sky-800 mb-0">{student?.name}</h4>
             </div>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -146,20 +147,12 @@ const Profile = ({ staffId }: IProps) => {
           </div>
           {/* avatar */}
           <div className="md:col-start-5 col-span-2 md:pl-14 flex flex-col gap-4 border-l-2">
-            <Avatar shape="square" size={200} src={staff?.photo} />
+            <Avatar shape="square" size={200} src={student?.photo} />
             <div className="bg-slate-800 rounded-md px-2 pt-3 w-max">
-              <span className="text-xs text-white">Staff Number</span>
+              <span className="text-xs text-white">ID Number</span>
               <p className="text-2xl font-bold text-slate-400">
-                {staff?.staffNo}
+                {student?.studentNo}
               </p>
-            </div>
-            <div>
-              {/* <h5 className="text-lg">Resume</h5> */}
-              <Space>
-                <Tag color="#104a8e" className="cursor-pointer">
-                  {"Download Resume"}
-                </Tag>
-              </Space>
             </div>
           </div>
         </div>

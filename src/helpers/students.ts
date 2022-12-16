@@ -96,3 +96,28 @@ export const getStudent = ({
   const res: any = axios.get(url, config);
   return res;
 };
+
+interface IGGSSLC extends IStudentAuthProps {
+  sessionId: number;
+  studentId: string;
+  levelId: number;
+}
+export const getStudentCoursesGroupedByLevel = ({
+  token,
+  schoolId,
+  sessionId,
+  studentId,
+  levelId,
+}: IGGSSLC) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/student/${studentId}/studentSessionCoursesGroupedByLevel?sessionId=${sessionId}&levelId=${levelId}`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const res: any = axios.get(url, config);
+  return res;
+};

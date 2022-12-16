@@ -166,13 +166,17 @@ const CourseParticipantTable = () => {
       const participant = participants.find(
         (item: any) => item.id === editingKey
       );
+      let total = 0;
+      Object.entries(row).forEach((item) => (total += item[1]));
+      console.log("all rows", row, total);
+      // check policy and identify the grade  here no do that backend and return
 
       if (schoolId) {
         saveCourseParticipantAssessment({
           participantId: participant.id,
           breakDown: row,
-          total: participant.total,
-          grade: participant.grade,
+          total,
+
           schoolId: schoolId,
           token,
         })
@@ -376,8 +380,8 @@ const CourseParticipantTable = () => {
         schoolId: schoolId as string,
         page: pagination.current,
         limit: pagination.pageSize,
-        courseId: 1,
-        levelId: 1,
+        courseId: 12,
+        levelId: 2,
         sessionId: 1,
 
         searchTerm,

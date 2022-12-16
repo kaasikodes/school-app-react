@@ -24,6 +24,7 @@ import Payments from "./pages/Payments";
 import AssignSessionCoursesToStudent from "./pages/Students/AssignSessionCoursesToStudent";
 import AssignSessionCoursesToStaff from "./pages/staff/AssignSessionCoursesToStaff";
 import StaffClassCourses from "./pages/classes/singleClass/courses/StaffClassCourses";
+import SingleStudent from "./pages/Students/SingleStudent";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +55,7 @@ function App() {
               <Route path={routes.classes} element={<Classes />} />
               <Route path={routes.staff} element={<Staff />} />
               <Route path={routes.singleStaff} element={<SingleStaff />} />
+              <Route path={routes.singleStudent} element={<SingleStudent />} />
               <Route path={routes.sessions} element={<Sessions />} />
               <Route path={routes.assessments} element={<Assessments />} />
               <Route path={routes.custodians} element={<Custodians />} />
