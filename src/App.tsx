@@ -25,6 +25,7 @@ import AssignSessionCoursesToStudent from "./pages/Students/AssignSessionCourses
 import AssignSessionCoursesToStaff from "./pages/staff/AssignSessionCoursesToStaff";
 import StaffClassCourses from "./pages/classes/singleClass/courses/StaffClassCourses";
 import SingleStudent from "./pages/Students/SingleStudent";
+import RegisterSchool from "./pages/RegisterSchool";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,7 @@ function App() {
         <Router>
           <Routes>
             <Route path={routes.login} element={<Login />} />
+            <Route path={routes.registerSchool} element={<RegisterSchool />} />
             <Route
               path="/"
               element={

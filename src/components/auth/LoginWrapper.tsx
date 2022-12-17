@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IAuthDets } from "../../appTypes/auth";
 import LoginForm from "./LoginForm";
-import RegisterSchoolForm from "./RegisterSchoolForm";
+import RegisterSchoolForm from "./ORegisterSchoolForm";
 import SelectSchoolOnLogin from "./SelectSchoolOnLogin";
 
 export enum ELoginStep {
