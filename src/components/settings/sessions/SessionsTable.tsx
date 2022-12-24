@@ -20,6 +20,7 @@ import { ExclamationCircleOutlined, LoadingOutlined } from "@ant-design/icons";
 import OfflineComponent from "../../errors/OfflineComponent";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../../appTypes/auth";
+import { useFetchSessions } from "../../../helpersAPIHooks/sessions";
 
 export interface ISessionEntry {
   id: number;
@@ -47,8 +48,6 @@ interface IProps {
 }
 
 const SessionsTable = ({ refresh, setRefresh, searchTerm }: IProps) => {
-  const [sessions, setSessions] = useState<ISessionEntry[]>([]);
-  const [fetching, setFetching] = useState(false);
   const [error, setError] = useState(false);
   const auth = useAuthUser();
 
@@ -210,67 +209,24 @@ const SessionsTable = ({ refresh, setRefresh, searchTerm }: IProps) => {
     showSizeChanger: false,
   });
 
-  const loadSessions = async (
-    newPagination: TablePaginationConfig,
-    searchTerm?: string
-  ) => {
-    if (token) {
-      try {
-        setFetching(true);
-        if (schoolId) {
-          const res = await getSessions({
-            token,
-            schoolId: schoolId,
-            page: newPagination.current,
-            limit: newPagination.pageSize,
-            searchTerm,
-          });
-          const result = res.data.data;
-          setPagination((pagination) => ({
-            ...pagination,
-            total: res.data.total,
-          }));
+  const { data: sessions, isFetching } = useFetchSessions({
+    token,
+    schoolId: schoolId as string,
+    pagination: {
+      page: pagination.current,
+      limit: pagination.pageSize,
+    },
+    searchParams: {
+      name: searchTerm,
+    },
+  });
 
-          const fSessions: ISessionEntry[] = result.map((item: any) => {
-            return {
-              id: item.id,
-              name: item.name,
-              duration: `${item.starts} - ${item.ends ? item.ends : ""}`,
-              levelCount: 0,
-              courseCount: 0,
-              parentCount: 0,
-              studentCount: 0,
-              staffCount: 0,
-              ends: item.ends,
-            };
-          });
-          setSessions(fSessions);
-          setFetching(false);
-        }
-      } catch (err: any) {
-        console.log(err);
-        setFetching(false);
-        setError(true);
-      }
-    }
-  };
   const onChange = (newPagination: TablePaginationConfig) => {
-    setPagination((pagination) => ({
+    setPagination(() => ({
       ...newPagination,
     }));
-    loadSessions(newPagination);
   };
-  // pheripherals
-  useEffect(() => {
-    // const token = localStorage.getItem(LOCAL_USER_TOKEN_KEY);
-    loadSessions(
-      {
-        current: pagination.current,
-        pageSize: pagination.pageSize,
-      },
-      searchTerm
-    );
-  }, [token, refresh, searchTerm]);
+
   return (
     <div>
       {error ? (
@@ -279,15 +235,15 @@ const SessionsTable = ({ refresh, setRefresh, searchTerm }: IProps) => {
         <div>
           <Table
             rowKey={(record) => record.id}
-            dataSource={sessions}
+            dataSource={sessions?.data ?? []}
             columns={columns}
             onChange={onChange}
             pagination={pagination}
-            loading={fetching}
+            loading={isFetching}
             size="small"
           />
           <Drawer
-            visible={showDrawer}
+            open={showDrawer}
             onClose={() => setShowDrawer(false)}
             title={action}
           >

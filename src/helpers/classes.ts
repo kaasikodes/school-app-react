@@ -1,5 +1,5 @@
 import axios from "axios";
-import moment from "moment";
+import { IPaginationProps, ISearchParams } from "../appTypes/requestParams";
 import { IAuthProps } from "./auth";
 
 export interface IClassAuthProps extends IAuthProps {
@@ -23,25 +23,31 @@ export const getClass = ({ token, classId }: IGetCLassProps) => {
   return res;
 };
 interface IGetMultipleCLassProps extends IClassAuthProps {
-  searchTerm?: string;
-  page?: number;
-  limit?: number;
+  pagination?: IPaginationProps;
+  searchParams?: ISearchParams;
 }
 
 export const getClasses = ({
   token,
   schoolId,
-  searchTerm,
-  limit,
-  page,
+  pagination,
+  searchParams,
 }: IGetMultipleCLassProps) => {
-  const url = `${
-    process.env.REACT_APP_APP_URL
-  }/api/schools/${schoolId}/levels?${
-    searchTerm ? "searchTerm=" + searchTerm : ""
-  }&limit=${(limit as number) > 0 ? limit : ""}&page=${
-    (page as number) > 0 ? page : ""
-  }`;
+  const limit = pagination?.limit ?? 10;
+  const page = pagination?.page ?? 0;
+  const name = searchParams?.name ?? "";
+
+  let url = `${process.env.REACT_APP_APP_URL}/api/schools/${schoolId}/levels`;
+
+  if (pagination || searchParams) {
+    url += "?";
+  }
+  if (pagination) {
+    url += `limit=${limit}&page=${page}&`;
+  }
+  if (searchParams) {
+    url += `searchTerm=${name}&`;
+  }
 
   const config = {
     headers: {
@@ -54,7 +60,7 @@ export const getClasses = ({
   return res;
 };
 
-interface ISaveClassProps extends IClassAuthProps {
+export interface ISaveClassProps extends IClassAuthProps {
   description?: string;
   name: string;
   id?: string;
@@ -85,4 +91,78 @@ export const saveSchoolClass = ({
 
   const res: any = axios.post(url, data, config);
   return res;
+};
+export interface IUpdateClassProps extends ISaveClassProps {
+  classId: string;
+}
+export const updateSchoolClass = ({
+  token,
+  schoolId,
+  name,
+  description,
+
+  // adminId,
+  classId,
+}: IUpdateClassProps) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/levels/${classId}/update`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  let data: any = {
+    name,
+    description,
+    schoolId,
+    // adminId,
+    classId,
+  };
+
+  const res: any = axios.patch(url, data, config);
+  return res;
+};
+export interface ISaveClassInBulkProps extends IClassAuthProps {
+  jsonData: string;
+  adminId: string;
+}
+export const saveSchoolClassesInBulk = ({
+  token,
+  schoolId,
+  jsonData,
+  adminId,
+}: ISaveClassInBulkProps) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/levels/add-bulk?schoolId=${schoolId}`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  let data = {
+    jsonData: JSON.parse(jsonData),
+    adminId,
+  };
+
+  const res: any = axios.post(url, data, config);
+  return res;
+};
+
+interface IDownloadBulkUploadProps {
+  author?: string;
+}
+
+export const downloadBulkClassesUploadTemplate = (
+  props?: IDownloadBulkUploadProps
+): string => {
+  let url = `${process.env.REACT_APP_APP_URL}/api/levels/export/bulk-template`;
+  if (props) {
+    url += "?";
+  }
+  if (props?.author) {
+    url += `${props.author}`;
+  }
+  return url;
 };

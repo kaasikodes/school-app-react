@@ -58,8 +58,6 @@ const AssignCourseTeacher = () => {
       getClasses({
         token,
         schoolId: schoolId as string,
-        page: 1,
-        limit: 1000,
       }),
 
     {

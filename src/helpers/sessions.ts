@@ -1,5 +1,6 @@
 import axios from "axios";
 import moment from "moment";
+import { IPaginationProps, ISearchParams } from "../appTypes/requestParams";
 import { IAuthProps } from "./auth";
 
 export interface ISchoolAuthProps extends IAuthProps {
@@ -9,9 +10,8 @@ interface IGetSessProps extends IAuthProps {
   sessionId: string;
 }
 interface IGetMultipleSessProps extends ISchoolAuthProps {
-  searchTerm?: string;
-  page?: number;
-  limit?: number;
+  pagination?: IPaginationProps;
+  searchParams?: ISearchParams;
 }
 
 export const getSession = ({ token, sessionId }: IGetSessProps) => {
@@ -30,18 +30,22 @@ export const getSession = ({ token, sessionId }: IGetSessProps) => {
 export const getSessions = ({
   token,
   schoolId,
-  searchTerm,
-  limit,
-  page,
+  pagination,
+  searchParams,
 }: IGetMultipleSessProps) => {
-  const url = `${
-    process.env.REACT_APP_APP_URL
-  }/api/schools/${schoolId}/sessions?${
-    searchTerm ? "searchTerm=" + searchTerm : ""
-  }&limit=${(limit as number) > 0 ? limit : ""}&page=${
-    (page as number) > 0 ? page : ""
-  }`;
-
+  const limit = pagination?.limit ?? 10;
+  const page = pagination?.page ?? 0;
+  const name = searchParams?.name ?? "";
+  let url = `${process.env.REACT_APP_APP_URL}/api/schools/${schoolId}/sessions`;
+  if (pagination || searchParams) {
+    url += "?";
+  }
+  if (pagination) {
+    url += `limit=${limit}&page=${page}&`;
+  }
+  if (searchParams) {
+    url += `searchTerm=${name}&`;
+  }
   const config = {
     headers: {
       Accept: "application/json",

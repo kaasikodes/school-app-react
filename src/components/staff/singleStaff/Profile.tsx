@@ -117,7 +117,9 @@ const Profile = ({ staffId }: IProps) => {
           {/* info */}
           <div className="flex flex-col gap-6 col-span-4">
             <div>
-              <h4 className="text-4xl text-sky-800 mb-0">{staff?.name}</h4>
+              <h4 className="text-4xl text-sky-800 mb-0 capitalize">
+                {staff?.name}
+              </h4>
             </div>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

@@ -28,7 +28,6 @@ const AssCourseToSessWrapper = () => {
       getCourses({
         token,
         schoolId: schoolId as string,
-        limit: 1000,
       }),
 
     {

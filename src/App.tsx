@@ -26,6 +26,9 @@ import AssignSessionCoursesToStaff from "./pages/staff/AssignSessionCoursesToSta
 import StaffClassCourses from "./pages/classes/singleClass/courses/StaffClassCourses";
 import SingleStudent from "./pages/Students/SingleStudent";
 import RegisterSchool from "./pages/RegisterSchool";
+import UserProfile from "./pages/UserProfile";
+import GlobalContextProvider from "./contexts/GlobalContextProvider";
+import Settings from "./pages/Settings";
 
 const queryClient = new QueryClient();
 
@@ -38,58 +41,70 @@ function App() {
       cookieSecure={window.location.protocol === "https:"}
     >
       <QueryClientProvider client={queryClient}>
-        <Router>
-          <Routes>
-            <Route path={routes.login} element={<Login />} />
-            <Route path={routes.registerSchool} element={<RegisterSchool />} />
-            <Route
-              path="/"
-              element={
-                <RequireAuth loginPath={routes.login}>
-                  <Root />
-                </RequireAuth>
-              }
-            >
-              <Route index element={<div>ok</div>} />
-              {/* <Route path={routes.schools} element={<Schools />} /> */}
-              <Route path={routes.departments} element={<Departments />} />
-              <Route path={routes.courses} element={<Courses />} />
-              <Route path={routes.classes} element={<Classes />} />
-              <Route path={routes.staff} element={<Staff />} />
-              <Route path={routes.singleStaff} element={<SingleStaff />} />
-              <Route path={routes.singleStudent} element={<SingleStudent />} />
-              <Route path={routes.sessions} element={<Sessions />} />
-              <Route path={routes.assessments} element={<Assessments />} />
-              <Route path={routes.custodians} element={<Custodians />} />
-              <Route path={routes.policies} element={<Policies />} />
-              <Route path={routes.payments} element={<Payments />} />
+        <GlobalContextProvider>
+          <Router>
+            <Routes>
+              <Route path={routes.login} element={<Login />} />
+              <Route
+                path={routes.registerSchool}
+                element={<RegisterSchool />}
+              />
+              <Route
+                path="/"
+                element={
+                  <RequireAuth loginPath={routes.login}>
+                    <Root />
+                  </RequireAuth>
+                }
+              >
+                <Route index element={<UserProfile />} />
+                {/* <Route path={routes.schools} element={<Schools />} /> */}
+                <Route path={routes.departments} element={<Departments />} />
+                <Route path={routes.courses} element={<Courses />} />
+                <Route path={routes.classes} element={<Classes />} />
+                <Route path={routes.staff} element={<Staff />} />
+                <Route path={routes.singleStaff} element={<SingleStaff />} />
+                <Route
+                  path={routes.singleStudent}
+                  element={<SingleStudent />}
+                />
+                <Route path={routes.sessions} element={<Sessions />} />
+                <Route path={routes.assessments} element={<Assessments />} />
+                <Route path={routes.custodians} element={<Custodians />} />
+                <Route path={routes.policies} element={<Policies />} />
+                <Route path={routes.payments} element={<Payments />} />
 
-              {/* /students/${record.id}/assign-course */}
-              <Route path={routes.students} element={<Students />} />
-              <Route
-                path={routes.assignSessionCoursesToStudent}
-                element={<AssignSessionCoursesToStudent />}
-              />
+                {/* /students/${record.id}/assign-course */}
+                <Route path={routes.students} element={<Students />} />
+                <Route
+                  path={routes.assignSessionCoursesToStudent}
+                  element={<AssignSessionCoursesToStudent />}
+                />
 
-              {/* staff */}
-              <Route
-                path={routes.assignSessionCoursesToStaff}
-                element={<AssignSessionCoursesToStaff />}
-              />
+                {/* staff */}
+                <Route
+                  path={routes.assignSessionCoursesToStaff}
+                  element={<AssignSessionCoursesToStaff />}
+                />
 
-              {/* classes */}
-              <Route path={routes.singleClass} element={<ClassCourses />} />
-              <Route
-                path={routes.singleStaffClass}
-                element={<StaffClassCourses />}
-              />
-              <Route
-                path={routes.singleClassCourse}
-                element={<SingleClassCourse />}
-              />
-            </Route>
-          </Routes>
-        </Router>
+                {/* classes */}
+                <Route path={routes.singleClass} element={<ClassCourses />} />
+                <Route
+                  path={routes.singleStaffClass}
+                  element={<StaffClassCourses />}
+                />
+                <Route
+                  path={routes.singleClassCourse}
+                  element={<SingleClassCourse />}
+                />
+
+                {/* settings */}
+                <Route path={routes.settings} element={<Settings />} />
+              </Route>
+            </Routes>
+          </Router>
+        </GlobalContextProvider>
+
         <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
       </QueryClientProvider>
     </AuthProvider>

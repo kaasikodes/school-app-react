@@ -90,9 +90,6 @@ const SchoolSessionCoursesTable = ({ searchTerm }: IProps) => {
       getCourses({
         token,
         schoolId: schoolId as string,
-        page: pagination.current,
-        limit: pagination.pageSize,
-        searchTerm,
       }),
 
     {

@@ -1,14 +1,15 @@
 import { Button, Form, Input, Select, Spin, Switch } from "antd";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { saveSchoolCourse } from "../../../helpers/courses";
 import { LoadingOutlined } from "@ant-design/icons";
 import { openNotification } from "../../../helpers/notifications";
 import { getDepartments } from "../../../helpers/department";
-import { IDepartmentEntry } from "../../departments/DepartmentsTable";
 import ComponentLoader from "../../loaders/ComponentLoader";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../../appTypes/auth";
+import { useFetchDepartments } from "../../../helpersAPIHooks/departments";
+import { GlobalContext } from "../../../contexts/GlobalContextProvider";
 
 interface IProps {
   handleClose: Function;
@@ -22,47 +23,23 @@ const AddSchoolCourse = ({ handleClose }: IProps) => {
 
   const authDetails = auth() as unknown as IAuthDets;
 
-  const user = authDetails.user;
+  const globalCtx = useContext(GlobalContext);
+  const { state: globalState } = globalCtx;
+  const schoolId = globalState?.currentSchool?.id as string;
   const token = authDetails.userToken;
-  const schoolId = authDetails.choosenSchoolId;
   const {
-    data: departments,
-    isLoading,
-    isError,
-    isFetched,
+    data: departmentData,
+
     isSuccess,
-  } = useQuery<any, any, any, any>(
-    "departments",
-    () =>
-      getDepartments({
-        token,
-        schoolId: schoolId as string,
-        limit: 10000,
-        // so you can get all items as you search and not alimited pagination
+  } = useFetchDepartments({
+    schoolId,
+    token,
+    pagination: {
+      limit: 1000,
 
-        searchTerm,
-      }),
-    {
-      select: (res: any) => {
-        const result = res.data.data;
-
-        const fdepartments: IDepartmentEntry[] = result.map((item: any) => {
-          return {
-            id: item.id,
-            name: item.name,
-
-            levelCount: 0,
-            courseCount: 0,
-            parentCount: 0,
-            studentCount: 0,
-            staffCount: 0,
-            ends: item.ends,
-          };
-        });
-        return fdepartments;
-      },
-    }
-  );
+      page: 1,
+    },
+  });
   const { mutate } = useMutation(
     (courseData: any) =>
       saveSchoolCourse({
@@ -131,8 +108,8 @@ const AddSchoolCourse = ({ handleClose }: IProps) => {
         </Form.Item>
         <Form.Item label={`Department`} name="departmentId">
           <Select>
-            {!isLoading ? (
-              departments.map((item: any) => (
+            {isSuccess ? (
+              departmentData.data.map((item: any) => (
                 <Select.Option key={item.id} value={item.id}>
                   {item.name}
                 </Select.Option>

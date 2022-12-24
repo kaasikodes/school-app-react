@@ -13,12 +13,15 @@ import StaffClasses from "./singleStaff/StaffClasses";
 // groups part of
 interface IProps {
   staffId?: string;
+  isUser?: boolean;
 }
-const SingleStaffWrapper = ({ staffId }: IProps) => {
+const SingleStaffWrapper = ({ staffId, isUser }: IProps) => {
   return (
     <div>
       {/* header */}
-      Back & Breadcrumbs for admin
+      {!isUser && <span>Back & Breadcrumbs for admin</span>}
+
+      <br />
       {staffId ? (
         <Tabs>
           <Tabs.TabPane tab="Profile" key="item-1">
@@ -34,7 +37,7 @@ const SingleStaffWrapper = ({ staffId }: IProps) => {
           </Tabs.TabPane>
         </Tabs>
       ) : (
-        "not found"
+        "staff profile not found"
       )}
     </div>
   );

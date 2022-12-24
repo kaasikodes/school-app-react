@@ -1,16 +1,14 @@
-import { useEffect } from "react";
 import { useIsAuthenticated } from "react-auth-kit";
-import { Navigate, useNavigate } from "react-router-dom";
-import LoginWrapper from "../components/auth/LoginWrapper";
-import RegisterSchoolForm from "../components/auth/ORegisterSchoolForm";
+import { Navigate } from "react-router-dom";
 import RegisterSchoolWrapper from "../components/auth/RegisterSchoolWrapper";
+import { routes } from "../routes";
 
 const RegisterSchool = () => {
   const isAuthenticated = useIsAuthenticated();
 
   return (
     <>
-      {isAuthenticated() && <Navigate to="/" replace={true} />}
+      {isAuthenticated() && <Navigate to={routes.index} replace={true} />}
 
       <RegisterSchoolWrapper />
     </>

@@ -1,30 +1,33 @@
 import { Form, Input, Checkbox, Button, Spin, Col, Row } from "antd";
 
-import React from "react";
+import React, { useContext } from "react";
 
 import { IAuthProps, loginUser } from "../../helpers/auth";
 import { openNotification } from "../../helpers/notifications";
 import axios from "axios";
 
-import { ELoginStep } from "./LoginWrapper";
 import { useAuthUser, useSignIn } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
-import { IAuthDets } from "../../appTypes/auth";
+import { IAuthDets, IAuthSchool } from "../../appTypes/auth";
+import { useLoginUser } from "../../helpersAPIHooks/auth";
+import {
+  emailValidationRules,
+  passwordValidationRules,
+  textInputValidationRules,
+} from "../../formValidation";
+import {
+  EGlobalOps,
+  GlobalContext,
+} from "../../contexts/GlobalContextProvider";
 
 axios.defaults.withCredentials = true;
 
-interface IProps {
-  handleStep: Function;
-  authDetails: IAuthDets;
-  setAuthDetails: Function;
-}
-
-const LoginForm = ({ handleStep, authDetails, setAuthDetails }: IProps) => {
-  const auth = useAuthUser();
+const LoginForm = () => {
   const signIn = useSignIn();
-
-  const user = auth();
-  const navigate = useNavigate();
+  const [form] = Form.useForm();
+  const { mutate, isLoading } = useLoginUser();
+  const globalCtx = useContext(GlobalContext);
+  const { state: globalState, dispatch: globalDispatch } = globalCtx;
 
   const onFinish = (values: any) => {
     const props = {
@@ -36,9 +39,17 @@ const LoginForm = ({ handleStep, authDetails, setAuthDetails }: IProps) => {
       title: "Wait a minute",
       description: <Spin />,
     });
-
-    loginUser(props)
-      .then((res: any) => {
+    mutate(props, {
+      onError: (err: any) => {
+        openNotification({
+          state: "error",
+          title: "Error Occurred",
+          description:
+            err?.response.data.message ?? err?.response.data.error.message,
+        });
+      },
+      onSuccess: (res: any) => {
+        // const result = res.data.data;
         console.log(res.data, "server");
         const result = res.data;
         // save the token in local storage
@@ -52,11 +63,21 @@ const LoginForm = ({ handleStep, authDetails, setAuthDetails }: IProps) => {
           const currentUserRoleInChoosenSchool = result.schools.find(
             (school: any) => school.id === choosenSchoolId
           )?.pivot.choosen_role;
-          const schools = result.schools.map((school: any) => {
+          const choosenSchoolCurrentSessionId = result.schools.find(
+            (school: any) => school.id === choosenSchoolId
+          )?.current_session_id;
+          const schools = result.schools.map((school: any): IAuthSchool => {
             return {
               name: school.name,
               id: school.id,
               description: school.description,
+              roles: JSON.parse(school.pivot.school_user_roles),
+              staffId: school.pivot.staff_id,
+              studentId: school.pivot.student_id,
+              custodianId: school.pivot.custodian_id,
+              adminId: school.pivot.admin_id,
+              currentRole: school.pivot.choosen_role,
+              currentSessionId: school.current_session_id,
             };
           });
           const authData: IAuthDets = {
@@ -68,6 +89,7 @@ const LoginForm = ({ handleStep, authDetails, setAuthDetails }: IProps) => {
             },
             userToken: result.token,
             choosenSchoolId: result.user.choosen_school_id,
+            choosenSchoolCurrentSessionId,
 
             currentUserRoleInChoosenSchool: currentUserRoleInChoosenSchool,
             possibleUserRolesInChoosenSchool: possUserRolesInChoosenSchool,
@@ -76,34 +98,33 @@ const LoginForm = ({ handleStep, authDetails, setAuthDetails }: IProps) => {
             schools: schools,
           };
 
-          setAuthDetails(authData);
+          if (
+            signIn({
+              token: authData.userToken,
+              expiresIn: process.env
+                .REACT_APP_SESSION_TIME as unknown as number,
 
-          // handle next steps
-          if (result.schools.length === 0) {
-            handleStep(ELoginStep.REGISTER_SCHOOL);
-          }
-          if (result.schools.length === 1) {
-            if (
-              signIn({
-                token: authDetails.userToken,
-                expiresIn: 120000000000,
-                tokenType: "Bearer",
-                authState: authData,
-              })
-            ) {
-              openNotification({
-                state: "success",
-
-                title: "Login Successfull!",
-                description: `Welcome to ${process.env.REACT_APP_APP_NAME}, ${authData.user.name}`,
-                // duration: 0.4,
+              tokenType: "Bearer",
+              authState: authData,
+            })
+          ) {
+            if (!globalState.currentSchool) {
+              globalDispatch({
+                type: EGlobalOps.setCurrentSchool,
+                payload: authData.schools.find(
+                  (school: any) => school.id === choosenSchoolId
+                ),
               });
-              navigate("/");
             }
+            openNotification({
+              state: "success",
+
+              title: "Login Successfull!",
+              description: `Welcome to ${process.env.REACT_APP_APP_NAME}, ${authData.user.name}`,
+              // duration: 0.4,
+            });
           }
-          if (result.schools.length > 1) {
-            handleStep(ELoginStep.SELECT_EXISTING_SCHOOL);
-          }
+
           openNotification({
             state: "success",
             title: "Successful login",
@@ -111,15 +132,17 @@ const LoginForm = ({ handleStep, authDetails, setAuthDetails }: IProps) => {
             duration: 0.5,
           });
         }
-      })
-      .catch((err: any) => {
-        console.log(err);
+        form.resetFields();
+
         openNotification({
-          state: "error",
-          title: "Unsuccessful login attempt",
-          description: "Please input your correct login details",
+          state: "success",
+
+          title: "Success",
+          description: res.data.message,
+          // duration: 0.4,
         });
-      });
+      },
+    });
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -134,10 +157,6 @@ const LoginForm = ({ handleStep, authDetails, setAuthDetails }: IProps) => {
         labelCol={{
           span: 24,
         }}
-        size="small"
-        // wrapperCol={{
-        //   span: 16,
-        // }}
         initialValues={{
           remember: true,
         }}
@@ -145,29 +164,16 @@ const LoginForm = ({ handleStep, authDetails, setAuthDetails }: IProps) => {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
         labelAlign="left"
+        form={form}
       >
-        <Form.Item
-          label="Email"
-          name="email"
-          rules={[
-            {
-              required: true,
-              message: "Please input your Email!",
-            },
-          ]}
-        >
+        <Form.Item label="Email" name="email" rules={emailValidationRules}>
           <Input />
         </Form.Item>
 
         <Form.Item
           label="Password"
           name="password"
-          rules={[
-            {
-              required: true,
-              message: "Please input your password!",
-            },
-          ]}
+          rules={textInputValidationRules}
         >
           <Input.Password />
         </Form.Item>
@@ -175,7 +181,12 @@ const LoginForm = ({ handleStep, authDetails, setAuthDetails }: IProps) => {
         <Row gutter={20}>
           <Col span={12} className="flex justify-center">
             <Form.Item>
-              <Button type="primary" htmlType="submit" className="w-full">
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="w-full"
+                loading={isLoading}
+              >
                 Login
               </Button>
             </Form.Item>

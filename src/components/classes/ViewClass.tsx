@@ -1,85 +1,124 @@
 import { Form, Input, Button, DatePicker } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { openNotification } from "../../helpers/notifications";
-import { saveSchool } from "../../helpers/schools";
+
 import { LoadingOutlined } from "@ant-design/icons";
-import moment from "moment";
-import {
-  addSchoolSession,
-  getSession,
-  updateSchoolSession,
-} from "../../helpers/sessions";
+
 import ComponentLoader from "../loaders/ComponentLoader";
-import { IClassEntry } from "./ClassesTable";
-import { getClass } from "../../helpers/classes";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";
+import { GlobalContext } from "../../contexts/GlobalContextProvider";
+import { useQueryClient } from "react-query";
+import {
+  useFetchSingleClass,
+  useUpdateSingleClass,
+} from "../../helpersAPIHooks/classes";
+import { TLevel } from "../../appTypes/levels";
+import { IUpdateClassProps } from "../../helpers/classes";
 
 interface IProps {
+  closeDrawer: Function;
+
   id: string;
 }
 
-const EditClassForm = ({ id }: IProps) => {
-  const [session, setSession] = useState<IClassEntry | null>(null);
-  const [fetching, setFetching] = useState(false);
+const ViewClass = ({ closeDrawer, id }: IProps) => {
+  const queryClient = useQueryClient();
+  const [form] = Form.useForm();
+
   const auth = useAuthUser();
 
   const authDetails = auth() as unknown as IAuthDets;
 
-  const user = authDetails.user;
   const token = authDetails.userToken;
-  const schoolId = authDetails.choosenSchoolId;
+
+  const globalCtx = useContext(GlobalContext);
+  const { state: globalState } = globalCtx;
+  const schoolId = globalState?.currentSchool?.id as string;
+  // const adminId = globalState?.currentSchool?.adminId as string;
+
+  const { mutate, isLoading } = useUpdateSingleClass();
+
+  const handleFinish = (data: any) => {
+    if (schoolId) {
+      const props: IUpdateClassProps = {
+        schoolId,
+        token,
+        name: data.name,
+        description: data.description,
+        // adminId,
+        classId: id,
+      };
+      // return;
+      openNotification({
+        state: "info",
+        title: "Wait a second ...",
+        description: <LoadingOutlined />,
+      });
+      mutate(props, {
+        onError: (err: any) => {
+          openNotification({
+            state: "error",
+            title: "Error Occurred",
+            description:
+              err?.response.data.message ?? err?.response.data.error.message,
+          });
+        },
+        onSuccess: (res: any) => {
+          // const result = res.data.data;
+          console.log("BULK", res);
+
+          openNotification({
+            state: "success",
+
+            title: "Success",
+            description: res.data.message,
+            // duration: 0.4,
+          });
+          form.resetFields();
+
+          closeDrawer();
+
+          queryClient.invalidateQueries({
+            queryKey: ["classes"],
+            // exact: true,
+          });
+        },
+      });
+    }
+  };
+
+  const { isSuccess } = useFetchSingleClass({
+    id,
+    schoolId,
+    token,
+    onSuccess: (data: TLevel) => {
+      form.setFieldsValue({
+        name: data.name,
+        description: data.description,
+      });
+    },
+  });
 
   // pheripherals
-  useEffect(() => {
-    // const token = localStorage.getItem(LOCAL_USER_TOKEN_KEY);
-    console.log(token);
-    setFetching(true);
-    if (schoolId)
-      getClass({ token, classId: id, schoolId })
-        .then((res: any) => {
-          const result = res.data.data;
-          console.log(result, "sess");
-          const fSession: IClassEntry = {
-            id: result.id,
-            name: result.name,
 
-            description: result.description,
-
-            teacherCount: 0,
-            courseCount: 0,
-            studentCount: 0,
-          };
-
-          setSession(fSession);
-          setFetching(false);
-        })
-        .catch((err: any) => {
-          console.log(err);
-        });
-  }, [token, id]);
   return (
     <div>
-      {fetching ? (
+      {!isSuccess ? (
         <ComponentLoader />
       ) : (
         <Form
           requiredMark={false}
           labelCol={{ span: 24 }}
-          initialValues={{
-            name: session?.name,
-            description: session?.description,
-          }}
+          onFinish={handleFinish}
+          form={form}
+          disabled
         >
           <Form.Item label={`Class name`} name="name">
-            <Input placeholder="Class name" required disabled />
+            <Input placeholder="Class name" required />
           </Form.Item>
           <Form.Item label={`Description (optional)`} name="description">
-            <Input.TextArea
-              placeholder="Describe the school"
-              rows={4}
-              disabled
-            />
+            <Input.TextArea placeholder="Describe the class" rows={4} />
           </Form.Item>
         </Form>
       )}
@@ -87,4 +126,4 @@ const EditClassForm = ({ id }: IProps) => {
   );
 };
 
-export default EditClassForm;
+export default ViewClass;

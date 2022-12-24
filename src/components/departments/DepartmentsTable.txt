@@ -224,7 +224,7 @@ const DepartmentsTable = ({ refresh, setRefresh, searchTerm }: IProps) => {
             size="small"
           />
           <Drawer
-            visible={showDrawer}
+            open={showDrawer}
             onClose={() => setShowDrawer(false)}
             title={action}
           >

@@ -83,3 +83,27 @@ export const logoutUser = ({ token, id }: ILProps) => {
   const res: any = axios.get(url, config);
   return res;
 };
+
+export interface IRegSchoolProps {
+  userFullName: string;
+  userEmail: string;
+  userPhone: string;
+  schoolName: string;
+  password: string;
+}
+export const registerSchool = async (props: IRegSchoolProps) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/schools/register-school`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+    },
+  };
+  const data = {
+    ...props,
+  };
+
+  await setCSRFToken();
+  const res: any = axios.post(url, data, config);
+  return res;
+};

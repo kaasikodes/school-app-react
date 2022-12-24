@@ -1,7 +1,9 @@
 import { Typography, Button, Drawer, Input } from "antd";
 import React, { useState } from "react";
-import AddDepartmentForm from "./AddDepartmentForm";
-import DepartmentsTable from "./DepartmentsTable";
+import AddDepartment from "./AddDepartment";
+import { DownloadOutlined } from "@ant-design/icons";
+
+import DepartmentsViewContainer from "./DepartmentsViewContainer";
 
 const DepartmentsWrapper = () => {
   const [showDrawer, setShowDrawer] = useState(false);
@@ -18,28 +20,28 @@ const DepartmentsWrapper = () => {
             allowClear
             onChange={(e) => e.target.value === "" && setSearchTerm("")}
           />
+
           <Button onClick={() => setShowDrawer(true)} type="primary">
             Add Department
           </Button>
+          {/* To Do -> download of departments & format from backend */}
+          <Button
+            type="text"
+            icon={<DownloadOutlined />}
+            title={`Download departments`}
+          />
         </div>
       </div>
       <div className="mt-8">
-        <DepartmentsTable
-          refresh={refresh}
-          setRefresh={setRefresh}
-          searchTerm={searchTerm}
-        />
+        <DepartmentsViewContainer searchTerm={searchTerm} />
       </div>
 
       <Drawer
-        visible={showDrawer}
+        open={showDrawer}
         onClose={() => setShowDrawer(false)}
         title="Add Department"
       >
-        <AddDepartmentForm
-          closeDrawer={() => setShowDrawer(false)}
-          setRefresh={setRefresh}
-        />
+        <AddDepartment closeDrawer={() => setShowDrawer(false)} />
       </Drawer>
     </div>
   );

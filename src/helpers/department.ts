@@ -1,5 +1,6 @@
 import axios from "axios";
 import moment from "moment";
+import { IPaginationProps, ISearchParams } from "../appTypes/requestParams";
 import { IAuthProps } from "./auth";
 
 export interface IDepartmentAuthProps extends IAuthProps {
@@ -23,25 +24,30 @@ export const getDepartment = ({ token, departmentId }: IGetDepartmentProps) => {
   return res;
 };
 interface IGetMultipleDepartmentProps extends IDepartmentAuthProps {
-  searchTerm?: string;
-  page?: number;
-  limit?: number;
+  pagination?: IPaginationProps;
+  searchParams?: ISearchParams;
 }
 
 export const getDepartments = ({
   token,
   schoolId,
-  searchTerm,
-  limit,
-  page,
+  pagination,
+  searchParams,
 }: IGetMultipleDepartmentProps) => {
-  const url = `${
-    process.env.REACT_APP_APP_URL
-  }/api/schools/${schoolId}/departments?${
-    searchTerm ? "searchTerm=" + searchTerm : ""
-  }&limit=${(limit as number) > 0 ? limit : ""}&page=${
-    (page as number) > 0 ? page : ""
-  }`;
+  const limit = pagination?.limit ?? 10;
+  const page = pagination?.page ?? 0;
+  const name = searchParams?.name ?? "";
+
+  let url = `${process.env.REACT_APP_APP_URL}/api/schools/${schoolId}/departments`;
+  if (pagination || searchParams) {
+    url += "?";
+  }
+  if (pagination) {
+    url += `limit=${limit}&page=${page}&`;
+  }
+  if (searchParams) {
+    url += `searchTerm=${name}&`;
+  }
 
   const config = {
     headers: {
@@ -54,17 +60,26 @@ export const getDepartments = ({
   return res;
 };
 
-interface ISaveDepartmentProps extends IDepartmentAuthProps {
+export interface ISaveDepartmentProps extends IDepartmentAuthProps {
   description?: string;
   name: string;
-  id?: string;
+
+  adminId: string;
+}
+
+export interface IUpdateDeptProps extends ISaveDepartmentProps {
+  departmentId: string;
+}
+export interface ISaveDepartmentInBulkProps extends IDepartmentAuthProps {
+  jsonData: string;
+  adminId: string;
 }
 export const saveSchoolDepartment = ({
   token,
   schoolId,
   name,
   description,
-  id,
+  adminId,
 }: ISaveDepartmentProps) => {
   const url = `${process.env.REACT_APP_APP_URL}/api/departments/save`;
 
@@ -78,11 +93,76 @@ export const saveSchoolDepartment = ({
     name,
     description,
     schoolId,
+    adminId,
   };
-  if (id) {
-    data = { ...data, id };
-  }
 
   const res: any = axios.post(url, data, config);
   return res;
+};
+export const updateSchoolDepartment = ({
+  token,
+  schoolId,
+  name,
+  description,
+
+  adminId,
+  departmentId,
+}: IUpdateDeptProps) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/departments/${departmentId}/update`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  let data: any = {
+    name,
+    description,
+    schoolId,
+    adminId,
+    departmentId,
+  };
+
+  const res: any = axios.patch(url, data, config);
+  return res;
+};
+export const saveSchoolDepartmentInBulk = ({
+  token,
+  schoolId,
+  jsonData,
+  adminId,
+}: ISaveDepartmentInBulkProps) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/departments/add-bulk?schoolId=${schoolId}`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  let data = {
+    jsonData: JSON.parse(jsonData),
+    adminId,
+  };
+
+  const res: any = axios.post(url, data, config);
+  return res;
+};
+
+interface IDownloadBulkUploadProps {
+  author?: string;
+}
+
+export const downloadBulkDepartmentUploadTemplate = (
+  props?: IDownloadBulkUploadProps
+): string => {
+  let url = `${process.env.REACT_APP_APP_URL}/api/departments/export/bulk-template`;
+  if (props) {
+    url += "?";
+  }
+  if (props?.author) {
+    url += `${props.author}`;
+  }
+  return url;
 };

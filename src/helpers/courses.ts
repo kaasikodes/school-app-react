@@ -1,5 +1,5 @@
 import axios from "axios";
-import moment from "moment";
+import { IPaginationProps, ISearchParams } from "../appTypes/requestParams";
 import { IAuthProps } from "./auth";
 
 export interface ICourseAuthProps extends IAuthProps {
@@ -132,34 +132,53 @@ export const saveSchoolCourse = ({
     name,
     description,
   };
-  if (id) {
-    data = { ...data, id };
-  }
 
   const res: any = axios.post(url, data, config);
   return res;
 };
+interface IGetCourseProps extends ICourseAuthProps {
+  courseId: string;
+}
+
+export const getCourse = ({ token, courseId }: IGetCourseProps) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/courses/${courseId}`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const res: any = axios.get(url, config);
+  return res;
+};
 
 interface IGetCoursesProps extends ICourseAuthProps {
-  searchTerm?: string;
-  page?: number;
-  limit?: number;
+  pagination?: IPaginationProps;
+  searchParams?: ISearchParams;
 }
 
 export const getCourses = ({
   token,
   schoolId,
-  searchTerm,
-  limit,
-  page,
+  pagination,
+  searchParams,
 }: IGetCoursesProps) => {
-  const url = `${
-    process.env.REACT_APP_APP_URL
-  }/api/schools/${schoolId}/courses?${
-    searchTerm ? "searchTerm=" + searchTerm : ""
-  }&limit=${(limit as number) > 0 ? limit : ""}&page=${
-    (page as number) > 0 ? page : ""
-  }`;
+  const limit = pagination?.limit ?? 10;
+  const page = pagination?.page ?? 0;
+  const name = searchParams?.name ?? "";
+  let url = `${process.env.REACT_APP_APP_URL}/api/schools/${schoolId}/courses`;
+
+  if (pagination || searchParams) {
+    url += "?";
+  }
+  if (pagination) {
+    url += `limit=${limit}&page=${page}&`;
+  }
+  if (searchParams) {
+    url += `searchTerm=${name}&`;
+  }
 
   const config = {
     headers: {
@@ -212,17 +231,23 @@ export const getSessionCourseParticipants = ({
 export const getCoursesGroupedByLevel = ({
   token,
   schoolId,
-  searchTerm,
-  limit,
-  page,
+  pagination,
+  searchParams,
 }: IGetCoursesProps) => {
-  const url = `${
-    process.env.REACT_APP_APP_URL
-  }/api/schools/${schoolId}/coursesGroupedByLevel?${
-    searchTerm ? "searchTerm=" + searchTerm : ""
-  }&limit=${(limit as number) > 0 ? limit : ""}&page=${
-    (page as number) > 0 ? page : ""
-  }`;
+  const limit = pagination?.limit ?? 10;
+  const page = pagination?.page ?? 0;
+  const name = searchParams?.name ?? "";
+  let url = `${process.env.REACT_APP_APP_URL}/api/schools/${schoolId}/coursesGroupedByLevel`;
+
+  if (pagination || searchParams) {
+    url += "?";
+  }
+  if (pagination) {
+    url += `limit=${limit}&page=${page}&`;
+  }
+  if (searchParams) {
+    url += `searchTerm=${name}&`;
+  }
 
   const config = {
     headers: {
@@ -233,4 +258,82 @@ export const getCoursesGroupedByLevel = ({
 
   const res: any = axios.get(url, config);
   return res;
+};
+
+export interface IUpdateCourseProps extends ISaveCourseProps {
+  courseId: string;
+}
+export const updateSchoolCourse = ({
+  token,
+  schoolId,
+  name,
+  description,
+  departmentId,
+
+  // adminId,
+  courseId,
+}: IUpdateCourseProps) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/courses/${courseId}/update`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  let data: any = {
+    name,
+    description,
+    schoolId,
+    departmentId,
+    // adminId,
+    courseId,
+  };
+
+  const res: any = axios.patch(url, data, config);
+  return res;
+};
+
+export interface ISaveCourseInBulkProps extends ICourseAuthProps {
+  jsonData: string;
+  adminId: string;
+}
+export const saveSchoolCoursesInBulk = ({
+  token,
+  schoolId,
+  jsonData,
+  adminId,
+}: ISaveCourseInBulkProps) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/courses/add-bulk?schoolId=${schoolId}`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  let data = {
+    jsonData: JSON.parse(jsonData),
+    adminId,
+  };
+
+  const res: any = axios.post(url, data, config);
+  return res;
+};
+
+interface IDownloadBulkUploadProps {
+  author?: string;
+}
+
+export const downloadBulkCoursesUploadTemplate = (
+  props?: IDownloadBulkUploadProps
+): string => {
+  let url = `${process.env.REACT_APP_APP_URL}/api/courses/export/bulk-template`;
+  if (props) {
+    url += "?";
+  }
+  if (props?.author) {
+    url += `${props.author}`;
+  }
+  return url;
 };

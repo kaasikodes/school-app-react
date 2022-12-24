@@ -1,6 +1,7 @@
 export const routes = {
   index: "/",
   login: "/login",
+  settings: "/settings",
   registerSchool: "/register",
   // schools: "/schools/",
   departments: "/departments/",

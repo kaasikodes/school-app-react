@@ -1,7 +1,8 @@
 import { Typography, Button, Drawer, Input } from "antd";
 import React, { useState } from "react";
+import AddClass from "./AddClass";
 import AddClassForm from "./AddClassForm";
-import ClassesTable from "./ClassesTable";
+import ClassesViewContainer from "./ClassesViewContainer";
 
 const ClassesWrapper = () => {
   const [showDrawer, setShowDrawer] = useState(false);
@@ -24,22 +25,15 @@ const ClassesWrapper = () => {
         </div>
       </div>
       <div className="mt-8">
-        <ClassesTable
-          refresh={refresh}
-          setRefresh={setRefresh}
-          searchTerm={searchTerm}
-        />
+        <ClassesViewContainer searchTerm={searchTerm} />
       </div>
 
       <Drawer
-        visible={showDrawer}
+        open={showDrawer}
         onClose={() => setShowDrawer(false)}
         title="Add Class"
       >
-        <AddClassForm
-          closeDrawer={() => setShowDrawer(false)}
-          setRefresh={setRefresh}
-        />
+        <AddClass closeDrawer={() => setShowDrawer(false)} />
       </Drawer>
     </div>
   );

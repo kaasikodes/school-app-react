@@ -157,9 +157,6 @@ const ClassesTable = ({ refresh, setRefresh, searchTerm }: IProps) => {
           const res = await getClasses({
             token,
             schoolId: schoolId,
-            page: newPagination.current,
-            limit: newPagination.pageSize,
-            searchTerm,
           });
           console.log("class", res);
           const result = res.data.data;
@@ -231,11 +228,15 @@ const ClassesTable = ({ refresh, setRefresh, searchTerm }: IProps) => {
             {action === EAction.EDIT && (
               <EditClassForm
                 closeDrawer={() => setShowDrawer(false)}
-                setRefresh={setRefresh}
                 id={classId}
               />
             )}
-            {action === EAction.VIEW && <ViewClass id={classId} />}
+            {action === EAction.VIEW && (
+              <ViewClass
+                id={classId}
+                closeDrawer={() => setShowDrawer(false)}
+              />
+            )}
           </Drawer>
         </div>
       )}

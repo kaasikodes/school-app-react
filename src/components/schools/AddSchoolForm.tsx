@@ -50,6 +50,7 @@ const AddSchoolForm = ({ closeDrawer }: IProps) => {
             description: data.description,
             roles: possUserRolesInSchool,
             currentRole: currentUserRoleInSchool,
+            currentSessionId: data.current_session_id,
           },
           ...authDetails.schools,
         ];
