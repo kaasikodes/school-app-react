@@ -25,7 +25,7 @@ import { useMutation, useQuery } from "react-query";
 import { getCourses } from "../../helpers/courses";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";
-import { enrollStudent, IEnrollStudentProps } from "../../helpers/students";
+import { IEnrollStudentProps } from "../../helpers/students";
 import { UploadOutlined } from "@ant-design/icons";
 import { TPaymentCategry } from "../../appTypes/payments";
 import { getClasses } from "../../helpers/classes";
@@ -145,60 +145,60 @@ const EnrollStudentForm = () => {
       },
     }
   );
-  const { mutate, isLoading } = useMutation(enrollStudent);
+  // const { mutate, isLoading } = useMutation(enrollStudent);
 
-  const handleSubmit = (data: any) => {
-    console.log("Data ", data);
-    if (schoolId && sessionId) {
-      const props: IEnrollStudentProps = {
-        name: `${data.firstName} ${(data.middleName ?? "") + " "}${
-          data.lastName
-        }`,
-        email: data.email,
-        currentClassId: data.currentClassId,
-        paymentCategoryId: data.paymentCategoryId,
-        schoolFeeAmountPaid: data.amountPaid,
-        currentSessionId: sessionId, //this should always be created by default when school is created
-        popDocumentUrl: "state url",
-        idNo: data.idNo,
-        schoolId: schoolId as unknown as string,
-        token: token as unknown as string,
-        note: data.note,
-      };
+  // const handleSubmit = (data: any) => {
+  //   console.log("Data ", data);
+  //   if (schoolId && sessionId) {
+  //     const props: IEnrollStudentProps = {
+  //       name: `${data.firstName} ${(data.middleName ?? "") + " "}${
+  //         data.lastName
+  //       }`,
+  //       email: data.email,
+  //       currentClassId: data.currentClassId,
+  //       paymentCategoryId: data.paymentCategoryId,
+  //       schoolFeeAmountPaid: data.amountPaid,
+  //       currentSessionId: sessionId, //this should always be created by default when school is created
+  //       popDocumentUrl: "state url",
+  //       idNo: data.idNo,
+  //       schoolId: schoolId as unknown as string,
+  //       token: token as unknown as string,
+  //       note: data.note,
+  //     };
 
-      console.log("prps", props, data);
-      openNotification({
-        state: "info",
-        title: "Wait a second ...",
-        // description: <Progress percent={80} status="active" />,
-        description: <Spin />,
-      });
-      mutate(props, {
-        onError: (err: any) => {
-          openNotification({
-            state: "error",
-            title: "Error Occured",
-            description:
-              err?.response.data.message ?? err?.response.data.error.message,
-          });
-        },
-        onSuccess: (res: any) => {
-          const result = res.data.data;
+  //     console.log("prps", props, data);
+  //     openNotification({
+  //       state: "info",
+  //       title: "Wait a second ...",
+  //       // description: <Progress percent={80} status="active" />,
+  //       description: <Spin />,
+  //     });
+  //     mutate(props, {
+  //       onError: (err: any) => {
+  //         openNotification({
+  //           state: "error",
+  //           title: "Error Occured",
+  //           description:
+  //             err?.response.data.message ?? err?.response.data.error.message,
+  //         });
+  //       },
+  //       onSuccess: (res: any) => {
+  //         const result = res.data.data;
 
-          openNotification({
-            state: "success",
+  //         openNotification({
+  //           state: "success",
 
-            title: "Success",
-            description: res.data.message,
-            // duration: 0.4,
-          });
+  //           title: "Success",
+  //           description: res.data.message,
+  //           // duration: 0.4,
+  //         });
 
-          form.resetFields();
-        },
-      });
-      return;
-    }
-  };
+  //         form.resetFields();
+  //       },
+  //     });
+  //     return;
+  //   }
+  // };
 
   const props: UploadProps = {
     name: "file",
@@ -236,7 +236,7 @@ const EnrollStudentForm = () => {
           <Form
             labelCol={{ span: 24 }}
             form={form}
-            onFinish={handleSubmit}
+            // onFinish={handleSubmit}
             size="small"
           >
             <div className="flex flex-col gap-4">
@@ -334,6 +334,13 @@ const EnrollStudentForm = () => {
                         rows={6}
                       />
                     </Form.Item>
+                  </div>
+                </Panel>
+                <Panel header="Custodian Information" key="3">
+                  <div>Should be a dynamic add on single</div>
+                  <div>Should be a single add on bulk</div>
+                  <div>
+                    phone, name, title, profession, email, alt phone, alt email
                   </div>
                 </Panel>
               </Collapse>

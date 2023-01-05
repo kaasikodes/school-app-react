@@ -8,3 +8,13 @@ export interface IStaffEntry {
   groupCount?: number;
   enrollmentStatus?: boolean;
 }
+
+export type TStaff = {
+  id: number;
+  name: string;
+  email: string;
+  staffNo: string;
+  createdAt: string;
+  updatedAt: string;
+  photo?: string;
+};

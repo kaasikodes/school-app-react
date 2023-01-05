@@ -22,8 +22,8 @@ const AssignCourseTeacher = () => {
       return getAllStaff({
         token,
         schoolId: schoolId as string,
-        page: 1,
-        limit: 1000,
+        // page: 1,
+        // limit: 1000,
       });
     },
     {

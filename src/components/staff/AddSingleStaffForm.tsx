@@ -12,8 +12,6 @@ import { GlobalContext } from "../../contexts/GlobalContextProvider";
 import { useAddSingleStaff } from "../../helpersAPIHooks/staff";
 import {
   emailValidationRules,
-  generalValidationRules,
-  generalValidationRulesOp,
   passwordValidationRules,
   textInputValidationRules,
   textInputValidationRulesOp,
@@ -23,7 +21,7 @@ interface IProps {
   closeDrawer: Function;
 }
 
-const AddStaffForm = ({ closeDrawer }: IProps) => {
+const AddSingleStaffForm = ({ closeDrawer }: IProps) => {
   const queryClient = useQueryClient();
   const [form] = Form.useForm();
 
@@ -45,7 +43,7 @@ const AddStaffForm = ({ closeDrawer }: IProps) => {
         token,
         email: data.email,
         password: data.password,
-        name: `${data.firstName} ${data.middleName} ${data.lastName}`,
+        name: `${data.firstName} ${data.middleName ?? ""} ${data.lastName}`,
         staffNo: data.staffNo,
       };
       // return;
@@ -189,4 +187,4 @@ const AddStaffForm = ({ closeDrawer }: IProps) => {
   );
 };
 
-export default AddStaffForm;
+export default AddSingleStaffForm;

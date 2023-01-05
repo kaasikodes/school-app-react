@@ -77,10 +77,6 @@ const StaffTable = ({ searchTerm }: IProps) => {
       return getAllStaff({
         token,
         schoolId: schoolId as string,
-        page: pagination.current,
-        limit: pagination.pageSize,
-
-        searchTerm,
       });
     },
     {
@@ -91,7 +87,7 @@ const StaffTable = ({ searchTerm }: IProps) => {
       // Polling : fetching data at reqular intervals
       // refetchInterval: 2000, // def -> false
       // refetchIntervalInBackground: true, //wll still refetfch data if window loses focus
-      // enabled:false && refetch  --> to allow fetching data based on events such as onClick
+      // enabled:false && refetch  --> to allow fetching data based on events such as onClic
       onError: (err) => {
         openNotification({
           state: "error",

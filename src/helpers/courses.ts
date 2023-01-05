@@ -1,16 +1,21 @@
 import axios from "axios";
-import { IPaginationProps, ISearchParams } from "../appTypes/requestParams";
+import {
+  IFilterParams,
+  IPaginationProps,
+  ISearchParams,
+} from "../appTypes/requestParams";
 import { IAuthProps } from "./auth";
 
 export interface ICourseAuthProps extends IAuthProps {
   schoolId: string;
 }
-interface ISaveCourseProps extends ICourseAuthProps {
+export interface ISaveCourseProps extends ICourseAuthProps {
   id?: string;
   departmentId?: string;
   name: string;
   isActive?: boolean;
   description?: boolean;
+  levels?: number[];
 }
 interface ISaveCoursePartAssProps extends ICourseAuthProps {
   participantId: string;
@@ -116,6 +121,7 @@ export const saveSchoolCourse = ({
   isActive,
   name,
   description,
+  levels = [],
 }: ISaveCourseProps) => {
   const url = `${process.env.REACT_APP_APP_URL}/api/courses/save`;
 
@@ -130,6 +136,7 @@ export const saveSchoolCourse = ({
     departmentId,
     isActive,
     name,
+    levels,
     description,
   };
 
@@ -157,6 +164,7 @@ export const getCourse = ({ token, courseId }: IGetCourseProps) => {
 interface IGetCoursesProps extends ICourseAuthProps {
   pagination?: IPaginationProps;
   searchParams?: ISearchParams;
+  filterParams?: IFilterParams;
 }
 
 export const getCourses = ({
@@ -164,13 +172,16 @@ export const getCourses = ({
   schoolId,
   pagination,
   searchParams,
+  filterParams,
 }: IGetCoursesProps) => {
   const limit = pagination?.limit ?? 10;
   const page = pagination?.page ?? 0;
   const name = searchParams?.name ?? "";
+  const levelId = filterParams?.levelId ?? "";
+
   let url = `${process.env.REACT_APP_APP_URL}/api/schools/${schoolId}/courses`;
 
-  if (pagination || searchParams) {
+  if (pagination || searchParams || filterParams) {
     url += "?";
   }
   if (pagination) {
@@ -178,6 +189,9 @@ export const getCourses = ({
   }
   if (searchParams) {
     url += `searchTerm=${name}&`;
+  }
+  if (filterParams?.levelId) {
+    url += `levelId=${levelId}&`;
   }
 
   const config = {

@@ -6,3 +6,6 @@ export interface IPaginationProps {
 export interface ISearchParams {
   name?: string;
 }
+export interface IFilterParams {
+  levelId?: number;
+}

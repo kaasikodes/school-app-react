@@ -9,23 +9,38 @@ export interface IStudentAuthProps extends IAuthProps {
 }
 
 export interface IEnrollStudentProps extends IStudentAuthProps {
+  // personal info 4 student
   idNo: string;
   name: string;
-  email?: string;
-  phone?: string;
-  userId?: string;
-  altPhone?: string;
-  altEmail?: string;
-  currentClassId: string;
-  paymentCategoryId: string;
-  currentSessionId: string;
-  schoolFeeAmountPaid: string;
-  popDocumentUrl: string;
-  note?: string;
-  // sessionCourses: { levelId: string; courseId: string }[];
+  email: string;
+  phone: string;
+  currentClassId: number;
+
+  // payment info -> TO DO (l8r)
+  // paymentCategoryId: string;
+  // schoolFeeAmountPaid: string;
+  // popDocumentUrl: string;
+  // note?: string;
+
+  // session info
+  // currentSessionId: number; => be found from school id
+
+  // course combo
+  sessionCourses: {
+    levelId: number;
+    courseId: number;
+  }[];
+
+  // custodians
+  custodians?: {
+    name: string;
+    occupation: string;
+    email: string;
+    phone: string;
+  };
 }
-export const enrollStudent = (props: IEnrollStudentProps) => {
-  const url = `${process.env.REACT_APP_APP_URL}/api/schools/${props.schoolId}/enroll-student-for-session`;
+export const enrollNewStudent = (props: IEnrollStudentProps) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/schools/${props.schoolId}/enroll-new-student-for-session`;
 
   const config = {
     headers: {
@@ -120,4 +135,21 @@ export const getStudentCoursesGroupedByLevel = ({
 
   const res: any = axios.get(url, config);
   return res;
+};
+
+interface IDownloadBulkUploadProps {
+  author?: string;
+}
+
+export const downloadBulkStudentsUploadTemplate = (
+  props?: IDownloadBulkUploadProps
+): string => {
+  let url = `${process.env.REACT_APP_APP_URL}/api/students/export/bulk-template`;
+  if (props) {
+    url += "?";
+  }
+  if (props?.author) {
+    url += `${props.author}`;
+  }
+  return url;
 };

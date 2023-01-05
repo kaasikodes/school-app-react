@@ -32,7 +32,6 @@ const EditStaffForm = ({ closeDrawer }: IProps) => {
 
     saveSchoolStaff({
       staffNo: data.staffNo,
-      userId: "1",
       schoolId: schoolId as string,
       token,
       email: data.email,

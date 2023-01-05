@@ -4,24 +4,16 @@ import { useState } from "react";
 import { useAuthUser } from "react-auth-kit";
 import { Link } from "react-router-dom";
 import { IAuthDets } from "../../appTypes/auth";
-
-import AddSchoolCourse from "../settings/courses/AddSchoolCourse";
-import CoursesTable from "./SchoolSessionCoursesTable";
+import AddCourse from "./AddCourse";
+import CoursesViewContainer from "./CoursesViewContainer";
+import { DownloadOutlined } from "@ant-design/icons";
 
 interface IProps {
   classId?: string;
 }
 const CoursesWrapper = ({ classId }: IProps) => {
   const [showDrawer, setShowDrawer] = useState(false);
-  const [refresh, setRefresh] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const auth = useAuthUser();
-
-  const authDetails = auth() as unknown as IAuthDets;
-
-  const user = authDetails.user;
-  const token = authDetails.userToken;
-  const schoolId = authDetails.choosenSchoolId;
 
   return (
     <div>
@@ -50,18 +42,23 @@ const CoursesWrapper = ({ classId }: IProps) => {
           <Button onClick={() => setShowDrawer(true)} type="primary">
             Add Course
           </Button>
+          <Button
+            type="text"
+            icon={<DownloadOutlined />}
+            title={`Download courses`}
+          />
         </div>
       </div>
-      <div className="mt-8 flex flex-col gap-2">
-        <CoursesTable />
+      <div className="mt-8">
+        <CoursesViewContainer searchTerm={searchTerm} />
       </div>
 
       <Drawer
-        visible={showDrawer}
+        open={showDrawer}
         onClose={() => setShowDrawer(false)}
         title="Add Course"
       >
-        <AddSchoolCourse handleClose={() => setShowDrawer(false)} />
+        <AddCourse closeDrawer={() => setShowDrawer(false)} />
       </Drawer>
     </div>
   );

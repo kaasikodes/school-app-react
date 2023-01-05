@@ -2,7 +2,11 @@ import moment from "moment";
 import { useMutation, useQuery } from "react-query";
 import { TCourse } from "../appTypes/courses";
 import { TLevel } from "../appTypes/levels";
-import { IPaginationProps, ISearchParams } from "../appTypes/requestParams";
+import {
+  IFilterParams,
+  IPaginationProps,
+  ISearchParams,
+} from "../appTypes/requestParams";
 import {
   addSessionCourseParticipant,
   addSessionCourseTeacher,
@@ -23,6 +27,7 @@ interface IFRQSingleProps {
 interface IFRQProps {
   pagination?: IPaginationProps;
   searchParams?: ISearchParams;
+  filterParams?: IFilterParams;
   schoolId: string;
   token: string;
   onSuccess?: Function;
@@ -49,6 +54,7 @@ export const useFetchCourses = ({
         pagination: { limit: pagination?.limit, page: pagination?.page },
       }),
     {
+      // enabled: filterParams ? !!filterParams?.levelId : true,
       // refetchInterval: false,
       // refetchIntervalInBackground: false,
       // refetchOnWindowFocus: false,
@@ -96,6 +102,87 @@ export const useFetchCourses = ({
         };
 
         return ans;
+      },
+    }
+  );
+
+  return queryData;
+};
+
+interface IFRQGroupedByLevelProps extends IFRQProps {
+  levelId: number;
+}
+
+export const useFetchCoursesGroupedByLevel = ({
+  pagination,
+  searchParams,
+  token,
+  schoolId,
+  onSuccess,
+  levelId,
+}: IFRQGroupedByLevelProps) => {
+  const queryData = useQuery(
+    [
+      "courses-groupedByLevel",
+      pagination?.page,
+      pagination?.limit,
+      searchParams,
+      levelId,
+    ],
+    () =>
+      getCourses({
+        schoolId,
+        token,
+        searchParams,
+        pagination: { limit: pagination?.limit, page: pagination?.page },
+        filterParams: {
+          levelId,
+        },
+      }),
+    {
+      enabled: levelId === 0 ? false : true,
+      // refetchInterval: false,
+      // refetchIntervalInBackground: false,
+      // refetchOnWindowFocus: false,
+      onError: (err: any) => {
+        // show notification
+        openNotification({
+          state: "error",
+          title: "Error Occurred",
+          description:
+            err?.response.data.message ?? err?.response.data.error.message,
+        });
+      },
+      onSuccess: (data) => {
+        onSuccess && onSuccess(data);
+      },
+
+      select: (res: any) => {
+        const fetchedData = res.data.data;
+        const result = fetchedData;
+
+        const data: TCourse[] = result.map(
+          (item: any): TCourse => ({
+            id: item.data.id,
+            name: item.data.name,
+            description: item.data.description,
+            levelCount: item?.levelCount,
+            author: item?.author
+              ? {
+                  id: item.author.id,
+                  name: item.author.name,
+                }
+              : undefined,
+            createdAt: item.data?.created_at
+              ? moment(item.data.created_at).format("YYYY/MM/DD")
+              : "",
+            updatedAt: item.data?.updated_at
+              ? moment(item.data.updated_at).format("YYYY/MM/DD")
+              : "",
+          })
+        );
+
+        return data;
       },
     }
   );

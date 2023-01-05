@@ -1,15 +1,15 @@
 import axios from "axios";
 import moment from "moment";
+import { IPaginationProps, ISearchParams } from "../appTypes/requestParams";
 import { IAuthProps } from "./auth";
 
 export interface IStaffAuthProps extends IAuthProps {
   schoolId: string;
 }
 
-interface ISaveStaffProps extends IStaffAuthProps {
+export interface ISaveStaffProps extends IStaffAuthProps {
   staffNo: string;
-  id?: string;
-  userId?: string;
+
   email: string;
   name?: string;
   password?: string;
@@ -18,13 +18,12 @@ export const saveSchoolStaff = ({
   token,
   schoolId,
   staffNo,
-  userId,
-  id,
+
   email,
   name,
   password,
 }: ISaveStaffProps) => {
-  const url = `${process.env.REACT_APP_APP_URL}/api/staff/save-profile`;
+  const url = `${process.env.REACT_APP_APP_URL}/api/staff/save`;
 
   const config = {
     headers: {
@@ -33,25 +32,20 @@ export const saveSchoolStaff = ({
     },
   };
   let data: any = {
-    userId,
     staffNo,
     schoolId,
     name,
     email,
     password,
   };
-  if (id) {
-    data = { ...data, id };
-  }
 
   const res: any = axios.post(url, data, config);
   return res;
 };
 
 interface IGetMultipleStaffProps extends IStaffAuthProps {
-  searchTerm?: string;
-  page?: number;
-  limit?: number;
+  pagination?: IPaginationProps;
+  searchParams?: ISearchParams;
 }
 interface IGGSSLC extends IStaffAuthProps {
   sessionId: number;
@@ -80,15 +74,24 @@ export const getStaffSessionLevelsAndCourses = ({
 export const getAllStaff = ({
   token,
   schoolId,
-  searchTerm,
-  limit,
-  page,
+  pagination,
+  searchParams,
 }: IGetMultipleStaffProps) => {
-  const url = `${process.env.REACT_APP_APP_URL}/api/schools/${schoolId}/staff?${
-    searchTerm ? "searchTerm=" + searchTerm : ""
-  }&limit=${(limit as number) > 0 ? limit : ""}&page=${
-    (page as number) > 0 ? page : ""
-  }`;
+  const limit = pagination?.limit ?? 10;
+  const page = pagination?.page ?? 0;
+  const name = searchParams?.name ?? "";
+
+  let url = `${process.env.REACT_APP_APP_URL}/api/schools/${schoolId}/staff`;
+
+  if (pagination || searchParams) {
+    url += "?";
+  }
+  if (pagination) {
+    url += `limit=${limit}&page=${page}&`;
+  }
+  if (searchParams) {
+    url += `searchTerm=${name}&`;
+  }
 
   const config = {
     headers: {
@@ -111,7 +114,7 @@ export const getSingleStaff = ({
   staffId,
   sessionId,
 }: IGetSingleStaffProps) => {
-  const url = `${process.env.REACT_APP_APP_URL}/api/schools/${schoolId}/staff/${staffId}`;
+  const url = `${process.env.REACT_APP_APP_URL}/api/staff/${staffId}`;
 
   const config = {
     headers: {
@@ -122,4 +125,79 @@ export const getSingleStaff = ({
 
   const res: any = axios.get(url, config);
   return res;
+};
+
+export interface ISaveStaffInBulkProps extends IStaffAuthProps {
+  jsonData: string;
+  adminId: string;
+}
+export const saveSchoolStaffInBulk = ({
+  token,
+  schoolId,
+  jsonData,
+  adminId,
+}: ISaveStaffInBulkProps) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/staff/add-bulk?schoolId=${schoolId}`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  let data = {
+    jsonData: JSON.parse(jsonData),
+    adminId,
+  };
+
+  const res: any = axios.post(url, data, config);
+  return res;
+};
+export interface IUpdateStaffProps extends IStaffAuthProps {
+  staffId: string;
+  staffNo: string;
+}
+export const updateSchoolStaff = ({
+  token,
+  schoolId,
+
+  staffNo,
+
+  // adminId,
+  staffId,
+}: IUpdateStaffProps) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/staff/${staffId}/update`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  let data: any = {
+    // TO DO
+    // Need to rethink columns of staff, as its possible the staff name might be editted
+    schoolId,
+    staffNo,
+  };
+
+  const res: any = axios.patch(url, data, config);
+  return res;
+};
+
+interface IDownloadBulkUploadProps {
+  author?: string;
+}
+
+export const downloadBulkStaffUploadTemplate = (
+  props?: IDownloadBulkUploadProps
+): string => {
+  let url = `${process.env.REACT_APP_APP_URL}/api/staff/export/bulk-template`;
+  if (props) {
+    url += "?";
+  }
+  if (props?.author) {
+    url += `${props.author}`;
+  }
+  return url;
 };
