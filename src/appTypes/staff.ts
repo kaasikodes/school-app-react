@@ -1,3 +1,5 @@
+import { TCourse } from "./courses";
+
 export interface IStaffEntry {
   id: string;
   name: string;
@@ -17,4 +19,12 @@ export type TStaff = {
   createdAt: string;
   updatedAt: string;
   photo?: string;
+};
+export type TStaffCourseTeacherRecord = {
+  id: number;
+  staff: TStaff;
+  course: TCourse;
+  createdAt: string;
+  updatedAt: string;
+  canRecord: boolean;
 };

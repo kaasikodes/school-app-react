@@ -188,7 +188,11 @@ const AddBulkStudentForm: React.FC<IProps> = ({ closeDrawer }) => {
       <div className="border border-dotted border-slate-500 rounded flex flex-col items-center gap-2 py-3 px-2">
         <p>Select file to be Imported</p>
         <Typography.Text title="Please Download template and populate">
-          <a href={downloadBulkStudentsUploadTemplate()}>
+          <a
+            href={downloadBulkStudentsUploadTemplate({
+              schoolId: schoolId as unknown as string,
+            })}
+          >
             <span className="text-sm pt-1 font-medium cursor-pointer hover:text-caramel underline">
               Download template
             </span>

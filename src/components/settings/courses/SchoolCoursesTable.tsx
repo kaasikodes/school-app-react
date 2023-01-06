@@ -224,7 +224,7 @@ const SchoolCoursesTable = ({ searchTerm }: IProps) => {
         onClose={() => setShowDrawer(false)}
         title={`${action}`}
       >
-        {action === EAction.ADD_TEACHER && <AssignCourseTeacher />}
+        {/* {action === EAction.ADD_TEACHER && <AssignCourseTeacher />} */}
       </Drawer>
     </div>
   );

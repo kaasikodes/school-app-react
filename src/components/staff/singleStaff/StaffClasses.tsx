@@ -1,6 +1,6 @@
 import { Button, Dropdown, List, Menu, Space, Table, Typography } from "antd";
 
-import React from "react";
+import React, { useContext } from "react";
 import {
   ExclamationCircleOutlined,
   LoadingOutlined,
@@ -14,6 +14,7 @@ import { openNotification } from "../../../helpers/notifications";
 import { getStaffSessionLevelsAndCourses } from "../../../helpers/staff";
 import { IStaffEntry } from "../StaffTable";
 import { ColumnsType, TablePaginationConfig, TableProps } from "antd/lib/table";
+import { GlobalContext } from "../../../contexts/GlobalContextProvider";
 
 interface IProps {
   staffId: string;
@@ -47,7 +48,10 @@ const StaffClasses = ({ staffId }: IProps) => {
 
   const user = authDetails.user;
   const token = authDetails.userToken;
-  const schoolId = authDetails.choosenSchoolId;
+  const globalCtx = useContext(GlobalContext);
+  const { state: globalState } = globalCtx;
+  const schoolId = globalState?.currentSchool?.id as string;
+  const sessionId = globalState?.currentSchool?.currentSessionId as string;
   const { data: levelsAndCourses, isFetching } = useQuery(
     ["getStaffSessionLevelsAndCourses", staffId],
     () => {
@@ -55,8 +59,7 @@ const StaffClasses = ({ staffId }: IProps) => {
         token,
         schoolId: schoolId as string,
         staffId,
-        levelId: 2,
-        sessionId: 1,
+        sessionId,
       });
     },
     {

@@ -23,7 +23,7 @@ import Policies from "./pages/policies/Policies";
 import Payments from "./pages/Payments";
 import AssignSessionCoursesToStudent from "./pages/Students/AssignSessionCoursesToStudent";
 import AssignSessionCoursesToStaff from "./pages/staff/AssignSessionCoursesToStaff";
-import StaffClassCourses from "./pages/classes/singleClass/courses/StaffClassCourses";
+import StaffClassCourses from "./pages/staff/StaffClassCourses";
 import SingleStudent from "./pages/Students/SingleStudent";
 import RegisterSchool from "./pages/RegisterSchool";
 import UserProfile from "./pages/UserProfile";

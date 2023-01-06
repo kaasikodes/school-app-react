@@ -74,6 +74,7 @@ const AddBulkStaffForm: React.FC<IProps> = ({ closeDrawer }) => {
         console.log("Data", dataParse);
         const columns: string[] = dataParse[0];
         const retrievedData: any[] = dataParse.splice(1);
+        console.log(dataParse[0], "reader", retrievedData, "retiever");
 
         // validate the columns
         if (

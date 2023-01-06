@@ -138,18 +138,13 @@ export const getStudentCoursesGroupedByLevel = ({
 };
 
 interface IDownloadBulkUploadProps {
-  author?: string;
+  schoolId: string;
 }
 
 export const downloadBulkStudentsUploadTemplate = (
-  props?: IDownloadBulkUploadProps
+  props: IDownloadBulkUploadProps
 ): string => {
-  let url = `${process.env.REACT_APP_APP_URL}/api/students/export/bulk-template`;
-  if (props) {
-    url += "?";
-  }
-  if (props?.author) {
-    url += `${props.author}`;
-  }
+  let url = `${process.env.REACT_APP_APP_URL}/api/schools/${props.schoolId}/students/export/bulk-template`;
+
   return url;
 };

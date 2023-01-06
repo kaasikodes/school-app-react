@@ -80,6 +80,7 @@ const LoginForm = () => {
               currentSessionId: school.current_session_id,
             };
           });
+          console.log("SCHOOLs", schools);
           const authData: IAuthDets = {
             loggedIn: true,
             user: {
@@ -108,14 +109,14 @@ const LoginForm = () => {
               authState: authData,
             })
           ) {
-            if (!globalState.currentSchool) {
-              globalDispatch({
-                type: EGlobalOps.setCurrentSchool,
-                payload: authData.schools.find(
-                  (school: any) => school.id === choosenSchoolId
-                ),
-              });
-            }
+            // if (!globalState.currentSchool) {
+            globalDispatch({
+              type: EGlobalOps.setCurrentSchool,
+              payload: authData.schools.find(
+                (school: any) => school.id === choosenSchoolId
+              ),
+            });
+            // }
             openNotification({
               state: "success",
 

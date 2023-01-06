@@ -18,7 +18,7 @@ const CoursesWrapper = ({ classId }: IProps) => {
   return (
     <div>
       <div className="flex flex-col justify-between">
-        <Typography.Title level={3}>{classId} Courses</Typography.Title>
+        <Typography.Title level={3}>School Courses</Typography.Title>
 
         <Breadcrumb>
           {classId && (
@@ -27,7 +27,7 @@ const CoursesWrapper = ({ classId }: IProps) => {
             </Breadcrumb.Item>
           )}
           <Breadcrumb.Item>
-            <span>Courses</span>
+            <span>These are the Courses offered in school</span>
           </Breadcrumb.Item>
         </Breadcrumb>
       </div>

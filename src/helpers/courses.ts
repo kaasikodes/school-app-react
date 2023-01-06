@@ -113,6 +113,42 @@ export const addSessionCourseTeacher = ({
   return res;
 };
 
+export interface IAStaffTHSCourse extends ICourseAuthProps {
+  staffIds: number[];
+  levelIds: number[];
+  sessionId: string;
+  courseId: string;
+}
+export const assignStaffToHandleSessionCourse = ({
+  token,
+  schoolId,
+  levelIds,
+  staffIds,
+
+  courseId,
+  sessionId,
+}: IAStaffTHSCourse) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/courses/assign-staff-to-handle-course-in-classes`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  let data = {
+    schoolId,
+    levelIds,
+    staffIds,
+
+    courseId,
+    sessionId,
+  };
+
+  const res: any = axios.post(url, data, config);
+  return res;
+};
+
 export const saveSchoolCourse = ({
   token,
   schoolId,
@@ -208,9 +244,9 @@ interface IGetCoursePsProps extends ICourseAuthProps {
   searchTerm?: string;
   page?: number;
   limit?: number;
-  sessionId: number;
-  levelId: number;
-  courseId: number;
+  sessionId: string;
+  levelId: string;
+  courseId: string;
 }
 
 export const getSessionCourseParticipants = ({
@@ -225,7 +261,7 @@ export const getSessionCourseParticipants = ({
 }: IGetCoursePsProps) => {
   const url = `${
     process.env.REACT_APP_APP_URL
-  }/api/courses/sessionCourseParticipants?sessionId=${sessionId}&courseId=${courseId}&levelId=${levelId}${
+  }/api/courses/${courseId}/sessionCourseParticipants?sessionId=${sessionId}&levelId=${levelId}${
     searchTerm ? "searchTerm=" + searchTerm : ""
   }&limit=${(limit as number) > 0 ? limit : ""}&page=${
     (page as number) > 0 ? page : ""

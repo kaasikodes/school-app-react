@@ -10,6 +10,7 @@ import {
 import {
   addSessionCourseParticipant,
   addSessionCourseTeacher,
+  assignStaffToHandleSessionCourse,
   getCourse,
   getCourses,
   saveSchoolCourse,
@@ -225,11 +226,31 @@ export const useFetchSingleCourse = ({
         const fetchedData = res.data;
         const item = fetchedData;
 
-        const data: TLevel = {
+        const data: TCourse = {
           id: item.data.id,
           name: item.data.name,
           description: item.data.description,
-          courseCount: item?.courseCount,
+          levelCount: item.data?.levels?.length,
+          levels: item.data?.levels.map(
+            (item: any): TLevel => ({
+              id: item.id,
+              name: item.name,
+              description: item.description,
+              courseCount: item?.courseCount,
+              author: item?.author
+                ? {
+                    id: item.author.id,
+                    name: item.author.name,
+                  }
+                : undefined,
+              createdAt: item.data?.created_at
+                ? moment(item.data.created_at).format("YYYY/MM/DD")
+                : "",
+              updatedAt: item.data?.updated_at
+                ? moment(item.data.updated_at).format("YYYY/MM/DD")
+                : "",
+            })
+          ),
           author: item?.author
             ? {
                 id: item.author.id,
@@ -269,4 +290,7 @@ export const useAddSessionCourseParticipantHook = () => {
 };
 export const useAddSessionCourseTeacher = () => {
   return useMutation(addSessionCourseTeacher);
+};
+export const useAssignStaffToHandleSessionCourse = () => {
+  return useMutation(assignStaffToHandleSessionCourse);
 };

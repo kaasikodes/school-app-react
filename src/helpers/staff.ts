@@ -48,18 +48,67 @@ interface IGetMultipleStaffProps extends IStaffAuthProps {
   searchParams?: ISearchParams;
 }
 interface IGGSSLC extends IStaffAuthProps {
-  sessionId: number;
+  sessionId: string;
   staffId: string;
-  levelId: number;
 }
 export const getStaffSessionLevelsAndCourses = ({
   token,
   schoolId,
   sessionId,
   staffId,
-  levelId,
 }: IGGSSLC) => {
-  const url = `${process.env.REACT_APP_APP_URL}/api/staff/${staffId}/staffSessionLevelsAndCourses?sessionId=${sessionId}&levelId=${levelId}`;
+  const url = `${process.env.REACT_APP_APP_URL}/api/staff/${staffId}/staffSessionLevelsAndCourses?sessionId=${sessionId}`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const res: any = axios.get(url, config);
+  return res;
+};
+
+export interface IGetStaffCourseTeacherRecordProps extends IStaffAuthProps {
+  pagination?: IPaginationProps;
+  searchParams?: ISearchParams;
+  sessionId: string;
+  staffId: string;
+  levelId: string;
+}
+export const getSingleStaffCourseTeacherRecords = ({
+  token,
+  schoolId,
+  pagination,
+  searchParams,
+  staffId,
+  levelId,
+  sessionId,
+}: IGetStaffCourseTeacherRecordProps) => {
+  const limit = pagination?.limit ?? 10;
+  const page = pagination?.page ?? 0;
+  const name = searchParams?.name ?? "";
+
+  let url = `${process.env.REACT_APP_APP_URL}/api/schools/${schoolId}/staff/${staffId}/course-teacher-records`;
+
+  if (pagination || searchParams || sessionId || levelId) {
+    url += "?";
+  }
+  if (pagination) {
+    url += `limit=${limit}&page=${page}&`;
+  }
+  if (searchParams) {
+    url += `searchTerm=${name}&`;
+  }
+
+  // needed parameters
+  if (sessionId) {
+    url += `sessionId=${sessionId}&`;
+  }
+  if (levelId) {
+    url += `levelId=${levelId}&`;
+  }
 
   const config = {
     headers: {

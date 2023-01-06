@@ -12,7 +12,7 @@ import {
   TablePaginationConfig,
   Typography,
 } from "antd";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { EllipsisOutlined, EditOutlined } from "@ant-design/icons";
 import { getCRTemplate } from "../../helpers/schoolCRecordTemplates";
 
@@ -24,6 +24,7 @@ import {
   getSessionCourseParticipants,
   saveCourseParticipantAssessment,
 } from "../../helpers/courses";
+import { GlobalContext } from "../../contexts/GlobalContextProvider";
 
 const backUpDropdown = () => (
   <Dropdown
@@ -123,7 +124,12 @@ const EditableCell: React.FC<EditableCellProps> = ({
   );
 };
 
-const CourseParticipantTable = () => {
+interface IProps {
+  courseId: string;
+  levelId: string;
+}
+
+const CourseParticipantTable = ({ courseId, levelId }: IProps) => {
   const queryClient = useQueryClient();
 
   const [form] = Form.useForm();
@@ -133,7 +139,12 @@ const CourseParticipantTable = () => {
 
   const user = authDetails.user;
   const token = authDetails.userToken;
-  const schoolId = authDetails.choosenSchoolId;
+
+  const globalCtx = useContext(GlobalContext);
+  const { state: globalState } = globalCtx;
+  const schoolId = globalState?.currentSchool?.id as string;
+  const sessionId = globalState?.currentSchool?.currentSessionId as string;
+
   const [pagination, setPagination] = useState<TablePaginationConfig>({
     current: 1,
     pageSize: 4,
@@ -380,9 +391,9 @@ const CourseParticipantTable = () => {
         schoolId: schoolId as string,
         page: pagination.current,
         limit: pagination.pageSize,
-        courseId: 12,
-        levelId: 2,
-        sessionId: 1,
+        courseId: courseId,
+        levelId: levelId,
+        sessionId: sessionId,
 
         searchTerm,
       });
@@ -399,8 +410,9 @@ const CourseParticipantTable = () => {
       onError: (err) => {
         openNotification({
           state: "error",
-          title: "Error occures",
-          description: `Oops, an err occured: ${err?.message}`,
+          title: "Error Occurred",
+          description:
+            err?.response.data.message ?? err?.response.data.error.message,
         });
       },
       select: (res: any) => {

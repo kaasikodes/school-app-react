@@ -1,5 +1,5 @@
-import { Form, Input, Button, DatePicker } from "antd";
-import React, { useContext, useEffect, useState } from "react";
+import { Form, Input, Button } from "antd";
+import React, { useContext } from "react";
 import { openNotification } from "../../helpers/notifications";
 
 import { LoadingOutlined } from "@ant-design/icons";
@@ -9,12 +9,8 @@ import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
 import { useQueryClient } from "react-query";
-import {
-  useFetchSingleClass,
-  useUpdateSingleClass,
-} from "../../helpersAPIHooks/classes";
+
 import { TLevel } from "../../appTypes/levels";
-import { IUpdateClassProps } from "../../helpers/classes";
 import { IUpdateCourseProps } from "../../helpers/courses";
 import {
   useFetchSingleCourse,
