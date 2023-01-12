@@ -5,6 +5,8 @@ import { useState } from "react";
 import { TStaff } from "../../appTypes/staff";
 import ViewStaff from "./ViewStaff";
 import EditStaffForm from "./EditStaffForm";
+import { routes } from "../../routes";
+import { Link } from "react-router-dom";
 
 interface IProps {
   staff: TStaff[];
@@ -42,6 +44,9 @@ const StaffTableView = ({ staff, loading, pagination, onChange }: IProps) => {
       title: "Name",
       dataIndex: "name",
       key: "name",
+      render: (_, record) => (
+        <Link to={`${routes.staff}/${record.id}`}>{record.name}</Link>
+      ),
     },
     {
       title: "Email",
@@ -120,7 +125,6 @@ const StaffTableView = ({ staff, loading, pagination, onChange }: IProps) => {
         pagination={pagination}
         onChange={onChange}
       />
-
       <Drawer open={showD} title={action} onClose={handleClose}>
         {action === EAction.EDIT && (
           <EditStaffForm id={staffId} closeDrawer={handleClose} />

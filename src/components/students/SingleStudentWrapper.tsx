@@ -1,7 +1,10 @@
-import { Tabs } from "antd";
+import { Tabs, Typography } from "antd";
 import React from "react";
+import { Link } from "react-router-dom";
+import { routes } from "../../routes";
 import Profile from "./singleStudent/Profile";
 import StudentClasses from "./singleStudent/StudentClasses";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 
 // staff details, image, id,
 // from - to
@@ -13,12 +16,24 @@ import StudentClasses from "./singleStudent/StudentClasses";
 // groups part of
 interface IProps {
   studentId?: string;
+  isUser?: boolean;
 }
-const SingleStudentWrapper = ({ studentId }: IProps) => {
+const SingleStudentWrapper = ({ studentId, isUser }: IProps) => {
   return (
     <div>
       {/* header */}
-      Back & Breadcrumbs for admin
+      <div className="flex justify-end">
+        {!isUser && (
+          <div className="flex gap-3 items-center">
+            <Link to={routes.staff} className="relative bottom-2">
+              <ArrowLeftOutlined />
+            </Link>
+            <Typography.Title level={4}>
+              <span className="mb-0 text-slate-500">Staff Profile</span>
+            </Typography.Title>
+          </div>
+        )}
+      </div>
       {studentId ? (
         <Tabs>
           <Tabs.TabPane tab="Profile" key="item-1">

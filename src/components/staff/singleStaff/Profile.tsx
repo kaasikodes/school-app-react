@@ -82,7 +82,7 @@ const Profile = ({ staffId }: IProps) => {
         console.log("staff concern", res);
       },
       select: (res: any) => {
-        const result = res.data;
+        const result = res.data.data;
         console.log("single-staff", result);
 
         interface IReturnProps {
@@ -95,12 +95,12 @@ const Profile = ({ staffId }: IProps) => {
         }
 
         const ans: IReturnProps = {
-          id: result.data.id,
+          id: result.id,
           name: result.user.name,
           photo: result.user.profile_photo_url,
           email: result.user.email,
-          staffNo: result.data.staff_no,
-          isActive: result.data.isActive,
+          staffNo: result.staff_no,
+          isActive: result.isActive,
         };
         return ans;
       },

@@ -18,8 +18,9 @@ import { openNotification } from "../../../helpers/notifications";
 import { getStaffSessionLevelsAndCourses } from "../../../helpers/staff";
 import { ColumnsType, TablePaginationConfig, TableProps } from "antd/lib/table";
 import { getStudentCoursesGroupedByLevel } from "../../../helpers/students";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import StudentClassResultOverview from "./StudentClassResultOverview";
+import { GlobalContext } from "../../../contexts/GlobalContextProvider";
 
 interface IProps {
   studentId: string;
@@ -53,7 +54,10 @@ const StudentClasses = ({ studentId }: IProps) => {
 
   const user = authDetails.user;
   const token = authDetails.userToken;
-  const schoolId = authDetails.choosenSchoolId;
+  const globalCtx = useContext(GlobalContext);
+  const { state: globalState } = globalCtx;
+  const schoolId = globalState?.currentSchool?.id as string;
+  const sessionId = globalState?.currentSchool?.currentSessionId as string;
   const { data: levelsAndCourses, isFetching } = useQuery(
     ["getStudentCoursesGroupedByLevel", studentId],
     () => {
@@ -61,8 +65,7 @@ const StudentClasses = ({ studentId }: IProps) => {
         token,
         schoolId: schoolId as string,
         studentId,
-        levelId: 2,
-        sessionId: 1,
+        sessionId,
       });
     },
     {
@@ -141,6 +144,7 @@ const StudentClasses = ({ studentId }: IProps) => {
       title: "Courses Taking",
       dataIndex: "levelCoursesTeachingCount",
       key: "levelCoursesTeachingCount",
+      render: (_: string, record) => record.levelCoursesTakingCount,
     },
 
     {

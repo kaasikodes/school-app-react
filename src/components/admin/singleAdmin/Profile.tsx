@@ -150,6 +150,7 @@ const Profile = ({ adminId }: IProps) => {
           {/* avatar */}
           <div className="md:col-start-5 col-span-2 md:pl-14 flex flex-col gap-4 border-l-2">
             <Avatar shape="square" size={200} src={staff?.photo} />
+            <a href={`mailto:${staff?.email}`}>{staff?.email}</a>
           </div>
         </div>
       )}

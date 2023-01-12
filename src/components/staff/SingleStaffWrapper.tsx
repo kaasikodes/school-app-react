@@ -1,7 +1,10 @@
-import { Tabs } from "antd";
+import { Breadcrumb, Tabs, Typography } from "antd";
 import React from "react";
 import Profile from "./singleStaff/Profile";
 import StaffClasses from "./singleStaff/StaffClasses";
+import { ArrowLeftOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
+import { routes } from "../../routes";
 
 // staff details, image, id,
 // from - to
@@ -19,9 +22,19 @@ const SingleStaffWrapper = ({ staffId, isUser }: IProps) => {
   return (
     <div>
       {/* header */}
-      {!isUser && <span>Back & Breadcrumbs for admin</span>}
+      <div className="flex justify-end">
+        {!isUser && (
+          <div className="flex gap-3 items-center">
+            <Link to={routes.staff} className="relative bottom-2">
+              <ArrowLeftOutlined />
+            </Link>
+            <Typography.Title level={4}>
+              <span className="mb-0 text-slate-500">Staff Profile</span>
+            </Typography.Title>
+          </div>
+        )}
+      </div>
 
-      <br />
       {staffId ? (
         <Tabs>
           <Tabs.TabPane tab="Profile" key="item-1">

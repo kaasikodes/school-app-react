@@ -113,18 +113,16 @@ export const getStudent = ({
 };
 
 interface IGGSSLC extends IStudentAuthProps {
-  sessionId: number;
+  sessionId: string;
   studentId: string;
-  levelId: number;
 }
 export const getStudentCoursesGroupedByLevel = ({
   token,
   schoolId,
   sessionId,
   studentId,
-  levelId,
 }: IGGSSLC) => {
-  const url = `${process.env.REACT_APP_APP_URL}/api/student/${studentId}/studentSessionCoursesGroupedByLevel?sessionId=${sessionId}&levelId=${levelId}`;
+  const url = `${process.env.REACT_APP_APP_URL}/api/student/${studentId}/studentSessionCoursesGroupedByLevel?sessionId=${sessionId}`;
 
   const config = {
     headers: {
