@@ -10,6 +10,10 @@ export const routes = {
   staff: "/staff",
   singleStaff: "/staff/:staffId",
   singleStudent: "/students/:studentId",
+  singleStudentCourseParticipantRecord:
+    "/students/:studentId/course-participant-record/course/:courseId/class/:classId",
+  singleStudentSingleClassOverview:
+    "/students/:studentId/class-overview/:classId",
   sessions: "/sessions",
   assessments: "/assessments",
   custodians: "/custodians",

@@ -5,6 +5,7 @@ import SingleStudentWrapper from "../../components/students/SingleStudentWrapper
 const SingleStudent = () => {
   // use params to pass staff id
   const params = useParams();
+  // restrict to student , custodian , and admin
 
   return (
     <div>

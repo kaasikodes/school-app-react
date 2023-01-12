@@ -208,7 +208,10 @@ const StudentClasses = ({ studentId }: IProps) => {
               expandedRowRender: (record) => (
                 <div className="flex gap-4 px-8">
                   {record.levelCoursesTaking.map((item) => (
-                    <Link key={item.id} to={`/student-courses/${item.id}`}>
+                    <Link
+                      key={item.id}
+                      to={`/students/${studentId}/course-participant-record/course/${item.id}/class/${record.levelId}`}
+                    >
                       <Tag>{item.name}</Tag>
                     </Link>
                   ))}
