@@ -30,6 +30,8 @@ import UserProfile from "./pages/UserProfile";
 import GlobalContextProvider from "./contexts/GlobalContextProvider";
 import Settings from "./pages/Settings";
 import SingleStudentCourse from "./pages/Students/SingleStudentCourse";
+import SingleStudentClassPage from "./pages/Students/SingleStudentClassPage";
+import SingleStudentSessionResultPage from "./pages/Students/SingleStudentSessionResultPage";
 
 const queryClient = new QueryClient();
 
@@ -72,6 +74,14 @@ function App() {
                 <Route
                   path={routes.singleStudentCourseParticipantRecord}
                   element={<SingleStudentCourse />}
+                />
+                <Route
+                  path={routes.singleStudentSingleClassOverview}
+                  element={<SingleStudentClassPage />}
+                />
+                <Route
+                  path={routes.singleStudentSingleSessionResult}
+                  element={<SingleStudentSessionResultPage />}
                 />
                 <Route path={routes.sessions} element={<Sessions />} />
                 <Route path={routes.assessments} element={<Assessments />} />

@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import StudentCourseOverview from "../../components/students/singleStudent/StudentCourseOverview";
+import StudentCourseWrapper from "../../components/students/singleStudent/StudentCourseWrapper";
 
 const SingleStudentCourse = () => {
   const params = useParams();
@@ -10,7 +10,7 @@ const SingleStudentCourse = () => {
 
   return (
     <div>
-      <StudentCourseOverview
+      <StudentCourseWrapper
         classId={classId as string}
         courseId={courseId as string}
         studentId={studentId as string}

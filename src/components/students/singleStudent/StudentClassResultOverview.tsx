@@ -87,13 +87,13 @@ const StudentClassResultOverview = ({
     };
   });
   return (
-    <div className="flrx flex-col gap-4">
+    <div className="flex flex-col gap-4">
       {/* title */}
       <div>
         <PageHeader
           onBack={() => clearClassDetails()}
           title={classDetails.levelName}
-          subTitle="Class"
+          subTitle="Courses"
         />
       </div>
       {/* content -> table */}

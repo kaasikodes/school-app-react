@@ -7,8 +7,8 @@ interface IProps {
   courseId: string;
 }
 
-const StudentCourseOverview = ({ studentId }: IProps) => {
+const StudentCourseWrapper = ({ studentId }: IProps) => {
   return <div>{studentId ? <div>Comp</div> : "not found"}</div>;
 };
 
-export default StudentCourseOverview;
+export default StudentCourseWrapper;

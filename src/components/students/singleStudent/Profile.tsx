@@ -13,10 +13,7 @@ import { useAuthUser } from "react-auth-kit";
 import { useQuery } from "react-query";
 import { IAuthDets } from "../../../appTypes/auth";
 import { openNotification } from "../../../helpers/notifications";
-import {
-  getSingleStaff,
-  getStaffSessionLevelsAndCourses,
-} from "../../../helpers/staff";
+
 import { getStudent } from "../../../helpers/students";
 
 interface IProps {

@@ -14,6 +14,7 @@ export const routes = {
     "/students/:studentId/course-participant-record/course/:courseId/class/:classId",
   singleStudentSingleClassOverview:
     "/students/:studentId/class-overview/:classId",
+  singleStudentSingleSessionResult: "/students/:studentId/session-result",
   sessions: "/sessions",
   assessments: "/assessments",
   custodians: "/custodians",

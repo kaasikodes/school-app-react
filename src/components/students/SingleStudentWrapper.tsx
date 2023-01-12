@@ -25,11 +25,11 @@ const SingleStudentWrapper = ({ studentId, isUser }: IProps) => {
       <div className="flex justify-end">
         {!isUser && (
           <div className="flex gap-3 items-center">
-            <Link to={routes.staff} className="relative bottom-2">
+            <Link to={routes.students} className="relative bottom-2">
               <ArrowLeftOutlined />
             </Link>
             <Typography.Title level={4}>
-              <span className="mb-0 text-slate-500">Staff Profile</span>
+              <span className="mb-0 text-slate-500">Student Profile</span>
             </Typography.Title>
           </div>
         )}

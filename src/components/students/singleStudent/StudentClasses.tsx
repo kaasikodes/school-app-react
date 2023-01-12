@@ -135,7 +135,7 @@ const StudentClasses = ({ studentId }: IProps) => {
       dataIndex: "levelName",
       key: "levelName",
       render: (_: string, record) => (
-        <Button type="text" onClick={() => handleSelectedClass(record)}>
+        <Button type="link" onClick={() => handleSelectedClass(record)}>
           {record.levelName}
         </Button>
       ),
