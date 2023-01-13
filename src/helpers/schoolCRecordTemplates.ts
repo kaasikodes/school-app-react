@@ -27,6 +27,25 @@ export const saveSchoolCRTemplate = (props: ISaveCRTemplateProps) => {
   const res: any = axios.post(url, data, config);
   return res;
 };
+export interface ISetupSchoolSessCRT extends IAuthProps {
+  schoolId: string;
+  templateId: string;
+  sessionId: string;
+}
+export const setupSchoolSessionCRTemplate = (props: ISetupSchoolSessCRT) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/schools/${props.schoolId}/setup-session-course-record-template`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${props.token}`,
+    },
+  };
+  let data = props;
+
+  const res: any = axios.post(url, data, config);
+  return res;
+};
 interface IGetCRTProps extends IAuthProps {
   id: string;
 }

@@ -36,6 +36,7 @@ const AssessmentTemplateContainer = () => {
       </div>
       <CourseAssessmentTemplateCards
         assignSessionTemplate={assignSessionTemplate}
+        setAssignSessionTemplate={setAssignSessionTemplate}
       />
     </div>
   );

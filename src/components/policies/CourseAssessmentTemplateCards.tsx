@@ -1,23 +1,32 @@
 import { Button, Typography } from "antd";
 import React, { useContext, useState } from "react";
 import { useAuthUser } from "react-auth-kit";
-import { isError, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { IAuthDets } from "../../appTypes/auth";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
 import { openNotification } from "../../helpers/notifications";
-import { getCRTemplates } from "../../helpers/schoolCRecordTemplates";
+import {
+  getCRTemplates,
+  setupSchoolSessionCRTemplate,
+} from "../../helpers/schoolCRecordTemplates";
 import ErrorComponent from "../errors/ErrorComponent";
 import ComponentLoader from "../loaders/ComponentLoader";
 import CourseAssessmentTemplateCard, {
   TCourseRecordingTempate,
 } from "./CourseAssessmentTemplateCard";
+import { LoadingOutlined } from "@ant-design/icons";
 
 interface IProps {
   assignSessionTemplate: boolean;
+  setAssignSessionTemplate: Function;
 }
 
-const CourseAssessmentTemplateCards = ({ assignSessionTemplate }: IProps) => {
+const CourseAssessmentTemplateCards = ({
+  assignSessionTemplate,
+  setAssignSessionTemplate,
+}: IProps) => {
   const auth = useAuthUser();
+  const queryClient = useQueryClient();
 
   const authDetails = auth() as unknown as IAuthDets;
 
@@ -25,6 +34,8 @@ const CourseAssessmentTemplateCards = ({ assignSessionTemplate }: IProps) => {
   const globalCtx = useContext(GlobalContext);
   const { state: globalState } = globalCtx;
   const schoolId = globalState?.currentSchool?.id as string;
+  const sessionId = globalState?.currentSchool?.currentSessionId as string;
+
   const {
     data: templatesData,
     isError,
@@ -66,11 +77,56 @@ const CourseAssessmentTemplateCards = ({ assignSessionTemplate }: IProps) => {
     }
   );
   const [selectedTemplate, setSelectedTemplate] = useState("");
+
+  const { mutate } = useMutation(
+    () =>
+      setupSchoolSessionCRTemplate({
+        token,
+        schoolId: schoolId as unknown as string,
+        templateId: selectedTemplate,
+        sessionId,
+      }),
+    {
+      onSuccess: (res: any) => {
+        const result = res?.data;
+        console.log(result, "res");
+        // queryClient.invalidateQueries("cr-templates");
+
+        openNotification({
+          state: "success",
+          title: "Success",
+          description: `${
+            result.message ?? "Course Record Template was created successfully."
+          } `,
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["course-record-templates"],
+          // exact: true,
+        });
+        setSelectedTemplate("");
+        setAssignSessionTemplate(false);
+      },
+      onError: (err: any) => {
+        console.log(err);
+        openNotification({
+          state: "error",
+          title: "Error occurs",
+          description: `Course Record Template was not created!`,
+        });
+      },
+    }
+  );
   const handleItemClick = (id: string) => {
     setSelectedTemplate(id);
   };
   const handleAssignTemplateToSession = () => {
-    console.log(selectedTemplate);
+    openNotification({
+      state: "info",
+      title: "Wait a minute",
+      description: <LoadingOutlined />,
+    });
+
+    mutate();
   };
   return (
     <>
