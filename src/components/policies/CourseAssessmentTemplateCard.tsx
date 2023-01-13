@@ -51,7 +51,13 @@ const CourseAssessmentTemplateCard = ({
     );
   }
   return (
-    <div className="shadow-md flex flex-col gap-4 py-4 px-2 bg-white rounded-sm">
+    <div
+      className={`${
+        selectedTemplate === id
+          ? "shadow-lg border border-green-600"
+          : "shadow-md"
+      }  flex flex-col gap-4 py-4 px-2 bg-white rounded-sm`}
+    >
       <div className="flex justify-between">
         <Typography.Title level={5}>{title}</Typography.Title>
         <Dropdown overlay={menu} trigger={["click"]}>

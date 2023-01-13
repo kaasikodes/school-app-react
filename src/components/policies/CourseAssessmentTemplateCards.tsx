@@ -1,5 +1,5 @@
 import { Button, Typography } from "antd";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useAuthUser } from "react-auth-kit";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { IAuthDets } from "../../appTypes/auth";
@@ -15,6 +15,7 @@ import CourseAssessmentTemplateCard, {
   TCourseRecordingTempate,
 } from "./CourseAssessmentTemplateCard";
 import { LoadingOutlined } from "@ant-design/icons";
+import { useFetchSchoolSessionSetting } from "../../helpersAPIHooks/sessions";
 
 interface IProps {
   assignSessionTemplate: boolean;
@@ -35,7 +36,22 @@ const CourseAssessmentTemplateCards = ({
   const { state: globalState } = globalCtx;
   const schoolId = globalState?.currentSchool?.id as string;
   const sessionId = globalState?.currentSchool?.currentSessionId as string;
+  const [selectedTemplate, setSelectedTemplate] = useState("");
 
+  const {
+    data: schoolSessionSetting,
+    isSuccess: isSessSettingSuccess,
+    isError: isSessSettingErr,
+  } = useFetchSchoolSessionSetting({
+    sessionId,
+    schoolId,
+    token,
+  });
+  useEffect(() => {
+    if (isSessSettingSuccess && schoolSessionSetting.courseRecordTemplateId) {
+      setSelectedTemplate(schoolSessionSetting.courseRecordTemplateId);
+    }
+  }, [isSessSettingSuccess, schoolSessionSetting]);
   const {
     data: templatesData,
     isError,
@@ -65,9 +81,9 @@ const CourseAssessmentTemplateCards = ({
           (item: any) => ({
             id: item.id,
             title: item.title,
-            sessionsUsedIn: item.sessionsUsedIn?.map((item: any) => ({
-              id: item.id,
-              name: item.name,
+            sessionsUsedIn: item.sessions_used_in?.map((item: any) => ({
+              id: item.session_id.id,
+              name: item.session_id.name,
             })),
           })
         );
@@ -76,7 +92,6 @@ const CourseAssessmentTemplateCards = ({
       },
     }
   );
-  const [selectedTemplate, setSelectedTemplate] = useState("");
 
   const { mutate } = useMutation(
     () =>
@@ -130,9 +145,11 @@ const CourseAssessmentTemplateCards = ({
   };
   return (
     <>
-      {isFetching && !isSuccess && !isError && <ComponentLoader />}
-      {isError && <ErrorComponent />}
-      {isSuccess && (
+      {isFetching && !isSuccess && !isError && !isSessSettingSuccess && (
+        <ComponentLoader />
+      )}
+      {isError && isSessSettingErr && <ErrorComponent />}
+      {isSuccess && isSessSettingSuccess && (
         <div
           className={`${
             assignSessionTemplate && "shadow-md px-4 py-4 bg-white"

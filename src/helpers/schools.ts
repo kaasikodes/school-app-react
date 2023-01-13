@@ -4,6 +4,10 @@ import { IAuthProps } from "./auth";
 interface IGetSchoolProps extends IAuthProps {
   id: string;
 }
+export interface IGetSchoolSessSettingProps extends IAuthProps {
+  schoolId: string;
+  sessionId: string;
+}
 interface IGetSchoolsProps extends IAuthProps {
   page?: number;
   limit?: number;
@@ -20,6 +24,23 @@ export const deleteSchool = ({ token, id }: IGetSchoolProps) => {
   };
 
   const res: any = axios.delete(url, config);
+  return res;
+};
+export const getSchoolSessionSetting = ({
+  token,
+  schoolId,
+  sessionId,
+}: IGetSchoolSessSettingProps) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/school-session-setting/${schoolId}/${sessionId}`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const res: any = axios.get(url, config);
   return res;
 };
 export const getSchool = ({ token, id }: IGetSchoolProps) => {
