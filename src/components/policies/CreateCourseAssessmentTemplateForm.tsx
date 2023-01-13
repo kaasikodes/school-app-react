@@ -1,7 +1,7 @@
 import { Button, Form, Input, InputNumber, Space, Typography } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 import { LoadingOutlined } from "@ant-design/icons";
 
@@ -22,6 +22,7 @@ interface ICRTData {
 }
 const CreateCourseAssessmentTemplateForm = ({ handleClose }: IProps) => {
   const auth = useAuthUser();
+  const queryClient = useQueryClient();
 
   const authDetails = auth() as unknown as IAuthDets;
 
@@ -49,13 +50,17 @@ const CreateCourseAssessmentTemplateForm = ({ handleClose }: IProps) => {
             result.message ?? "Course Record Template was created successfully."
           } `,
         });
+        queryClient.invalidateQueries({
+          queryKey: ["course-record-templates"],
+          // exact: true,
+        });
         handleClose();
       },
       onError: (err: any) => {
         console.log(err);
         openNotification({
           state: "error",
-          title: "Error occures",
+          title: "Error occurs",
           description: `Course Record Template was not created!`,
         });
       },

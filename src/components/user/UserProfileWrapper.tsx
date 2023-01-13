@@ -1,11 +1,9 @@
 import React, { useContext } from "react";
-import { useAuthUser } from "react-auth-kit";
-import { IAuthDets } from "../../appTypes/auth";
 import { ERole } from "../../appTypes/roles";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
 import SingleAdminWrapper from "../admin/SingleAdminWrapper";
-import Profile from "../staff/singleStaff/Profile";
 import SingleStaffWrapper from "../staff/SingleStaffWrapper";
+import SingleStudentWrapper from "../students/SingleStudentWrapper";
 
 const UserProfileWrapper = () => {
   const globalCtx = useContext(GlobalContext);
@@ -16,6 +14,7 @@ const UserProfileWrapper = () => {
   const userRole = globalState.currentSchool?.currentRole;
   const staffId = globalState.currentSchool?.staffId;
   const adminId = globalState.currentSchool?.adminId;
+  const studentId = globalState.currentSchool?.studentId;
 
   return (
     <div>
@@ -28,6 +27,10 @@ const UserProfileWrapper = () => {
       {/* messages */}
       {/* if staff classes teaching, no students */}
       {/* if custodian sttudents, Previous session reports */}
+
+      {userRole === ERole.STUDENT && (
+        <SingleStudentWrapper studentId={studentId} isUser />
+      )}
       {userRole === ERole.STAFF && (
         <SingleStaffWrapper staffId={staffId} isUser />
       )}

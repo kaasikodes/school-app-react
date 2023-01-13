@@ -203,7 +203,10 @@ const StudentClasses = ({ studentId }: IProps) => {
             columns={columns}
             loading={isFetching}
             size="small"
-            dataSource={levelsAndCourses?.coursesGroupedByLevel}
+            dataSource={levelsAndCourses?.coursesGroupedByLevel.map((item) => ({
+              ...item,
+              key: item.levelId,
+            }))}
             expandable={{
               expandedRowRender: (record) => (
                 <div className="flex gap-4 px-8">

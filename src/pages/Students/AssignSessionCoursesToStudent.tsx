@@ -7,36 +7,61 @@ import {
   Button,
   Spin,
 } from "antd";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useAuthUser } from "react-auth-kit";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { IAuthDets } from "../../appTypes/auth";
+import { TLevel } from "../../appTypes/levels";
 import { IClassEntry } from "../../components/classes/ClassesTable";
 import { ICourseEntry } from "../../components/courses/SchoolSessionCoursesTable";
+import { ICGByLevel } from "../../components/students/singleStudent/StudentClasses";
 import { IStudentEntry } from "../../components/students/StudentsTable";
+import { GlobalContext } from "../../contexts/GlobalContextProvider";
 import { generalValidationRules } from "../../formValidation";
 import {
   getCoursesGroupedByLevel,
   IASCParticipant,
 } from "../../helpers/courses";
 import { openNotification } from "../../helpers/notifications";
-import { getStudent } from "../../helpers/students";
+import {
+  getStudent,
+  getStudentCoursesGroupedByLevel,
+} from "../../helpers/students";
+import { useFetchClasses } from "../../helpersAPIHooks/classes";
 import { useAddSessionCourseParticipantHook } from "../../helpersAPIHooks/courses";
+
+interface ICourse {
+  id: number;
+  name: string;
+  assessmentCount: number;
+  breakdown: string;
+  grade: string;
+  total: number;
+}
+
+interface IReturnProps {
+  coursesGroupedByLevel: ICGByLevel[];
+  courses: ICourse[];
+}
 
 const AssignSessionCoursesToStudent = () => {
   let { studentId } = useParams();
 
   const auth = useAuthUser();
-
   const authDetails = auth() as unknown as IAuthDets;
 
-  // const user = authDetails.user;
   const token = authDetails.userToken;
-  const schoolId = authDetails.choosenSchoolId;
-  const sessionId = authDetails.choosenSchoolCurrentSessionId ?? "1";
-  const [_, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(0);
+
+  const globalCtx = useContext(GlobalContext);
+  const { state: globalState } = globalCtx;
+  const schoolId = globalState?.currentSchool?.id as string;
+  const sessionId = globalState?.currentSchool?.currentSessionId as string;
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<TLevel | undefined>(
+    undefined
+  );
   const [form] = Form.useForm();
 
   const handleSearch = (e: any) => {
@@ -45,8 +70,8 @@ const AssignSessionCoursesToStudent = () => {
   };
 
   const handleCategoryClick = (val: number) => {
-    console.log(val, "catLevel");
-    setSelectedCategory(val);
+    const level = classesData?.data.find((item) => item.id === val);
+    setSelectedCategory(level);
   };
 
   const {
@@ -94,72 +119,21 @@ const AssignSessionCoursesToStudent = () => {
   );
 
   const {
-    data: courseData,
-
+    data: classesData,
+    isError,
     isSuccess: isCSuccess,
-  } = useQuery(
-    ["coursesGroupedByLevel"],
-    () =>
-      getCoursesGroupedByLevel({
-        token,
-        schoolId: schoolId as string,
-      }),
+  } = useFetchClasses({
+    schoolId,
+    token,
+    pagination: {
+      limit: 100,
 
-    {
-      select: (res: any) => {
-        const result = res.data.data;
-        console.log(result, "new");
-
-        // const fCourses: ICourseEntry[] = result.map(
-        //   (item: any): ICourseEntry => ({
-        //     id: item.id,
-        //     name: item.name,
-        //     description: item.description,
-        //     department: item?.department_id,
-        //     isActive: item.isActive,
-        //     levelCount: item?.levelCount,
-        //     studentCount: item?.studentCount,
-        //     teacherCount: item?.teacherCount,
-        //     addedBy: item?.addedBy,
-        //     createdAt: item?.created_at,
-        //   })
-        // );
-
-        const levels: IClassEntry[] = [];
-        const courses: ICourseEntry[] = [];
-
-        result.forEach((level: any) => {
-          levels.push({ id: level.id, name: level.name });
-          level.courses.forEach((item: any) => {
-            courses.push({
-              id: item.id,
-              name: item.name,
-              description: item.description,
-              department: item?.department_id,
-              isActive: item.isActive,
-              levelCount: item?.levelCount,
-              studentCount: item?.studentCount,
-              teacherCount: item?.teacherCount,
-              addedBy: item?.addedBy,
-              createdAt: item?.created_at,
-              levelId: item?.pivot?.level_id,
-            });
-          });
-        });
-
-        return {
-          courses,
-          levels: [
-            {
-              id: 0,
-              name: "all",
-            },
-            ...levels,
-          ],
-        };
-      },
-    }
-  );
+      page: 1,
+    },
+    searchParams: {
+      name: searchTerm,
+    },
+  });
   // TO DO
   // get student route
   // check if school fee is paid, if not inform the staff that student cannot be assigned courses cos of that
@@ -238,12 +212,12 @@ const AssignSessionCoursesToStudent = () => {
                         </Typography.Title>
                         {/* permission categories */}
                         <div className="flex flex-wrap gap-4 pb-3 border-b ">
-                          {courseData.levels.map((item) => (
+                          {classesData.data.map((item) => (
                             <div className="" key={item.id}>
                               <button
                                 type="button"
                                 className={` capitalize hover:bg-sky-700 hover:border-sky-700 focus:bg-sky-700 active:bg-sky-700 text-white block rounded-full text-sm cursor-pointer px-2 py-1 hover:text-white ${
-                                  item.id === selectedCategory
+                                  item.id === selectedCategory?.id
                                     ? "bg-sky-700"
                                     : "bg-transparent border border-slate-400 text-slate-400"
                                 }`}
@@ -273,24 +247,12 @@ const AssignSessionCoursesToStudent = () => {
                         >
                           <Checkbox.Group style={{ width: "100%" }}>
                             <div className="my-6 grid grid-cols-4 gap-4">
-                              {courseData.courses.map((item) => (
-                                <div
-                                  key={item.id}
-                                  className={`${
-                                    item.levelId === selectedCategory ||
-                                    selectedCategory === 0
-                                      ? //   ||
-                                        //   searchTerm
-                                        //     .toLowerCase()
-                                        //     .search(item.name.toLowerCase()) !== -1
-                                        "flex"
-                                      : "hidden"
-                                  }`}
-                                >
+                              {selectedCategory?.courses?.map((item) => (
+                                <div key={item.id}>
                                   <Checkbox
                                     value={{
                                       courseId: item.id,
-                                      levelId: item.levelId,
+                                      levelId: selectedCategory.id,
                                     }}
                                     onChange={(e) => {
                                       console.log(e);

@@ -5,6 +5,7 @@ import CreateCourseAssessmentTemplateForm from "./CreateCourseAssessmentTemplate
 
 const AssessmentTemplateContainer = () => {
   const [showD, setShowD] = useState(false);
+  const [assignSessionTemplate, setAssignSessionTemplate] = useState(false);
   return (
     <div className="flex flex-col gap-6">
       <Drawer
@@ -18,13 +19,24 @@ const AssessmentTemplateContainer = () => {
       </Drawer>
       <div className="flex justify-end">
         <div className="flex gap-2">
-          <Button type="ghost">Assign policy to Session</Button>
-          <Button type="primary" onClick={() => setShowD(true)}>
-            Create New Template
+          <Button
+            type="ghost"
+            onClick={() => setAssignSessionTemplate((val) => !val)}
+          >
+            {assignSessionTemplate
+              ? "Cancel Operation"
+              : "Assign Template to Session"}
           </Button>
+          {!assignSessionTemplate && (
+            <Button type="primary" onClick={() => setShowD(true)}>
+              Create New Template
+            </Button>
+          )}
         </div>
       </div>
-      <CourseAssessmentTemplateCards />
+      <CourseAssessmentTemplateCards
+        assignSessionTemplate={assignSessionTemplate}
+      />
     </div>
   );
 };

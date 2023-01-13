@@ -1,22 +1,10 @@
-import {
-  Avatar,
-  Divider,
-  Rate,
-  Skeleton,
-  Space,
-  Table,
-  Tag,
-  Typography,
-} from "antd";
+import { Avatar, Divider, Skeleton, Space, Table, Tag, Typography } from "antd";
 import React from "react";
 import { useAuthUser } from "react-auth-kit";
 import { useQuery } from "react-query";
 import { IAuthDets } from "../../../appTypes/auth";
 import { openNotification } from "../../../helpers/notifications";
-import {
-  getSingleStaff,
-  getStaffSessionLevelsAndCourses,
-} from "../../../helpers/staff";
+import { getSingleStaff } from "../../../helpers/staff";
 
 interface IProps {
   staffId: string;

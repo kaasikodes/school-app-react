@@ -151,6 +151,7 @@ const Profile = ({ studentId }: IProps) => {
                 {student?.studentNo}
               </p>
             </div>
+            <span>{student?.email}</span>
           </div>
         </div>
       )}

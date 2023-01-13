@@ -1,5 +1,6 @@
 import moment from "moment";
 import { useMutation, useQuery } from "react-query";
+import { TCourse } from "../appTypes/courses";
 import { TLevel } from "../appTypes/levels";
 import { IPaginationProps, ISearchParams } from "../appTypes/requestParams";
 import {
@@ -73,6 +74,9 @@ export const useFetchClasses = ({
             name: item.data.name,
             description: item.data.description,
             courseCount: item?.courseCount,
+            courses: item.data?.courses.map(
+              (item: any): TCourse => ({ id: item.id, name: item.name })
+            ),
             author: item?.author
               ? {
                   id: item.author.id,
