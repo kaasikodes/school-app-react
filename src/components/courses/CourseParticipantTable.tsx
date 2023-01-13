@@ -25,6 +25,7 @@ import {
   saveCourseParticipantAssessment,
 } from "../../helpers/courses";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
+import { useFetchSchoolSessionSetting } from "../../helpersAPIHooks/sessions";
 
 const backUpDropdown = () => (
   <Dropdown
@@ -293,18 +294,30 @@ const CourseParticipantTable = ({ courseId, levelId }: IProps) => {
     },
   ];
   const {
+    data: schoolSessionSetting,
+    isSuccess: isSessSettingSuccess,
+    isError: isSessSettingErr,
+  } = useFetchSchoolSessionSetting({
+    sessionId,
+    schoolId,
+    token,
+  });
+  const {
     data: templateData,
 
     isSuccess,
   } = useQuery<any, any, any, any>(
-    ["course-record-templates", 2],
+    ["course-record-templates", schoolSessionSetting?.courseRecordTemplateId],
+
     () => {
       return getCRTemplate({
         token,
-        id: "4",
+        id: schoolSessionSetting?.courseRecordTemplateId as string,
       });
     },
+
     {
+      enabled: !!schoolSessionSetting?.courseRecordTemplateId,
       onError: (err) => {
         openNotification({
           state: "error",
@@ -421,7 +434,7 @@ const CourseParticipantTable = ({ courseId, levelId }: IProps) => {
         const ans = result.map((item: any) => ({
           key: item.data.id,
           id: item.data.id,
-          studentName: item.user.name,
+          studentName: item.user?.name,
           ...JSON.parse(item.data.break_down),
 
           grade: item.data.grade,

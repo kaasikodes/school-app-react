@@ -116,7 +116,9 @@ const CourseAssessmentTemplateCards = ({
         });
         queryClient.invalidateQueries({
           queryKey: ["course-record-templates"],
-          // exact: true,
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["school-session-setting"],
         });
         setSelectedTemplate("");
         setAssignSessionTemplate(false);
