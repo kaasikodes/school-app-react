@@ -43,7 +43,11 @@ const ADMIN_LINKS: ILink[] = [
     link: "/classes",
   },
   { icon: ApartmentOutlined as IconType, label: "Staff", link: "/staff" },
-  { icon: IoIosHammer as IconType, label: "Policies", link: "/policies" },
+  {
+    icon: IoIosHammer as IconType,
+    label: "Policies & Templates",
+    link: "/policies",
+  },
 
   {
     icon: AuditOutlined as IconType,
