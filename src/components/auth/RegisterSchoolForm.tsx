@@ -1,5 +1,5 @@
 import { Button, Form, Input, Select } from "antd";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   textInputValidationRules,
   generalValidationRules,
@@ -23,6 +23,15 @@ const RegisterSchoolForm = () => {
   const { mutate, isLoading } = useRegisterSchool();
   const globalCtx = useContext(GlobalContext);
   const { state: globalState, dispatch: globalDispatch } = globalCtx;
+
+  useEffect(() => {
+    openNotification({
+      state: "info",
+      title: "Warning",
+      description:
+        "Please Contact Admin to turn on the server 4 testing, before proceeding. Thank You. Email: odehisaac1998@gmail.com  || phone: +234 8144893734",
+    });
+  }, []);
 
   const handleFinish = (data: any) => {
     const props: IRegSchoolProps = {
