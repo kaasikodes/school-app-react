@@ -1,6 +1,6 @@
 import { Form, Input, Checkbox, Button, Spin, Col, Row } from "antd";
 
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 import { IAuthProps, loginUser } from "../../helpers/auth";
 import { openNotification } from "../../helpers/notifications";
@@ -28,6 +28,15 @@ const LoginForm = () => {
   const { mutate, isLoading } = useLoginUser();
   const globalCtx = useContext(GlobalContext);
   const { state: globalState, dispatch: globalDispatch } = globalCtx;
+
+  useEffect(() => {
+    openNotification({
+      state: "info",
+      title: "Warning",
+      description:
+        "Please Contact Admin to turn the server 4 testing, before proceeding. Thank You. Email: odehisaac1998@gmail.com  || phone: +234 8144893734",
+    });
+  }, []);
 
   const onFinish = (values: any) => {
     const props = {
