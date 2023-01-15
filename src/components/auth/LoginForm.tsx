@@ -34,7 +34,7 @@ const LoginForm = () => {
       state: "info",
       title: "Warning",
       description:
-        "Please Contact Admin to turn the server 4 testing, before proceeding. Thank You. Email: odehisaac1998@gmail.com  || phone: +234 8144893734",
+        "Please Contact Admin to turn on the server 4 testing, before proceeding. Thank You. Email: odehisaac1998@gmail.com  || phone: +234 8144893734",
     });
   }, []);
 
