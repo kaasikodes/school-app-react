@@ -89,7 +89,6 @@ const LoginForm = () => {
               currentSessionId: school.current_session_id,
             };
           });
-          console.log("SCHOOLs", schools);
           const authData: IAuthDets = {
             loggedIn: true,
             user: {

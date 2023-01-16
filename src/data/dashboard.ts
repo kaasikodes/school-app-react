@@ -19,6 +19,7 @@ import { TbSchool } from "react-icons/tb";
 import { FaSchool } from "react-icons/fa";
 import { AiOutlineSchedule } from "react-icons/ai";
 import { IconType } from "react-icons";
+import { routes } from "../routes";
 
 interface IDSMProps {
   role: ERole;
@@ -29,147 +30,150 @@ export interface ILink {
   link: string;
 }
 const ADMIN_LINKS: ILink[] = [
-  { icon: FaSchool as IconType, label: "Home", link: "/" },
+  { icon: FaSchool as IconType, label: "Profile", link: routes.index },
   // { icon: TbSchool as IconType, label: "Schools", link: "/schools" },
   {
     icon: ApartmentOutlined as IconType,
     label: "Departments",
-    link: "/departments",
+    link: routes.departments,
   },
-  { icon: AuditOutlined as IconType, label: "Courses", link: "/courses" },
+  { icon: AuditOutlined as IconType, label: "Courses", link: routes.courses },
   {
     icon: BsFileEarmarkPostFill as IconType,
-    label: "Levels",
-    link: "/classes",
+    label: "Classes",
+    link: routes.classes,
   },
-  { icon: ApartmentOutlined as IconType, label: "Staff", link: "/staff" },
+  { icon: ApartmentOutlined as IconType, label: "Staff", link: routes.staff },
   {
     icon: IoIosHammer as IconType,
     label: "Policies & Templates",
-    link: "/policies",
+    link: routes.policies,
   },
 
   {
     icon: AuditOutlined as IconType,
     label: "Sessions",
     // link: "/sessions/admin",
-    link: "/sessions",
+    link: routes.sessions,
   },
 
   //courses belongs to the current session
 
-  { icon: BookOutlined as IconType, label: "Custodians", link: "/custodians" },
-  { icon: GiTeacher as IconType, label: "Students", link: "/students" },
+  {
+    icon: BookOutlined as IconType,
+    label: "Custodians",
+    link: routes.custodians,
+  },
+  { icon: GiTeacher as IconType, label: "Students", link: routes.students },
 
   {
     icon: CalculatorOutlined as IconType,
     label: "Reports",
-    link: "/reports",
+    link: routes.reports,
   },
 
   {
     icon: NotificationOutlined as IconType,
     label: "Announcements",
-    link: "/announcements",
+    link: routes.announcements,
+  },
+  {
+    icon: NotificationOutlined as IconType,
+    label: "My Requisitions",
+    link: routes.requisitions,
+  },
+  {
+    icon: NotificationOutlined as IconType,
+    label: "Approvals",
+    link: routes.approvals,
+  },
+  {
+    icon: NotificationOutlined as IconType,
+    label: "Events",
+    link: routes.events,
   },
 
-  { icon: AiOutlineSchedule, label: "Payments", link: "/payments" },
+  { icon: AiOutlineSchedule, label: "Payments", link: routes.payments },
 
   { icon: LogoutOutlined as IconType, label: "Log out", link: "/logout" },
-  { icon: UserOutlined as IconType, label: "Filler", link: "/" },
+  { icon: UserOutlined as IconType, label: "Filler", link: routes.index },
 ];
 
 const STAFF_LINKS: ILink[] = [
-  { icon: FaSchool as IconType, label: "Home", link: "/" },
+  { icon: FaSchool as IconType, label: "Profile", link: routes.index },
   // { icon: TbSchool as IconType, label: "Schools", link: "/schools" },
 
-  { icon: AuditOutlined as IconType, label: "Classes", link: "/classes" },
-  {
-    icon: ApartmentOutlined as IconType,
-    label: "Departments",
-    link: "setting/departments",
-  },
-  {
-    icon: AuditOutlined as IconType,
-    label: "Sessions",
-    link: "/sessions/staff",
-  },
-
-  { icon: BookOutlined as IconType, label: "Courses", link: "/courses" },
+  { icon: AuditOutlined as IconType, label: "Classes", link: routes.classes },
+  { icon: AuditOutlined as IconType, label: "Courses", link: routes.courses },
 
   {
-    icon: CalculatorOutlined as IconType,
-    label: "Assessments",
-    link: "/assessments",
+    icon: CheckSquareOutlined as IconType,
+    label: "My Requisitions",
+    link: routes.requisitions,
   },
-
   {
     icon: CheckSquareOutlined as IconType,
     label: "Approvals",
-    link: "/approvals",
+    link: routes.approvals,
   },
 
-  { icon: AiOutlineSchedule as IconType, label: "Events", link: "/events" },
+  { icon: AiOutlineSchedule as IconType, label: "Events", link: routes.events },
 
   { icon: LogoutOutlined as IconType, label: "Log out", link: "/logout" },
 ];
 
-const CUSTODIAN_LINKS: ILink[] = [
-  { icon: FaSchool as IconType, label: "Home", link: "/" },
-  // { icon: TbSchool as IconType, label: "Schools", link: "/schools" },
-
-  { icon: AuditOutlined as IconType, label: "My Children", link: "/students" },
-
-  { icon: BookOutlined as IconType, label: "Payments", link: "/courses" },
-
-  {
-    icon: CalculatorOutlined as IconType,
-    label: "Academic Records",
-    link: "/assessments",
-  },
-
-  {
-    icon: CheckSquareOutlined as IconType,
-    label: "Pending Approvals",
-    link: "/approvals",
-  },
-
-  {
-    icon: AiOutlineSchedule as IconType,
-    label: "Upcoming Events",
-    link: "/events",
-  },
-
-  { icon: LogoutOutlined as IconType, label: "Log out", link: "/logout" },
-];
 const STUDENT_LINKS: ILink[] = [
-  { icon: FaSchool as IconType, label: "Home", link: "/" },
+  { icon: FaSchool as IconType, label: "Profile", link: routes.index },
   // { icon: TbSchool as IconType, label: "Schools", link: "/schools" },
 
+  { icon: AuditOutlined as IconType, label: "Classes", link: routes.classes },
+  { icon: AuditOutlined as IconType, label: "Courses", link: routes.courses },
+  {
+    icon: AuditOutlined as IconType,
+    label: "Assessments",
+    link: routes.assessments,
+  },
   {
     icon: AuditOutlined as IconType,
     label: "Academic Records",
-    link: "student/academic-records",
-  },
-
-  { icon: BookOutlined as IconType, label: "My Courses", link: "/courses" },
-
-  {
-    icon: CalculatorOutlined as IconType,
-    label: "Assessments",
-    link: "/assessments",
+    link: routes.academicRecords,
   },
 
   {
     icon: CheckSquareOutlined as IconType,
     label: "My Requisitions",
-    link: "/approvals",
+    link: routes.requisitions,
+  },
+
+  { icon: AiOutlineSchedule as IconType, label: "Events", link: routes.events },
+
+  { icon: LogoutOutlined as IconType, label: "Log out", link: "/logout" },
+];
+
+const CUSTODIAN_LINKS: ILink[] = [
+  { icon: FaSchool as IconType, label: "Profile", link: routes.index },
+  // { icon: TbSchool as IconType, label: "Schools", link: "/schools" },
+
+  { icon: AuditOutlined as IconType, label: "My Wards", link: routes.students },
+
+  { icon: BookOutlined as IconType, label: "Payments", link: routes.payments },
+
+  {
+    icon: AuditOutlined as IconType,
+    label: "Academic Records",
+    link: routes.academicRecords,
+  },
+
+  {
+    icon: CheckSquareOutlined as IconType,
+    label: "Approvals",
+    link: routes.approvals,
   },
 
   {
     icon: AiOutlineSchedule as IconType,
     label: "Upcoming Events",
-    link: "/events",
+    link: routes.events,
   },
 
   { icon: LogoutOutlined as IconType, label: "Log out", link: "/logout" },
@@ -200,6 +204,8 @@ interface IUserLink {
   title: string;
 }
 
+// TO DO
+// Make use of this in profile dropdown
 const ADMIN_USER_LINKS: IUserLink[] = [
   {
     label: "My Profile",
