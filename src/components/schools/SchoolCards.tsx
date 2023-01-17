@@ -58,12 +58,6 @@ const SchoolCards = ({
           total={total}
           pageSize={pageSize}
         />
-        {/* <Pagination
-          current={current}
-          onChange={onChange}
-          total={total}
-          pageSize={pageSize}
-        /> */}
       </div>
     </div>
   );
