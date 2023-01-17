@@ -45,7 +45,6 @@ const TopActions = ({
   const [selectedRole, setSelectedRole] = useState(ERole.NONE);
 
   const handleRoleChange = (value: ERole) => {
-    console.log(value, "FRom");
     setSelectedRole(value);
   };
 

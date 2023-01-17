@@ -6,11 +6,10 @@ import ClassesViewContainer from "./ClassesViewContainer";
 
 const ClassesWrapper = () => {
   const [showDrawer, setShowDrawer] = useState(false);
-  const [refresh, setRefresh] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   return (
     <div>
-      <Typography.Title level={3}>Classes</Typography.Title>
+      <Typography.Title level={3}>School Classes</Typography.Title>
       <div className=" mt-4 flex justify-end">
         <div className="flex gap-4">
           <Input.Search
