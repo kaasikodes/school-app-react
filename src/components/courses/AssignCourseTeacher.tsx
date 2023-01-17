@@ -35,7 +35,6 @@ const AssignCourseTeacher = ({ closeDrawer, id }: IProps) => {
   const { state: globalState } = globalCtx;
   const schoolId = globalState?.currentSchool?.id as string;
   const sessionId = globalState?.currentSchool?.currentSessionId as string;
-  const adminId = globalState?.currentSchool?.adminId as string;
   const [staffHint, setStaffHint] = useState<string | undefined>();
   const {
     data: staffData,
@@ -61,7 +60,6 @@ const AssignCourseTeacher = ({ closeDrawer, id }: IProps) => {
   const { mutate, isLoading } = useAssignStaffToHandleSessionCourse();
 
   const handleFinish = (data: any) => {
-    console.log(",,,,,,,,,,,,", sessionId);
     if (schoolId) {
       const props: IAStaffTHSCourse = {
         schoolId,

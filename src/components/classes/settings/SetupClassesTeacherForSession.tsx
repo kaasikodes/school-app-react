@@ -4,9 +4,14 @@ import React, { useContext, useState } from "react";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../../appTypes/auth";
 import { GlobalContext } from "../../../contexts/GlobalContextProvider";
+import { generalValidationRules } from "../../../formValidation";
+import { IAStaffTHSClass, IAStaffTHSCourse } from "../../../helpers/courses";
+import { openNotification } from "../../../helpers/notifications";
 import { useFetchClasses } from "../../../helpersAPIHooks/classes";
+import { useAssignStaffToHandleSessionClasses } from "../../../helpersAPIHooks/courses";
 import { useFetchAllStaff } from "../../../helpersAPIHooks/staff";
 import { IClassEntry } from "../ClassesTable";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const SetupClassesTeacherForSession = () => {
   const auth = useAuthUser();
@@ -18,6 +23,8 @@ const SetupClassesTeacherForSession = () => {
   const globalCtx = useContext(GlobalContext);
   const { state: globalState } = globalCtx;
   const schoolId = globalState?.currentSchool?.id as string;
+  const sessionId = globalState?.currentSchool?.currentSessionId as string;
+
   const [staffHint, setStaffHint] = useState<string | undefined>();
 
   const { data: levelsData } = useFetchClasses({
@@ -46,16 +53,58 @@ const SetupClassesTeacherForSession = () => {
     },
   });
 
-  const handleSubmit = (data: any) => {
-    console.log("ASS STAFF", data);
+  const { mutate, isLoading } = useAssignStaffToHandleSessionClasses();
+
+  const handleFinish = (data: any) => {
+    const classStaffIds = Object.entries(data).map((item: any) => ({
+      levelId: item[0],
+      staffId: item[1],
+    }));
+    if (schoolId) {
+      const props: IAStaffTHSClass = {
+        schoolId,
+        token,
+        classStaffIds,
+        sessionId,
+        // adminId,
+      };
+      // return;
+      openNotification({
+        state: "info",
+        title: "Wait a second ...",
+        description: <LoadingOutlined />,
+      });
+      mutate(props, {
+        onError: (err: any) => {
+          openNotification({
+            state: "error",
+            title: "Error Occurred",
+            description:
+              err?.response.data.message ?? err?.response.data.error.message,
+          });
+        },
+        onSuccess: (res: any) => {
+          // const result = res.data.data;
+          console.log("TEST SSSS", res);
+
+          openNotification({
+            state: "success",
+
+            title: "Success",
+            description: res.data.message,
+            // duration: 0.4,
+          });
+        },
+      });
+    }
   };
   return (
     <div>
       {" "}
       <div className="mt-6">
-        <Form onFinish={handleSubmit} initialValues={{ Quantum: true }}>
+        <Form onFinish={handleFinish} requiredMark={false}>
           <div className="flex items-center justify-end">
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" loading={isLoading}>
               Save Class Teachers
             </Button>
           </div>
@@ -71,6 +120,7 @@ const SetupClassesTeacherForSession = () => {
                   label={item.name}
                   labelCol={{ span: 24 }}
                   // wrapperCol={{ span: 24 }}
+                  rules={generalValidationRules}
                 >
                   <Select
                     onSearch={(val) => setStaffHint(val)}

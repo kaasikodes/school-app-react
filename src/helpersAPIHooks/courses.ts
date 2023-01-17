@@ -10,6 +10,7 @@ import {
 import {
   addSessionCourseParticipant,
   addSessionCourseTeacher,
+  assignStaffToHandleSessionClasses,
   assignStaffToHandleSessionCourse,
   getCourse,
   getCourses,
@@ -293,4 +294,7 @@ export const useAddSessionCourseTeacher = () => {
 };
 export const useAssignStaffToHandleSessionCourse = () => {
   return useMutation(assignStaffToHandleSessionCourse);
+};
+export const useAssignStaffToHandleSessionClasses = () => {
+  return useMutation(assignStaffToHandleSessionClasses);
 };
