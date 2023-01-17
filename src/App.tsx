@@ -61,7 +61,7 @@ function App() {
                 }
               >
                 <Route index element={<UserProfile />} />
-                {/* <Route path={routes.schools} element={<Schools />} /> */}
+                <Route path={routes.schools} element={<Schools />} />
                 <Route path={routes.departments} element={<Departments />} />
                 <Route path={routes.courses} element={<Courses />} />
                 <Route path={routes.classes} element={<Classes />} />

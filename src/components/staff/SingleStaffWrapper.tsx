@@ -5,6 +5,7 @@ import StaffClasses from "./singleStaff/StaffClasses";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { routes } from "../../routes";
+import StaffActivities from "./singleStaff/StaffActivities";
 
 // staff details, image, id,
 // from - to
@@ -46,7 +47,7 @@ const SingleStaffWrapper = ({ staffId, isUser }: IProps) => {
 
           {/* for admin */}
           <Tabs.TabPane tab="Activities" key="item-3">
-            Staff recorded scores of student in SS3A Physics
+            <StaffActivities />
           </Tabs.TabPane>
         </Tabs>
       ) : (
