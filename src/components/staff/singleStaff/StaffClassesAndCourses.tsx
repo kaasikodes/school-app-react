@@ -18,6 +18,7 @@ import { GlobalContext } from "../../../contexts/GlobalContextProvider";
 
 interface IProps {
   staffId: string;
+  show?: "coursesGroupedByLevel" | "both" | "classesTeacherIsManaging";
 }
 interface IReturnProps {
   coursesGroupedByLevel: ICGByLevels[];
@@ -41,7 +42,7 @@ interface ICGBySess {
   canCompileAssessment: boolean;
 }
 
-const StaffClasses = ({ staffId }: IProps) => {
+const StaffClassesAndCourses = ({ staffId, show = "both" }: IProps) => {
   const auth = useAuthUser();
 
   const authDetails = auth() as unknown as IAuthDets;
@@ -168,31 +169,39 @@ const StaffClasses = ({ staffId }: IProps) => {
   ];
   return (
     <div className="mt-4 flex flex-col gap-4">
-      <div className="flex flex-col gap-4">
-        <Typography.Title level={5}>Classes I'm Teaching</Typography.Title>
+      {(show === "both" || show === "coursesGroupedByLevel") && (
+        <div className="flex flex-col gap-4">
+          <Typography.Title level={5}>
+            Courses your teaching grouped by class
+          </Typography.Title>
 
-        <Table
-          columns={columns}
-          loading={isFetching}
-          size="small"
-          dataSource={levelsAndCourses?.coursesGroupedByLevel}
-        />
-      </div>
-      <div>
-        <List
-          size="small"
-          split
-          header={
-            <Typography.Title level={5}>Classes I'm Managing</Typography.Title>
-          }
-          loading={isFetching}
-          bordered
-          dataSource={levelsAndCourses?.classesGroupedBySession}
-          renderItem={(item) => <List.Item>{item.name}</List.Item>}
-        />
-      </div>
+          <Table
+            columns={columns}
+            loading={isFetching}
+            size="small"
+            dataSource={levelsAndCourses?.coursesGroupedByLevel}
+          />
+        </div>
+      )}
+      {(show === "both" || show === "classesTeacherIsManaging") && (
+        <div>
+          <List
+            size="small"
+            split
+            header={
+              <Typography.Title level={5}>
+                Classes your managing as a class teacher
+              </Typography.Title>
+            }
+            loading={isFetching}
+            bordered
+            dataSource={levelsAndCourses?.classesGroupedBySession}
+            renderItem={(item) => <List.Item>{item.name}</List.Item>}
+          />
+        </div>
+      )}
     </div>
   );
 };
 
-export default StaffClasses;
+export default StaffClassesAndCourses;
