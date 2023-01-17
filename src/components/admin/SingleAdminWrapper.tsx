@@ -1,5 +1,6 @@
 import { Tabs } from "antd";
 import React from "react";
+import AdminActivities from "./singleAdmin/AdminActivities";
 import Profile from "./singleAdmin/Profile";
 
 interface IProps {
@@ -20,7 +21,7 @@ const SingleAdminWrapper = ({ adminId, isUser }: IProps) => {
 
           {/* for admin */}
           <Tabs.TabPane tab="Activities" key="item-3">
-            Admin added 20 new staff record, ... etc.
+            <AdminActivities />
           </Tabs.TabPane>
         </Tabs>
       ) : (

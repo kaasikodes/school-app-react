@@ -8,16 +8,13 @@ import {
   Tag,
   Typography,
 } from "antd";
-import React from "react";
+import React, { useContext } from "react";
 import { useAuthUser } from "react-auth-kit";
 import { useQuery } from "react-query";
 import { IAuthDets } from "../../../appTypes/auth";
+import { GlobalContext } from "../../../contexts/GlobalContextProvider";
 import { getSingleAdmin } from "../../../helpers/admin";
 import { openNotification } from "../../../helpers/notifications";
-import {
-  getSingleStaff,
-  getStaffSessionLevelsAndCourses,
-} from "../../../helpers/staff";
 
 interface IProps {
   adminId: string;
@@ -57,9 +54,11 @@ const Profile = ({ adminId }: IProps) => {
 
   const authDetails = auth() as unknown as IAuthDets;
 
-  const user = authDetails.user;
   const token = authDetails.userToken;
-  const schoolId = authDetails.choosenSchoolId;
+  const globalCtx = useContext(GlobalContext);
+  const { state: globalState } = globalCtx;
+
+  const schoolId = globalState.currentSchool?.id;
   const { data: staff, isFetching } = useQuery(
     ["single-staff", adminId],
     () => {

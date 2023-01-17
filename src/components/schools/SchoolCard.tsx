@@ -1,12 +1,17 @@
 import { Typography, Button, Drawer, Modal } from "antd";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import EditSchoolForm from "./EditSchoolForm";
 import { ExclamationCircleOutlined, LoadingOutlined } from "@ant-design/icons";
 import { useAuthUser, useSignIn } from "react-auth-kit";
-import { IAuthDets } from "../../appTypes/auth";
+import { IAuthDets, IAuthSchool } from "../../appTypes/auth";
 import { openNotification } from "../../helpers/notifications";
 import { deleteSchool } from "../../helpers/schools";
 import { updateChoosenSchool } from "../../helpers/users";
+import {
+  EGlobalOps,
+  GlobalContext,
+} from "../../contexts/GlobalContextProvider";
+import { ERole } from "../../appTypes/roles";
 
 export interface ISchoolCardEntry {
   item: {
@@ -25,6 +30,11 @@ const SchoolCard = ({ item, selected }: ISchoolCardEntry) => {
   const authDetails = auth() as unknown as IAuthDets;
   const user = authDetails.user;
   const token = authDetails.userToken;
+
+  const globalCtx = useContext(GlobalContext);
+  const { state: globalState, dispatch: globalDispatch } = globalCtx;
+  const userCurrentRole = globalState.currentSchool?.currentRole;
+
   const handleDelete = () => {
     Modal.confirm({
       title: "Delete School",
@@ -99,39 +109,30 @@ const SchoolCard = ({ item, selected }: ISchoolCardEntry) => {
           userId: user.id,
         })
           .then((res: any) => {
-            console.log(res);
+            console.log(res, "SWITCH");
             const result = res.data;
             //  update sign in
             const choosenSchoolId = result.data.choosen_school_id;
-            const possUserRolesInChoosenSchool = JSON.parse(
-              result.schools.find(
-                (school: any) => school.id === choosenSchoolId
-              )?.pivot.school_user_roles ?? null
-            );
-            const currentUserRoleInChoosenSchool = result.schools.find(
-              (school: any) => school.id === choosenSchoolId
-            )?.pivot.choosen_role;
-            const schools = result.schools.map((school: any) => {
+            const schools = result.schools.map((school: any): IAuthSchool => {
               return {
                 name: school.name,
                 id: school.id,
                 description: school.description,
+                roles: JSON.parse(school.pivot.school_user_roles),
+                staffId: school.pivot.staff_id,
+                studentId: school.pivot.student_id,
+                custodianId: school.pivot.custodian_id,
+                adminId: school.pivot.admin_id,
+                currentRole: school.pivot.choosen_role,
+                currentSessionId: school.current_session_id,
               };
             });
 
-            const newAuth: IAuthDets = {
-              ...authDetails,
-              loggedIn: true,
-              choosenSchoolId,
-              currentUserRoleInChoosenSchool: currentUserRoleInChoosenSchool,
-              possibleUserRolesInChoosenSchool: possUserRolesInChoosenSchool,
-              schools,
-            };
-            signIn({
-              token: authDetails.userToken,
-              expiresIn: 120000000000,
-              tokenType: "Bearer",
-              authState: newAuth,
+            globalDispatch({
+              type: EGlobalOps.setCurrentSchool,
+              payload: schools.find(
+                (school: any) => school.id === choosenSchoolId
+              ),
             });
 
             openNotification({
@@ -169,21 +170,25 @@ const SchoolCard = ({ item, selected }: ISchoolCardEntry) => {
           >
             {selected ? "Currently on" : "Switch to"}
           </Button>
-          <Button
-            size="small"
-            type="dashed"
-            onClick={() => setShowEditSchoolForm(true)}
-          >
-            Edit
-          </Button>
-          <Button
-            size="small"
-            className="text-red-800"
-            type="ghost"
-            onClick={handleDelete}
-          >
-            Delete
-          </Button>
+          {userCurrentRole === ERole.ADMIN && (
+            <>
+              <Button
+                size="small"
+                type="dashed"
+                onClick={() => setShowEditSchoolForm(true)}
+              >
+                Edit
+              </Button>
+              <Button
+                size="small"
+                className="text-red-800"
+                type="ghost"
+                onClick={handleDelete}
+              >
+                Delete
+              </Button>
+            </>
+          )}
         </div>
         <Drawer
           visible={showEditSchoolForm}

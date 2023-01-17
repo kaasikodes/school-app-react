@@ -6,11 +6,12 @@ import {
   Spin,
   Typography,
 } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useAuthUser } from "react-auth-kit";
 
 import { IAuthDets } from "../../appTypes/auth";
 import { ERole } from "../../appTypes/roles";
+import { GlobalContext } from "../../contexts/GlobalContextProvider";
 import { openNotification } from "../../helpers/notifications";
 import { getSchools } from "../../helpers/schools";
 import { retrieveUser } from "../../helpers/users";
@@ -24,13 +25,16 @@ const SchoolWrapper = () => {
   const auth = useAuthUser();
   const authDetails = auth() as unknown as IAuthDets;
 
-  const choosenSchoolId = authDetails.choosenSchoolId;
-  const userCurrentRole = authDetails.currentUserRoleInChoosenSchool;
+  const globalCtx = useContext(GlobalContext);
+  const { state: globalState } = globalCtx;
+  const choosenSchoolId = globalState.currentSchool?.id;
+  const userCurrentRole = globalState.currentSchool?.currentRole;
+
   const [currentPage, setCurrentPage] = useState(1);
 
   const [schools, setSchools] = useState<ISchoolCardEntry[]>([]);
   const [schoolCount, setSchoolCount] = useState(0);
-  const [limit, setLimit] = useState(3);
+  const limit = 3;
   useEffect(() => {
     const fetchedSchools: ISchoolCardEntry[] = authDetails.schools.map(
       (school): ISchoolCardEntry => ({
@@ -68,7 +72,7 @@ const SchoolWrapper = () => {
       )}
       {/* add school form */}
       <Drawer
-        visible={showAddSchoolForm}
+        open={showAddSchoolForm}
         onClose={() => setShowAddSchoolForm(false)}
         title="Add School"
       >
