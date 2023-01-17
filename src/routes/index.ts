@@ -7,7 +7,7 @@ export const routes = {
   requisitions: "/requisitions",
   academicRecords: "/academicRecords",
   registerSchool: "/register",
-  // schools: "/schools/",
+  schools: "/schools",
   departments: "/departments",
   courses: "/courses",
   classes: "/classes",

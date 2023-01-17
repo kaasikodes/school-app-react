@@ -22,6 +22,7 @@ import {
   TCSchool,
 } from "../../contexts/GlobalContextProvider";
 import { TSession } from "../../appTypes/sessions";
+import { routes } from "../../routes";
 
 interface IProps {
   setShowMobileMenu: Function;
@@ -39,6 +40,7 @@ const TopActions = ({
 }: IProps) => {
   const globalCtx = useContext(GlobalContext);
   const { dispatch: globalDispatch } = globalCtx;
+  const currentUserRole = currentSchool?.currentRole as string;
   const [isSwitchRoleModalOpen, setIsSwitchRoleModalOpen] = useState(false);
   const [selectedRole, setSelectedRole] = useState(ERole.NONE);
 
@@ -68,21 +70,21 @@ const TopActions = ({
       style={{ width: "200px" }}
       items={[
         {
-          label: <Link to="/user-profile">My Profile</Link>,
+          label: <Link to={routes.index}>My Profile</Link>,
           key: "lis",
           icon: React.createElement(TbSchool as IconType),
           title: "My Profile",
         },
 
         {
-          label: <Link to="/schools">Switch School</Link>,
+          label: <Link to={routes.schools}>Switch School</Link>,
           key: "1",
           icon: React.createElement(TbSchool as IconType),
           title: "Switch school",
         },
 
         {
-          label: `Switch role (${currentSchool?.currentRole})`,
+          label: `Switch role (${currentUserRole})`,
           key: "3",
           title: "Switch role",
           onClick: () => setIsSwitchRoleModalOpen(true),
@@ -145,12 +147,14 @@ const TopActions = ({
             <div className="block md:hidden">
               <Button type="text" icon={<SearchOutlined />} />
             </div>
-            <Link to={`/settings`}>
-              <MdSettings
-                size={23}
-                className="text-[#072A6C] font-bold cursor-pointer"
-              />
-            </Link>
+            {currentUserRole === ERole.ADMIN && (
+              <Link to={routes.settings}>
+                <MdSettings
+                  size={23}
+                  className="text-[#072A6C] font-bold cursor-pointer"
+                />
+              </Link>
+            )}
 
             <Badge dot size="small">
               <IoIosNotifications
