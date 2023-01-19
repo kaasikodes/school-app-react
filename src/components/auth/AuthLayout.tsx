@@ -18,7 +18,9 @@ const AuthLayout = ({ alternativeAction, children, heading }: IProps) => {
       {/* image n animation */}
       <div className="bg-white hidden lg:flex shadow-lg">
         asa
-        <div className="fixed lg:w-2/4 top-0  bg-cover left-0 z-20 h-screen  bg-gradient-to-tl from-sky-700 to-blue-800 shadow-lg flex flex-col gap-4 items-center pt-12">
+        <div
+          className={`fixed lg:w-2/4 top-0  bg-cover bg-no-repeat bg- left-0 z-20 h-screen bg-[url(https://images.pexels.com/photos/7929411/pexels-photo-7929411.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)] bg-gradient-to-tl from-sky-700 to-blue-800 shadow-lg flex flex-col gap-4 items-center justify-end pt-12 pb-6`}
+        >
           {/* <div className="w-2/4">
             <img
               src="/assets/loginIll.svg"
@@ -26,7 +28,7 @@ const AuthLayout = ({ alternativeAction, children, heading }: IProps) => {
               className=" object-contain"
             />
           </div> */}
-          <p className="text-white text-center font-light italic w-4/5">
+          <p className="text-white text-center font-light italic w-4/5 ">
             Smooth result compilation no matter the amount of students present,
             save time by uploading students in bulk, and have parents monitor
             the academic progress of their students in real time.
