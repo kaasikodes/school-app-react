@@ -19,13 +19,13 @@ const AuthLayout = ({ alternativeAction, children, heading }: IProps) => {
       <div className="bg-white hidden lg:flex shadow-lg">
         asa
         <div className="fixed lg:w-2/4 top-0  bg-cover left-0 z-20 h-screen  bg-gradient-to-tl from-sky-700 to-blue-800 shadow-lg flex flex-col gap-4 items-center pt-12">
-          <div className="w-2/4">
+          {/* <div className="w-2/4">
             <img
               src="/assets/loginIll.svg"
               alt="result compilation"
               className=" object-contain"
             />
-          </div>
+          </div> */}
           <p className="text-white text-center font-light italic w-4/5">
             Smooth result compilation no matter the amount of students present,
             save time by uploading students in bulk, and have parents monitor
