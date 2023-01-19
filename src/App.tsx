@@ -32,6 +32,9 @@ import Settings from "./pages/Settings";
 import SingleStudentCourse from "./pages/Students/SingleStudentCourse";
 import SingleStudentClassPage from "./pages/Students/SingleStudentClassPage";
 import SingleStudentSessionResultPage from "./pages/Students/SingleStudentSessionResultPage";
+import Events from "./pages/Events";
+import Approvals from "./pages/Approvals";
+import Requisitions from "./pages/Requisitions";
 
 const queryClient = new QueryClient();
 
@@ -88,6 +91,9 @@ function App() {
                 <Route path={routes.custodians} element={<Custodians />} />
                 <Route path={routes.policies} element={<Policies />} />
                 <Route path={routes.payments} element={<Payments />} />
+                <Route path={routes.events} element={<Events />} />
+                <Route path={routes.approvals} element={<Approvals />} />
+                <Route path={routes.requisitions} element={<Requisitions />} />
 
                 {/* /students/${record.id}/assign-course */}
                 <Route path={routes.students} element={<Students />} />
