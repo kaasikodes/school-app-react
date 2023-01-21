@@ -62,7 +62,7 @@ const backUpDropdown = () => (
     </Space>
   </Dropdown>
 );
-interface IParticipantEntry {
+export interface IParticipantEntry {
   key: string;
   id: string;
   studentName: string;
@@ -71,7 +71,7 @@ interface IParticipantEntry {
   total: number;
 }
 
-const originData: IParticipantEntry[] = Array(50)
+export const originData: IParticipantEntry[] = Array(50)
   .fill(0)
   .map((_, i) => ({
     key: (i * 2).toString(),

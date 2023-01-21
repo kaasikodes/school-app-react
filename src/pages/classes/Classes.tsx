@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ERole } from "../../appTypes/roles";
 import ClassesWrapper from "../../components/classes/ClassesWrapper";
 import StaffClassesAndCourses from "../../components/staff/singleStaff/StaffClassesAndCourses";
+import StudentClasses from "../../components/students/singleStudent/StudentClasses";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
 import { openNotification } from "../../helpers/notifications";
 import { routes } from "../../routes";
@@ -13,11 +14,13 @@ const Classes = () => {
   const { state: globalState } = globalCtx;
   const currentSchool = globalState.currentSchool;
   const staffId = globalState.currentSchool?.staffId as string;
+  const studentId = globalState.currentSchool?.studentId as string;
 
   const navigate = useNavigate();
   const canAccessPage =
     currentSchool?.currentRole === ERole.ADMIN ||
-    currentSchool?.currentRole === ERole.STAFF;
+    currentSchool?.currentRole === ERole.STAFF ||
+    currentSchool?.currentRole === ERole.STUDENT;
 
   useEffect(() => {
     if (!canAccessPage) {
@@ -41,6 +44,12 @@ const Classes = () => {
             staffId={staffId}
             show="classesTeacherIsManaging"
           />
+        </>
+      )}
+      {currentSchool?.currentRole === ERole.STUDENT && (
+        <>
+          <Typography.Title level={3}>My Classes</Typography.Title>
+          <StudentClasses studentId={studentId} />
         </>
       )}
     </div>

@@ -277,6 +277,12 @@ interface IGetCoursePsProps extends ICourseAuthProps {
   levelId: string;
   courseId: string;
 }
+interface IGetCoursePsSingleProps extends ICourseAuthProps {
+  sessionId: string;
+  levelId: string;
+  courseId: string;
+  studentId: string;
+}
 
 export const getSessionCourseParticipants = ({
   token,
@@ -295,6 +301,25 @@ export const getSessionCourseParticipants = ({
   }&limit=${(limit as number) > 0 ? limit : ""}&page=${
     (page as number) > 0 ? page : ""
   }`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const res: any = axios.get(url, config);
+  return res;
+};
+export const getSessionCourseSingleParticipant = ({
+  token,
+  studentId,
+  sessionId,
+  courseId,
+  levelId,
+}: IGetCoursePsSingleProps) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/courses/${courseId}/sessionCourseSingleParticipant?sessionId=${sessionId}&levelId=${levelId}&studentId=${studentId}`;
 
   const config = {
     headers: {
