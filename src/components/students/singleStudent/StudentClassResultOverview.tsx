@@ -1,8 +1,10 @@
 import { PageHeader, Table, Typography } from "antd";
-import React from "react";
+import React, { useContext } from "react";
 import { useQuery } from "react-query";
+import { GlobalContext } from "../../../contexts/GlobalContextProvider";
 import { openNotification } from "../../../helpers/notifications";
 import { getCRTemplate } from "../../../helpers/schoolCRecordTemplates";
+import { useFetchSchoolSessionSetting } from "../../../helpersAPIHooks/sessions";
 import { ICGByLevel } from "./StudentClasses";
 
 interface IProps {
@@ -16,17 +18,30 @@ const StudentClassResultOverview = ({
   clearClassDetails,
   token,
 }: IProps) => {
+  const globalCtx = useContext(GlobalContext);
+  const { state: globalState } = globalCtx;
+  const schoolId = globalState?.currentSchool?.id as string;
+  const sessionId = globalState?.currentSchool?.currentSessionId as string;
+  const {
+    data: schoolSessionSetting,
+    isSuccess: isSessSettingSuccess,
+    isError: isSessSettingErr,
+  } = useFetchSchoolSessionSetting({
+    sessionId,
+    schoolId,
+    token,
+  });
   const {
     data: templateData,
 
     isFetching,
     isSuccess,
   } = useQuery<any, any, any, any>(
-    ["course-record-templates", 2],
+    ["course-record-templates", schoolSessionSetting?.courseRecordTemplateId],
     () => {
       return getCRTemplate({
         token,
-        id: "4",
+        id: schoolSessionSetting?.courseRecordTemplateId as string,
       });
     },
     {

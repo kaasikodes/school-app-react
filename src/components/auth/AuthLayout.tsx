@@ -19,7 +19,7 @@ const AuthLayout = ({ alternativeAction, children, heading }: IProps) => {
       <div className="bg-white hidden lg:flex shadow-lg">
         asa
         <div
-          className={`fixed lg:w-2/4 top-0  bg-cover bg-no-repeat bg- left-0 z-20 h-screen bg-[url(https://images.pexels.com/photos/7929411/pexels-photo-7929411.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)] bg-gradient-to-tl from-sky-700 to-blue-800 shadow-lg flex flex-col gap-4 items-center justify-end pt-12 pb-6`}
+          className={`fixed lg:w-2/4 top-0  bg-cover bg-no-repeat bg-gradient-to-tl from-sky-700 to-blue-800 left-0 z-20 h-screen bg-[url(https://images.pexels.com/photos/7929411/pexels-photo-7929411.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)]  shadow-lg flex flex-col gap-4 items-center justify-end pt-12 pb-6`}
         >
           {/* <div className="w-2/4">
             <img
