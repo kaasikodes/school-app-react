@@ -35,6 +35,7 @@ import SingleStudentSessionResultPage from "./pages/Students/SingleStudentSessio
 import Events from "./pages/Events";
 import Approvals from "./pages/Approvals";
 import Requisitions from "./pages/Requisitions";
+import AcademicRecords from "./pages/AcademicRecords";
 
 const queryClient = new QueryClient();
 
@@ -94,6 +95,10 @@ function App() {
                 <Route path={routes.events} element={<Events />} />
                 <Route path={routes.approvals} element={<Approvals />} />
                 <Route path={routes.requisitions} element={<Requisitions />} />
+                <Route
+                  path={routes.academicRecords}
+                  element={<AcademicRecords />}
+                />
 
                 {/* /students/${record.id}/assign-course */}
                 <Route path={routes.students} element={<Students />} />
