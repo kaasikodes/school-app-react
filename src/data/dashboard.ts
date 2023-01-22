@@ -126,8 +126,12 @@ const STUDENT_LINKS: ILink[] = [
   { icon: FaSchool as IconType, label: "Profile", link: routes.index },
   // { icon: TbSchool as IconType, label: "Schools", link: "/schools" },
 
-  { icon: AuditOutlined as IconType, label: "Classes", link: routes.classes },
-  { icon: AuditOutlined as IconType, label: "Courses", link: routes.courses },
+  {
+    icon: AuditOutlined as IconType,
+    label: "Classes & Courses",
+    link: routes.classes,
+  },
+  // { icon: AuditOutlined as IconType, label: "Courses", link: routes.courses },
   {
     icon: AuditOutlined as IconType,
     label: "Assessments",
