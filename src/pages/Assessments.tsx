@@ -1,7 +1,12 @@
 import React from "react";
+import ComingSoon from "../components/general/ComingSoon";
 
 const Assessments = () => {
-  return <div>Assessments</div>;
+  return (
+    <div>
+      <ComingSoon />
+    </div>
+  );
 };
 
 export default Assessments;
