@@ -19,7 +19,6 @@ import { MoreOutlined } from "@ant-design/icons";
 
 import { openNotification } from "../../helpers/notifications";
 import { getAllStudents } from "../../helpers/students";
-import EnrollExistingStudentForm from "./EnrollExistingStudentForm";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
 
 export interface IStudentEntry {
@@ -39,7 +38,11 @@ enum EComp {
   NO_COMP = "",
 }
 
-const StudentsTable = () => {
+interface IProps {
+  custodianId: string;
+}
+
+const CustodianWardsTable = ({ custodianId }: IProps) => {
   const auth = useAuthUser();
 
   const authDetails = auth() as unknown as IAuthDets;
@@ -54,7 +57,7 @@ const StudentsTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [pagination, setPagination] = useState<TablePaginationConfig>({
     current: 1,
-    pageSize: 4,
+    pageSize: 100,
     total: 0,
     showSizeChanger: false,
   });
@@ -69,14 +72,14 @@ const StudentsTable = () => {
       return getAllStudents({
         token,
         schoolId: schoolId as string,
-        page: pagination.current,
-        limit: pagination.pageSize,
+
         sessionId,
         searchTerm,
+        custodianId,
       });
     },
     {
-      refetchOnWindowFocus: false,
+      refetchOnWindowFocus: true,
       onError: (err) => {
         openNotification({
           state: "error",
@@ -84,12 +87,9 @@ const StudentsTable = () => {
           description: `Oops, an err occured: ${err?.message}`,
         });
       },
-      onSuccess: (data) => {
-        setPagination((pag) => ({ ...pag, total: data.total }));
-      },
+
       select: (res: any) => {
         const result = res.data.data;
-        console.log("student", result);
 
         const data = result.map(
           (item: any): IStudentEntry => ({
@@ -104,8 +104,6 @@ const StudentsTable = () => {
         );
         return {
           data: data,
-          limit: 4,
-          total: res.data.meta.total,
         };
       },
     }
@@ -176,19 +174,7 @@ const StudentsTable = () => {
               items={[
                 {
                   key: "0",
-                  label: (
-                    <button
-                      className="w-full text-left"
-                      onClick={() =>
-                        handleDrawerComp({
-                          id: record.id,
-                          comp: EComp.ENROLL_EXISTING_STUDENT,
-                        })
-                      }
-                    >
-                      Enroll Student for Session
-                    </button>
-                  ),
+                  label: <button className="w-full text-left">Pay Fees</button>,
                   disabled: record.enrollmentStatus,
                 },
                 {
@@ -198,25 +184,8 @@ const StudentsTable = () => {
                       className="w-full text-left"
                       to={`/students/${record.id}/assign-course`}
                     >
-                      Assign Courses
+                      Select Courses for ward
                     </Link>
-                  ),
-                  disabled: record.enrollmentStatus ? false : true,
-                },
-                {
-                  key: "2",
-                  label: (
-                    <button
-                      className="w-full text-left"
-                      onClick={() =>
-                        handleDrawerComp({
-                          id: record.id,
-                          comp: EComp.VIEW_STUDENT_ENROLLMENT_DETAILS,
-                        })
-                      }
-                    >
-                      View Enrollment Details
-                    </button>
                   ),
                   disabled: record.enrollmentStatus ? false : true,
                 },
@@ -241,18 +210,9 @@ const StudentsTable = () => {
       ),
     },
   ];
-  const drawerSize =
-    comp === EComp.ENROLL_EXISTING_STUDENT ? "large" : "default";
+
   return (
     <div>
-      <Drawer open={openD} onClose={closeDrawer} title={comp} size={drawerSize}>
-        {comp === EComp.ENROLL_EXISTING_STUDENT && (
-          <EnrollExistingStudentForm
-            handleClose={closeDrawer}
-            studentId={studentId}
-          />
-        )}
-      </Drawer>
       {isSuccess && (
         <Table
           rowKey={(record) => record.id}
@@ -268,4 +228,4 @@ const StudentsTable = () => {
   );
 };
 
-export default StudentsTable;
+export default CustodianWardsTable;

@@ -59,6 +59,7 @@ interface IGetMultipleStudentProps extends IStudentAuthProps {
   page?: number;
   limit?: number;
   sessionId?: string;
+  custodianId?: string;
 }
 
 export const getAllStudents = ({
@@ -68,14 +69,19 @@ export const getAllStudents = ({
   limit,
   page,
   sessionId,
+  custodianId,
 }: IGetMultipleStudentProps) => {
-  const url = `${
+  let url = `${
     process.env.REACT_APP_APP_URL
   }/api/schools/${schoolId}/students?${
     searchTerm ? "searchTerm=" + searchTerm : ""
   }&limit=${(limit as number) > 0 ? limit : ""}&page=${
     (page as number) > 0 ? page : ""
   }&sessionId=${sessionId ?? ""}`;
+
+  if (custodianId) {
+    url += `&custodianId=${custodianId}`;
+  }
 
   const config = {
     headers: {
