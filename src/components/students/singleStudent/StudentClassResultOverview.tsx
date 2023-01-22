@@ -1,6 +1,7 @@
 import { PageHeader, Table, Typography } from "antd";
 import React, { useContext } from "react";
 import { useQuery } from "react-query";
+import { Link } from "react-router-dom";
 import { GlobalContext } from "../../../contexts/GlobalContextProvider";
 import { openNotification } from "../../../helpers/notifications";
 import { getCRTemplate } from "../../../helpers/schoolCRecordTemplates";
@@ -11,12 +12,14 @@ interface IProps {
   classDetails: ICGByLevel;
   clearClassDetails: Function;
   token: string;
+  studentId: string;
 }
 
 const StudentClassResultOverview = ({
   classDetails,
   clearClassDetails,
   token,
+  studentId,
 }: IProps) => {
   const globalCtx = useContext(GlobalContext);
   const { state: globalState } = globalCtx;
@@ -73,6 +76,13 @@ const StudentClassResultOverview = ({
             dataIndex: "courseName",
             key: "courseName",
             fixed: "left",
+            render: (val: any, data: any) => (
+              <Link
+                to={`/students/${studentId}/course-participant-record/course/${data.courseId}/class/${classDetails.levelId}`}
+              >
+                {val}
+              </Link>
+            ),
           },
           ...fcolumns,
           {
@@ -96,6 +106,7 @@ const StudentClassResultOverview = ({
     const record = JSON.parse(item.breakdown);
     return {
       courseName: item.name,
+      courseId: item.id,
       grade: item.grade,
       total: item.total,
       ...record,

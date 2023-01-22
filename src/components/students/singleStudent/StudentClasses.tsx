@@ -230,6 +230,7 @@ const StudentClasses = ({ studentId }: IProps) => {
             classDetails={selectedClass}
             clearClassDetails={() => setSelectedClass(null)}
             token={token}
+            studentId={studentId}
           />
         </div>
       )}
