@@ -1,7 +1,7 @@
 import React from "react";
 import ComingSoon from "../components/general/ComingSoon";
 
-const Assessments = () => {
+const AcademicRecords = () => {
   return (
     <div>
       <ComingSoon />
@@ -9,4 +9,4 @@ const Assessments = () => {
   );
 };
 
-export default Assessments;
+export default AcademicRecords;
