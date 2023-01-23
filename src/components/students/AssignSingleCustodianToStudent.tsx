@@ -108,19 +108,20 @@ const AssignSingleCustodianToStudent = ({ handleClose, studentId }: IProps) => {
           <Input placeholder="Last name" />
         </Form.Item>
         <Form.Item
-          label={`Occupation`}
-          name="occupation"
-          rules={textInputValidationRules}
-        >
-          <Input placeholder="Last name" />
-        </Form.Item>
-        <Form.Item
           label={`Middle Name`}
           name="middleName"
           rules={textInputValidationRulesOp}
         >
           <Input placeholder="Middle name" />
         </Form.Item>
+        <Form.Item
+          label={`Occupation`}
+          name="occupation"
+          rules={textInputValidationRules}
+        >
+          <Input placeholder="occupation" />
+        </Form.Item>
+
         <Form.Item
           label={`Custodian Email`}
           name="email"
