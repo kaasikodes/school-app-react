@@ -21,6 +21,7 @@ import { openNotification } from "../../helpers/notifications";
 import { getAllStudents } from "../../helpers/students";
 import EnrollExistingStudentForm from "./EnrollExistingStudentForm";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
+import AssignStudentCustodian from "./AssignStudentCustodian";
 
 export interface IStudentEntry {
   id: string;
@@ -36,6 +37,7 @@ export interface IStudentEntry {
 enum EComp {
   ENROLL_EXISTING_STUDENT = "Enroll Existing Student",
   VIEW_STUDENT_ENROLLMENT_DETAILS = "Enrollment Details",
+  ASSIGN_STUDENT_CUSTODIANS = "Assign Student Custodian",
   NO_COMP = "",
 }
 
@@ -229,6 +231,22 @@ const StudentsTable = () => {
                     </Link>
                   ),
                 },
+                {
+                  key: "assign-custodian",
+                  label: (
+                    <button
+                      className="w-full text-left"
+                      onClick={() =>
+                        handleDrawerComp({
+                          id: record.id,
+                          comp: EComp.ASSIGN_STUDENT_CUSTODIANS,
+                        })
+                      }
+                    >
+                      Assign custodian(s)
+                    </button>
+                  ),
+                },
               ]}
             />
           }
@@ -248,6 +266,12 @@ const StudentsTable = () => {
       <Drawer open={openD} onClose={closeDrawer} title={comp} size={drawerSize}>
         {comp === EComp.ENROLL_EXISTING_STUDENT && (
           <EnrollExistingStudentForm
+            handleClose={closeDrawer}
+            studentId={studentId}
+          />
+        )}
+        {comp === EComp.ASSIGN_STUDENT_CUSTODIANS && (
+          <AssignStudentCustodian
             handleClose={closeDrawer}
             studentId={studentId}
           />
