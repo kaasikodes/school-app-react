@@ -1,5 +1,4 @@
 import axios from "axios";
-import moment from "moment";
 import { IPaginationProps, ISearchParams } from "../appTypes/requestParams";
 import { IAuthProps } from "./auth";
 
