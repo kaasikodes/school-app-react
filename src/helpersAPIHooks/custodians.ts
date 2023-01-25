@@ -53,12 +53,13 @@ export const useFetchAllCustodians = ({
       select: (res: any) => {
         const fetchedData = res.data.data;
         const result = fetchedData;
+        console.log("POPP", res);
 
         const data: TCustodian[] = result.map(
           (item: any): TCustodian => ({
             id: item.data.id,
             name: item.data?.user.name,
-            studentCount: item.data?.pivot.students.length,
+            studentCount: item.data?.students.length,
             email: item.data?.user.email,
             createdAt: item.data?.created_at
               ? moment(item.data.created_at).format("YYYY/MM/DD")

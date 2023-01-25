@@ -15,8 +15,8 @@ interface IProps {
 }
 
 enum EAction {
-  EDIT = "Edit Staff",
-  VIEW = "View Staff",
+  EDIT = "Edit Custodian",
+  VIEW = "View Custodian",
   NONE = "",
 }
 
@@ -65,8 +65,8 @@ const CustodiansTableView = ({
           Student Count
         </span>
       ),
-      dataIndex: "levelCount",
-      key: "levelCount",
+      dataIndex: "studentCount",
+      key: "studentCount",
     },
 
     {
