@@ -1,4 +1,5 @@
 import axios from "axios";
+import { IPaginationProps, ISearchParams } from "../appTypes/requestParams";
 import { IAuthProps } from "./auth";
 
 export interface ICustAuthProps extends IAuthProps {
@@ -13,6 +14,43 @@ export interface ISaveCustProps extends ICustAuthProps {
   name: string;
   phone: string;
 }
+interface IGetMultipleCustProps extends ICustAuthProps {
+  pagination?: IPaginationProps;
+  searchParams?: ISearchParams;
+}
+
+export const getAllCustodians = ({
+  token,
+  schoolId,
+  pagination,
+  searchParams,
+}: IGetMultipleCustProps) => {
+  const limit = pagination?.limit ?? 10;
+  const page = pagination?.page ?? 0;
+  const name = searchParams?.name ?? "";
+
+  let url = `${process.env.REACT_APP_APP_URL}/api/schools/${schoolId}/custodians`;
+
+  if (pagination || searchParams) {
+    url += "?";
+  }
+  if (pagination) {
+    url += `limit=${limit}&page=${page}&`;
+  }
+  if (searchParams) {
+    url += `searchTerm=${name}&`;
+  }
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const res: any = axios.get(url, config);
+  return res;
+};
 export const saveSchoolCustodian = ({
   token,
   schoolId,
