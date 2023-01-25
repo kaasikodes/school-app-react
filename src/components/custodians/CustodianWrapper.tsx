@@ -1,7 +1,7 @@
 import { Button, Drawer, Tabs, Typography } from "antd";
 import React, { useState } from "react";
-import CustodianTable from "./CustodianTable";
 import AddCustodianForm from "./AddCustodianForm";
+import CustodiansViewContainer from "./CustodiansViewContainer";
 
 const CustodianWrapper = () => {
   const [showD, setShowD] = useState(false);
@@ -29,7 +29,7 @@ const CustodianWrapper = () => {
             Add Custodian
           </Button>
         </div>
-        <CustodianTable />
+        <CustodiansViewContainer />
       </div>
     </>
   );
