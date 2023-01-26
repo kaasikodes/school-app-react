@@ -135,15 +135,6 @@ const Profile = ({ custodianId }: IProps) => {
           {/* avatar */}
           <div className="md:col-start-5 col-span-2 md:pl-14 flex flex-col gap-4 border-l-2">
             <Avatar shape="square" size={200} src={custodian?.photo} />
-
-            <div>
-              {/* <h5 className="text-lg">Resume</h5> */}
-              <Space>
-                <Tag color="#104a8e" className="cursor-pointer">
-                  {"Download Resume"}
-                </Tag>
-              </Space>
-            </div>
           </div>
         </div>
       )}
