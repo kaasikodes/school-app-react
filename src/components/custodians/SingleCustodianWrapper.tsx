@@ -31,6 +31,7 @@ const SingleCustodianWrapper = ({ custodianId, isUser }: IProps) => {
           <Tabs.TabPane tab="Profile" key="item-1">
             <Profile custodianId={custodianId} />
           </Tabs.TabPane>
+          <Tabs.TabPane tab="Pending Approvals" key="item-00"></Tabs.TabPane>
 
           {/* for admin */}
           <Tabs.TabPane tab="Activities" key="item-3"></Tabs.TabPane>
