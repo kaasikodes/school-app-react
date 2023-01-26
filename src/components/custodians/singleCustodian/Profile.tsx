@@ -71,14 +71,13 @@ const Profile = ({ custodianId }: IProps) => {
       },
       select: (res: any) => {
         const result = res.data.data;
-        console.log("single-staff", result);
+        console.log("single-custodian", result);
 
         interface IReturnProps {
           id: number;
           name: string;
           photo?: string;
           email: string;
-          staffNo: string;
           isActive: boolean;
         }
 
@@ -87,7 +86,6 @@ const Profile = ({ custodianId }: IProps) => {
           name: result.user.name,
           photo: result.user.profile_photo_url,
           email: result.user.email,
-          staffNo: result.staff_no,
           isActive: result.isActive,
         };
         return ans;
@@ -98,6 +96,7 @@ const Profile = ({ custodianId }: IProps) => {
   // const ftch staff data
   return (
     <div className="mt-4 flex flex-col gap-12">
+      ___________________
       {isFetching ? (
         <Skeleton active paragraph={{ rows: 30 }} />
       ) : (

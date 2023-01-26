@@ -37,7 +37,7 @@ const SingleCustodianWrapper = ({ custodianId, isUser }: IProps) => {
           <Tabs.TabPane tab="Activities" key="item-3"></Tabs.TabPane>
         </Tabs>
       ) : (
-        "staff profile not found"
+        "custodian profile not found"
       )}
     </div>
   );
