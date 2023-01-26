@@ -96,7 +96,6 @@ const Profile = ({ custodianId }: IProps) => {
   // const ftch staff data
   return (
     <div className="mt-4 flex flex-col gap-12">
-      ___________________
       {isFetching ? (
         <Skeleton active paragraph={{ rows: 30 }} />
       ) : (

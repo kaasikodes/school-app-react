@@ -41,7 +41,6 @@ const UserProfileWrapper = () => {
       )}
       {userRole === ERole.CUSTODIAN && (
         <>
-          {custodianId}ewew
           <SingleCustodianWrapper custodianId={custodianId} isUser />
         </>
       )}
