@@ -51,6 +51,29 @@ export const getAllCustodians = ({
   const res: any = axios.get(url, config);
   return res;
 };
+
+interface IGetSingleStaffProps extends ICustAuthProps {
+  custodianId: string;
+  sessionId?: string;
+}
+export const getSingleCustodian = ({
+  token,
+  schoolId,
+  custodianId,
+  sessionId,
+}: IGetSingleStaffProps) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/custodians/${custodianId}`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const res: any = axios.get(url, config);
+  return res;
+};
 export const saveSchoolCustodian = ({
   token,
   schoolId,

@@ -13,7 +13,7 @@ import Courses from "./pages/Courses";
 import Classes from "./pages/classes/Classes";
 import Staff from "./pages/staff/Staff";
 import Sessions from "./pages/Sessions";
-import Custodians from "./pages/Custodians";
+import Custodians from "./pages/custodians/Custodians";
 import Assessments from "./pages/Assessments";
 import Students from "./pages/Students/Students";
 import SingleClassCourse from "./pages/classes/singleClass/courses/SingleClassCourse";

@@ -1,5 +1,5 @@
 import React from "react";
-import CustodianWrapper from "../components/custodians/CustodianWrapper";
+import CustodianWrapper from "../../components/custodians/CustodianWrapper";
 
 const Custodians = () => {
   return (

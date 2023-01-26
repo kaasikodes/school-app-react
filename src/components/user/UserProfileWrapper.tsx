@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { ERole } from "../../appTypes/roles";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
 import SingleAdminWrapper from "../admin/SingleAdminWrapper";
+import SingleCustodianWrapper from "../custodians/SingleCustodianWrapper";
 import SingleStaffWrapper from "../staff/SingleStaffWrapper";
 import SingleStudentWrapper from "../students/SingleStudentWrapper";
 
@@ -15,6 +16,7 @@ const UserProfileWrapper = () => {
   const staffId = globalState.currentSchool?.staffId;
   const adminId = globalState.currentSchool?.adminId;
   const studentId = globalState.currentSchool?.studentId;
+  const custodianId = globalState.currentSchool?.custodianId;
 
   return (
     <div>
@@ -36,6 +38,9 @@ const UserProfileWrapper = () => {
       )}
       {userRole === ERole.ADMIN && (
         <SingleAdminWrapper adminId={adminId} isUser />
+      )}
+      {userRole === ERole.CUSTODIAN && (
+        <SingleCustodianWrapper custodianId={custodianId} isUser />
       )}
     </div>
   );
