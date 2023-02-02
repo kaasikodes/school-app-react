@@ -1,4 +1,12 @@
-import { Typography, Input, Button, Drawer, Breadcrumb, Tabs } from "antd";
+import {
+  Typography,
+  Input,
+  Button,
+  Drawer,
+  Breadcrumb,
+  Tabs,
+  Modal,
+} from "antd";
 
 import { useState, useContext } from "react";
 import { useAuthUser } from "react-auth-kit";
@@ -214,15 +222,16 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
         {/* Course Paticipant Table that takes in class id and course id, and sessId */}
       </div>
 
-      <Drawer
-        visible={showDrawer}
-        onClose={() => setShowDrawer(false)}
+      <Modal
+        open={showDrawer}
+        onCancel={() => setShowDrawer(false)}
         title={comp}
+        footer={null}
       >
         {comp === "Add Participant" && (
           <AddCourseParticipantForm {...{ courseId, levelId: classId }} />
         )}
-      </Drawer>
+      </Modal>
     </div>
   );
 };

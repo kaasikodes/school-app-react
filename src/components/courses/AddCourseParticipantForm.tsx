@@ -9,7 +9,7 @@ interface IProps {
 const AddCourseParticipantForm = ({ courseId = "", levelId = "" }: IProps) => {
   return (
     <div>
-      <Form labelCol={{ span: 24 }}>
+      <Form labelCol={{ span: 24 }} requiredMark={false}>
         <Form.Item label="Select a student to add to course.">
           <Select />
         </Form.Item>
