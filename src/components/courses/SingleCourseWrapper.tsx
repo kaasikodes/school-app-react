@@ -10,6 +10,7 @@ import { useFetchSingleCourse } from "../../helpersAPIHooks/courses";
 import { routes } from "../../routes";
 import ComponentLoader from "../loaders/ComponentLoader";
 import AddSchoolCourse from "../settings/courses/AddSchoolCourse";
+import AddCourseParticipantForm from "./AddCourseParticipantForm";
 import CourseLessonTable from "./CourseLessonTable";
 import CourseParticipantTable from "./CourseParticipantTable";
 import CourseRecordAssessmentTable from "./CourseRecordAssessmentTable";
@@ -18,10 +19,9 @@ interface IProps {
   courseId?: string;
   classId?: string;
 }
-
+type TComp = "Add Participant" | "Upload Assessmnet" | "";
 const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
   const [showDrawer, setShowDrawer] = useState(false);
-  const [refresh, setRefresh] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const auth = useAuthUser();
 
@@ -34,6 +34,12 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
   const globalCtx = useContext(GlobalContext);
   const { state: globalState } = globalCtx;
   const schoolId = globalState?.currentSchool?.id as string;
+  const [comp, setComp] = useState<TComp>("");
+
+  const handleClick = (val: TComp) => {
+    setComp(val);
+    setShowDrawer(true);
+  };
 
   const { isSuccess: isCSuccess, data: course } = useFetchSingleCourse({
     id: courseId as string,
@@ -121,7 +127,10 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
                   />
                 </div>
                 <div className="flex gap-4">
-                  <Button onClick={() => setShowDrawer(true)} type="text">
+                  <Button
+                    onClick={() => handleClick("Add Participant")}
+                    type="text"
+                  >
                     Add Participant
                   </Button>
                   <Button onClick={() => setShowDrawer(true)} type="ghost">
@@ -208,9 +217,11 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
       <Drawer
         visible={showDrawer}
         onClose={() => setShowDrawer(false)}
-        title="Add Course"
+        title={comp}
       >
-        <AddSchoolCourse handleClose={() => setShowDrawer(false)} />
+        {comp === "Add Participant" && (
+          <AddCourseParticipantForm {...{ courseId, levelId: classId }} />
+        )}
       </Drawer>
     </div>
   );
