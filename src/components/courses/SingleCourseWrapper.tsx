@@ -17,7 +17,6 @@ import { useFetchSingleClass } from "../../helpersAPIHooks/classes";
 import { useFetchSingleCourse } from "../../helpersAPIHooks/courses";
 import { routes } from "../../routes";
 import ComponentLoader from "../loaders/ComponentLoader";
-import AddSchoolCourse from "../settings/courses/AddSchoolCourse";
 import AddCourseParticipantForm from "./AddCourseParticipantForm";
 import CourseLessonTable from "./CourseLessonTable";
 import CourseParticipantTable from "./CourseParticipantTable";
