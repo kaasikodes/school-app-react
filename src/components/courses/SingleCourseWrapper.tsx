@@ -228,7 +228,10 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
         footer={null}
       >
         {comp === "Add Participant" && (
-          <AddCourseParticipantForm {...{ courseId, levelId: classId }} />
+          <AddCourseParticipantForm
+            {...{ courseId, levelId: classId }}
+            closeModal={() => setShowDrawer(false)}
+          />
         )}
       </Modal>
     </div>

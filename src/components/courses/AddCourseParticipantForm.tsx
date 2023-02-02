@@ -6,13 +6,19 @@ import { IAuthDets } from "../../appTypes/auth";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
 import ComponentLoader from "../loaders/ComponentLoader";
 import ErrorComponent from "../errors/ErrorComponent";
+import { generalValidationRules } from "../../formValidation";
 
 interface IProps {
   courseId?: string;
   levelId?: string;
+  closeModal: () => void;
 }
 
-const AddCourseParticipantForm = ({ courseId = "", levelId = "" }: IProps) => {
+const AddCourseParticipantForm = ({
+  courseId = "",
+  levelId = "",
+  closeModal,
+}: IProps) => {
   const auth = useAuthUser();
 
   const authDetails = auth() as unknown as IAuthDets;
@@ -25,23 +31,28 @@ const AddCourseParticipantForm = ({ courseId = "", levelId = "" }: IProps) => {
   const { state: globalState } = globalCtx;
   const schoolId = globalState?.currentSchool?.id as string;
   const [hint, setHint] = useState("");
-  const {
-    data: staff,
-    isSuccess,
-    isError,
-    isFetching,
-  } = useFetchAllStaff({
+  const { data: staff, isSuccess } = useFetchAllStaff({
     schoolId,
     token,
     searchParams: {
       name: hint,
     },
   });
-
+  const handleSubmit = (data: any) => {
+    closeModal();
+  };
   return (
     <div>
-      <Form labelCol={{ span: 24 }} requiredMark={false}>
-        <Form.Item label="Select a student to add to course.">
+      <Form
+        labelCol={{ span: 24 }}
+        requiredMark={false}
+        onFinish={handleSubmit}
+      >
+        <Form.Item
+          label="Select a student to add to course."
+          name="studentId"
+          rules={generalValidationRules}
+        >
           <Select
             options={staff?.data.map((item) => ({
               label: `${item.name}(${item.staffNo})`,
