@@ -54,7 +54,7 @@ export const enrollNewStudent = (props: IEnrollStudentProps) => {
   return res;
 };
 
-interface IGetMultipleStudentProps extends IStudentAuthProps {
+export interface IGetMultipleStudentProps extends IStudentAuthProps {
   searchTerm?: string;
   page?: number;
   limit?: number;

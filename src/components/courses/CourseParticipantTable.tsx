@@ -317,7 +317,7 @@ const CourseParticipantTable = ({ courseId, levelId }: IProps) => {
     },
 
     {
-      enabled: !!schoolSessionSetting?.courseRecordTemplateId,
+      enabled: schoolSessionSetting?.courseRecordTemplateId ? true : false,
       onError: (err) => {
         openNotification({
           state: "error",
@@ -412,14 +412,6 @@ const CourseParticipantTable = ({ courseId, levelId }: IProps) => {
       });
     },
     {
-      // cacheTime: 5000, // def->5min && isIndicated by isFetching , its how long data will be in cache if im not on the page
-      //   staleTime: 30000, //def -> 0s && is the amount of time before your data is considered stale
-      // refetchOnMount: false, def->true
-      // refetchOnWindowFocus: true, def->true
-      // Polling : fetching data at reqular intervals
-      // refetchInterval: 2000, // def -> false
-      // refetchIntervalInBackground: true, //wll still refetfch data if window loses focus
-      // enabled:false && refetch  --> to allow fetching data based on events such as onClick
       onError: (err) => {
         openNotification({
           state: "error",
