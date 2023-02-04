@@ -420,6 +420,9 @@ const CourseParticipantTable = ({ courseId, levelId }: IProps) => {
             err?.response.data.message ?? err?.response.data.error.message,
         });
       },
+      onSuccess: (data) => {
+        setPagination((pag) => ({ ...pag, total: data.total }));
+      },
       select: (res: any) => {
         const result = res.data.data;
 
@@ -433,7 +436,7 @@ const CourseParticipantTable = ({ courseId, levelId }: IProps) => {
           total: item.data.total,
         }));
 
-        return ans;
+        return { data: ans, total: res.data.meta.total };
       },
     }
   );
@@ -458,11 +461,16 @@ const CourseParticipantTable = ({ courseId, levelId }: IProps) => {
             }}
             bordered
             columns={templateData.mergedColumns}
-            pagination={{
-              onChange: handleCancel,
+            pagination={pagination}
+            onChange={(newPagination: TablePaginationConfig) => {
+              setPagination((val) => ({
+                ...val,
+                total: participants.total,
+                current: newPagination.current,
+              }));
             }}
             loading={isPLoading}
-            dataSource={participants}
+            dataSource={participants.data}
             scroll={{ x: "max-content" }}
             size="small"
           />
