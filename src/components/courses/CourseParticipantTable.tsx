@@ -175,7 +175,7 @@ const CourseParticipantTable = ({ courseId, levelId }: IProps) => {
         title: "Wait a minute",
         description: <Spin />,
       });
-      const participant = participants.find(
+      const participant = participants.data.find(
         (item: any) => item.id === editingKey
       );
       let total = 0;
@@ -201,6 +201,7 @@ const CourseParticipantTable = ({ courseId, levelId }: IProps) => {
               title: "Success",
               description: `Record saved!`,
             });
+            setEditingKey("");
             queryClient.invalidateQueries({
               queryKey: ["course-participants"],
             });
@@ -325,8 +326,10 @@ const CourseParticipantTable = ({ courseId, levelId }: IProps) => {
           description: `Oops, an err occured: ${err?.message}`,
         });
       },
-      onSuccess: (columns) => {
+      onSuccess: (data) => {
         const brkKeys: string[] = [];
+        const { mergedColumns: columns } = data;
+        console.log("COL", columns);
         columns.forEach(
           (item: any) => item.editable && brkKeys.push(item.dataIndex)
         );
@@ -468,6 +471,7 @@ const CourseParticipantTable = ({ courseId, levelId }: IProps) => {
                 total: participants.total,
                 current: newPagination.current,
               }));
+              setEditingKey("");
             }}
             loading={isPLoading}
             dataSource={participants.data}
