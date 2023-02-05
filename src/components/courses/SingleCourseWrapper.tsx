@@ -151,9 +151,14 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
                     onChange={(e) => e.target.value === "" && setSearchTerm("")}
                   />
                 </div>
-                <Button onClick={() => setShowDrawer(true)} type="primary">
-                  Add Lesson
-                </Button>
+                <div className="flex gap-2">
+                  <Button onClick={() => setShowDrawer(true)} type="text">
+                    Lesson Groups
+                  </Button>
+                  <Button onClick={() => setShowDrawer(true)} type="primary">
+                    Add Lesson
+                  </Button>
+                </div>
               </div>
               <CourseLessonTable />
             </div>
