@@ -392,7 +392,6 @@ const CourseParticipantTable = ({
           },
           ...actColumns,
         ];
-        console.log("ANSWERS +>", mergedColumns);
 
         return { mergedColumns, templateColumns };
       },
@@ -436,7 +435,7 @@ const CourseParticipantTable = ({
         const ans = result.map((item: any) => ({
           key: item.data.id,
           id: item.data.id,
-          studentName: item.user?.name,
+          studentName: `${item.user?.name}(${item.data.student.id_number})`,
           ...JSON.parse(item.data.break_down),
 
           grade: item.data.grade,
