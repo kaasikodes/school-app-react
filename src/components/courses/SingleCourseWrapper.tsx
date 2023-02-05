@@ -104,24 +104,7 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
               <p>This is to show the lesson plan for course</p>
             </div>
           </Tabs.TabPane>
-          <Tabs.TabPane tab="Categories" key="item-5">
-            <div className="flex flex-col gap-4">
-              <div className="flex md:justify-between">
-                <div>
-                  <Input.Search
-                    placeholder="Search assessment"
-                    onSearch={(val) => setSearchTerm(val)}
-                    allowClear
-                    onChange={(e) => e.target.value === "" && setSearchTerm("")}
-                  />
-                </div>
-                <Button onClick={() => setShowDrawer(true)} type="primary">
-                  Record Assessment
-                </Button>
-              </div>
-              <p>This is to show the categories lessons will be grouped into</p>
-            </div>
-          </Tabs.TabPane>
+
           <Tabs.TabPane tab="Participants" key="item-1">
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-4 items-center md:flex-row  md:justify-between">
