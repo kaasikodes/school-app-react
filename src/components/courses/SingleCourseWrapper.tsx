@@ -127,7 +127,7 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
               <div className="flex flex-col gap-4 items-center md:flex-row  md:justify-between">
                 <div>
                   <Input.Search
-                    placeholder="Search participant"
+                    placeholder="Search by ID no."
                     onSearch={(val) => setSearchTerm(val)}
                     allowClear
                     onChange={(e) => e.target.value === "" && setSearchTerm("")}
@@ -152,6 +152,7 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
                 <CourseParticipantTable
                   courseId={courseId as string}
                   levelId={classId as string}
+                  searchParticipantTerm={searchTerm}
                 />
               </div>
             </div>

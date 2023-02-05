@@ -128,9 +128,14 @@ const EditableCell: React.FC<EditableCellProps> = ({
 interface IProps {
   courseId: string;
   levelId: string;
+  searchParticipantTerm?: string;
 }
 
-const CourseParticipantTable = ({ courseId, levelId }: IProps) => {
+const CourseParticipantTable = ({
+  courseId,
+  levelId,
+  searchParticipantTerm = "",
+}: IProps) => {
   const queryClient = useQueryClient();
 
   const [form] = Form.useForm();
@@ -151,7 +156,6 @@ const CourseParticipantTable = ({ courseId, levelId }: IProps) => {
     pageSize: 4,
     showSizeChanger: false,
   });
-  const [searchTerm, setSearchTerm] = useState("");
 
   const [breakDownKeys, setbreakDownKeys] = useState<string[]>([]);
 
@@ -400,7 +404,7 @@ const CourseParticipantTable = ({ courseId, levelId }: IProps) => {
     isFetching: isPLoading,
     isSuccess: isPSuccess,
   } = useQuery<any, any, any, any>(
-    ["course-participants", pagination.current],
+    ["course-participants", pagination.current, searchParticipantTerm],
     () => {
       return getSessionCourseParticipants({
         token,
@@ -411,7 +415,7 @@ const CourseParticipantTable = ({ courseId, levelId }: IProps) => {
         levelId: levelId,
         sessionId: sessionId,
 
-        searchTerm,
+        searchTerm: searchParticipantTerm,
       });
     },
     {
