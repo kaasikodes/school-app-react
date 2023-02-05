@@ -136,16 +136,16 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
                 <div className="flex gap-4">
                   <Button
                     onClick={() => handleClick("Add Participant")}
-                    type="text"
+                    type="ghost"
                   >
                     Add Participant
                   </Button>
-                  <Button onClick={() => setShowDrawer(true)} type="ghost">
+                  {/* <Button onClick={() => setShowDrawer(true)} type="ghost">
                     Upload Assessment
                   </Button>
                   <Button onClick={() => setShowDrawer(true)} type="primary">
                     Submit Assessment
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
               <div>
