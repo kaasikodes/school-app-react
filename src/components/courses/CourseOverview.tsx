@@ -4,13 +4,24 @@ import { Button, Form, Input } from "antd";
 
 const CourseOverview = () => {
   const [edit, setEdit] = useState(false);
+  const handleSave = () => {
+    setEdit(false);
+  };
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-end">
         {edit ? (
-          <Button icon={<EditFilled />} type="text" />
+          <Button
+            icon={<SaveFilled />}
+            type="text"
+            onClick={() => handleSave()}
+          />
         ) : (
-          <Button icon={<SaveFilled />} type="text" />
+          <Button
+            icon={<EditFilled />}
+            type="text"
+            onClick={() => setEdit(true)}
+          />
         )}
       </div>
 
