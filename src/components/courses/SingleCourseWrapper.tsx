@@ -88,20 +88,14 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
         <Tabs>
           <Tabs.TabPane tab="Course Overview" key="item-4">
             <div className="flex flex-col gap-4">
-              <div className="flex md:justify-between">
-                <div>
-                  <Input.Search
-                    placeholder="Search assessment"
-                    onSearch={(val) => setSearchTerm(val)}
-                    allowClear
-                    onChange={(e) => e.target.value === "" && setSearchTerm("")}
-                  />
-                </div>
-                <Button onClick={() => setShowDrawer(true)} type="primary">
-                  Record Assessment
-                </Button>
+              {/* brief */}
+              <div>
+                <p>This is a brief of the course</p>
               </div>
-              <p>This is to show the lesson plan for course</p>
+              {/* brakdown */}
+              <div>
+                <p>This is breakdown of the course</p>
+              </div>
             </div>
           </Tabs.TabPane>
 
@@ -152,7 +146,7 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
                   />
                 </div>
                 <div className="flex gap-2">
-                  <Button onClick={() => setShowDrawer(true)} type="text">
+                  <Button onClick={() => setShowDrawer(true)} type="ghost">
                     Lesson Groups
                   </Button>
                   <Button onClick={() => setShowDrawer(true)} type="primary">
