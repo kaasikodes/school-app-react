@@ -134,6 +134,7 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
               </div>
             </div>
           </Tabs.TabPane>
+          {/* TO DO -> list out teavhers 4 the course (available to everyone) */}
           {/* <Tabs.TabPane tab="Lessons" key="item-2">
             <div className="flex flex-col gap-4">
               <div className="flex md:justify-between">
