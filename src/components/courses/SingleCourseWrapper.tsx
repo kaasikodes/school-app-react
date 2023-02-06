@@ -19,6 +19,7 @@ import { routes } from "../../routes";
 import ComponentLoader from "../loaders/ComponentLoader";
 import AddCourseParticipantForm from "./AddCourseParticipantForm";
 import CourseLessonTable from "./CourseLessonTable";
+import CourseOverview from "./CourseOverview";
 import CourseParticipantTable from "./CourseParticipantTable";
 import CourseRecordAssessmentTable from "./CourseRecordAssessmentTable";
 
@@ -87,16 +88,7 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
       <div className="mt-8 flex flex-col gap-2">
         <Tabs>
           <Tabs.TabPane tab="Course Overview" key="item-4">
-            <div className="flex flex-col gap-4">
-              {/* brief */}
-              <div>
-                <p>This is a brief of the course</p>
-              </div>
-              {/* brakdown */}
-              <div>
-                <p>This is breakdown of the course</p>
-              </div>
-            </div>
+            <CourseOverview />
           </Tabs.TabPane>
 
           <Tabs.TabPane tab="Participants" key="item-1">
