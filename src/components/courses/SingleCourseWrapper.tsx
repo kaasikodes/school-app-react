@@ -134,7 +134,7 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
               </div>
             </div>
           </Tabs.TabPane>
-          <Tabs.TabPane tab="Lessons" key="item-2">
+          {/* <Tabs.TabPane tab="Lessons" key="item-2">
             <div className="flex flex-col gap-4">
               <div className="flex md:justify-between">
                 <div>
@@ -199,7 +199,7 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
               student submissions (include assessment their submitting for -
               also dropdown to chooose the assessment teacher wishes to see)
             </p>
-          </Tabs.TabPane>
+          </Tabs.TabPane> */}
         </Tabs>
         {/* Course Paticipant Table that takes in class id and course id, and sessId */}
       </div>
