@@ -14,6 +14,7 @@ import {
   assignStaffToHandleSessionCourse,
   getCourse,
   getCourses,
+  saveCourseOverview,
   saveSchoolCourse,
   saveSchoolCoursesInBulk,
   updateSchoolCourse,
@@ -297,4 +298,7 @@ export const useAssignStaffToHandleSessionCourse = () => {
 };
 export const useAssignStaffToHandleSessionClasses = () => {
   return useMutation(assignStaffToHandleSessionClasses);
+};
+export const useSaveCourseOverview = () => {
+  return useMutation(saveCourseOverview);
 };

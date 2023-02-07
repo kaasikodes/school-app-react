@@ -177,7 +177,31 @@ export const assignStaffToHandleSessionClasses = ({
   const res: any = axios.post(url, data, config);
   return res;
 };
+export interface ISaveCourseOverviewProps extends ICourseAuthProps {
+  sessionId: string;
+  levelId: string;
+  courseId: string;
+  breakDown: string;
+  brief: string;
+}
 
+export const saveCourseOverview = (props: ISaveCourseOverviewProps) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/courses/saveSessionCourseSingleOverview`;
+  const { token } = props;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  let data = {
+    ...props,
+  };
+
+  const res: any = axios.post(url, data, config);
+  return res;
+};
 export const saveSchoolCourse = ({
   token,
   schoolId,
@@ -211,9 +235,30 @@ export const saveSchoolCourse = ({
 interface IGetCourseProps extends ICourseAuthProps {
   courseId: string;
 }
+interface IGetSessLevelCourseOWProps extends IGetCourseProps {
+  courseId: string;
+  levelId: string;
+  sessionId: string;
+}
 
 export const getCourse = ({ token, courseId }: IGetCourseProps) => {
   const url = `${process.env.REACT_APP_APP_URL}/api/courses/${courseId}`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const res: any = axios.get(url, config);
+  return res;
+};
+export const getSessionLevelCourseOverview = (
+  props: IGetSessLevelCourseOWProps
+) => {
+  const { token, courseId, sessionId, levelId } = props;
+  const url = `${process.env.REACT_APP_APP_URL}/api/courses/${courseId}/sessionCourseSingleOverview?sessionId=${sessionId}&levelId=${levelId}`;
 
   const config = {
     headers: {

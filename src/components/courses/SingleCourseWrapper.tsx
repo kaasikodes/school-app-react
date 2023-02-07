@@ -88,7 +88,9 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
       <div className="mt-8 flex flex-col gap-2">
         <Tabs>
           <Tabs.TabPane tab="Course Overview" key="item-4">
-            <CourseOverview />
+            <CourseOverview
+              {...{ courseId: courseId as string, levelId: classId as string }}
+            />
           </Tabs.TabPane>
 
           <Tabs.TabPane tab="Participants" key="item-1">
