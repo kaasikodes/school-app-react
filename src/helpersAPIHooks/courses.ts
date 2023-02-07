@@ -14,6 +14,8 @@ import {
   assignStaffToHandleSessionCourse,
   getCourse,
   getCourses,
+  getSessionLevelCourseOverview,
+  IGetSessLevelCourseOWProps,
   saveCourseOverview,
   saveSchoolCourse,
   saveSchoolCoursesInBulk,
@@ -102,6 +104,55 @@ export const useFetchCourses = ({
         const ans: IFRQReturnProps = {
           data,
           total: res.data?.meta.total,
+        };
+
+        return ans;
+      },
+    }
+  );
+
+  return queryData;
+};
+export const useFetchCourseOverview = ({
+  levelId,
+  courseId,
+  token,
+  schoolId,
+  sessionId,
+}: IGetSessLevelCourseOWProps) => {
+  const queryData = useQuery(
+    ["course-overview", levelId, courseId, sessionId],
+    () =>
+      getSessionLevelCourseOverview({
+        levelId,
+        courseId,
+        token,
+        schoolId,
+        sessionId,
+      }),
+    {
+      // enabled: filterParams ? !!filterParams?.levelId : true,
+      // refetchInterval: false,
+      // refetchIntervalInBackground: false,
+      // refetchOnWindowFocus: false,
+      onError: (err: any) => {
+        // show notification
+        openNotification({
+          state: "error",
+          title: "Error Occurred",
+          description:
+            err?.response.data.message ?? err?.response.data.error.message,
+        });
+      },
+
+      select: (res: any) => {
+        const fetchedData = res.data.data;
+        const result = fetchedData;
+
+        const ans = {
+          brief: result.brief,
+          id: result.id,
+          breakDown: result.break_down,
         };
 
         return ans;

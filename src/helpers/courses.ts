@@ -235,7 +235,7 @@ export const saveSchoolCourse = ({
 interface IGetCourseProps extends ICourseAuthProps {
   courseId: string;
 }
-interface IGetSessLevelCourseOWProps extends IGetCourseProps {
+export interface IGetSessLevelCourseOWProps extends IGetCourseProps {
   courseId: string;
   levelId: string;
   sessionId: string;

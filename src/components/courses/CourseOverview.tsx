@@ -1,7 +1,10 @@
 import React, { useContext, useState } from "react";
 import { EditFilled, SaveFilled } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
-import { useSaveCourseOverview } from "../../helpersAPIHooks/courses";
+import {
+  useFetchCourseOverview,
+  useSaveCourseOverview,
+} from "../../helpersAPIHooks/courses";
 import { ISaveCourseOverviewProps } from "../../helpers/courses";
 import { useAuthUser } from "react-auth-kit";
 import { useQueryClient } from "react-query";
@@ -29,6 +32,20 @@ const CourseOverview = ({ levelId, courseId }: IProps) => {
   const { state: globalState } = globalCtx;
   const schoolId = globalState?.currentSchool?.id as string;
   const sessionId = globalState?.currentSchool?.currentSessionId as string;
+  const { data, isSuccess } = useFetchCourseOverview({
+    courseId,
+    levelId,
+    sessionId,
+    token,
+    schoolId,
+  });
+
+  if (isSuccess) {
+    form.setFieldsValue({
+      breakDown: data.breakDown,
+      brief: data.brief,
+    });
+  }
 
   const { mutate } = useSaveCourseOverview();
 
@@ -72,7 +89,7 @@ const CourseOverview = ({ levelId, courseId }: IProps) => {
           form.resetFields();
 
           queryClient.invalidateQueries({
-            queryKey: ["departments"],
+            queryKey: ["course-overview"],
             // exact: true,
           });
         },
@@ -117,11 +134,11 @@ const CourseOverview = ({ levelId, courseId }: IProps) => {
         <>
           {/* brief */}
           <div className="border p-4 ">
-            <p>This is a brief of the course</p>
+            <p>{data?.brief}</p>
           </div>
           {/* brakdown */}
           <div className="p-4">
-            <p>This is breakdown of the course</p>
+            <p>{data?.breakDown}</p>
           </div>
         </>
       )}
