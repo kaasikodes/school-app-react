@@ -16,7 +16,7 @@ const SingleCustodianWrapper = ({ custodianId, isUser }: IProps) => {
       <div className="flex justify-end">
         {!isUser && (
           <div className="flex gap-3 items-center">
-            <Link to={routes.staff} className="relative bottom-2">
+            <Link to={routes.custodians} className="relative bottom-2">
               <ArrowLeftOutlined />
             </Link>
             <Typography.Title level={4}>
