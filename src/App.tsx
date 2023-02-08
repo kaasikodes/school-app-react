@@ -36,6 +36,7 @@ import Events from "./pages/Events";
 import Approvals from "./pages/Approvals";
 import Requisitions from "./pages/Requisitions";
 import AcademicRecords from "./pages/AcademicRecords";
+import SingleCustodian from "./pages/custodians/SingleCustodian";
 
 const queryClient = new QueryClient();
 
@@ -71,6 +72,12 @@ function App() {
                 <Route path={routes.classes} element={<Classes />} />
                 <Route path={routes.staff} element={<Staff />} />
                 <Route path={routes.singleStaff} element={<SingleStaff />} />
+                {/* custodianId */}
+                <Route
+                  path={routes.singleCustodian}
+                  element={<SingleCustodian />}
+                />
+                {/* student */}
                 <Route
                   path={routes.singleStudent}
                   element={<SingleStudent />}
