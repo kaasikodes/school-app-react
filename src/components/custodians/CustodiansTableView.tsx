@@ -49,7 +49,7 @@ const CustodiansTableView = ({
       dataIndex: "name",
       key: "name",
       render: (_, record) => (
-        <Link to={`${routes.staff}/${record.id}`}>{record.name}</Link>
+        <Link to={`${routes.custodians}/${record.id}`}>{record.name}</Link>
       ),
     },
     {

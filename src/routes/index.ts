@@ -21,6 +21,8 @@ export const routes = {
   singleStudentSingleSessionResult: "/students/:studentId/session-result",
   sessions: "/sessions",
   assessments: "/assessments",
+  singleCustodian: "/custodians/:custodianId",
+
   custodians: "/custodians",
   students: "/students",
   singleClassCourse: `/classes/:classId/courses/:courseId`,
