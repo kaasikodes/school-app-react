@@ -76,10 +76,16 @@ const TopActions = ({
         },
 
         {
-          label: <Link to={routes.schools}>Switch School</Link>,
+          label: <Link to={routes.schools}>Manage Schools</Link>,
           key: "1",
           icon: React.createElement(TbSchool as IconType),
-          title: "Switch school",
+          title: "Manage Schools",
+        },
+        {
+          label: <Link to={routes.sessions}>Manage Sessions</Link>,
+          key: "sessions",
+          icon: React.createElement(TbSchool as IconType),
+          title: "Manage Sessions",
         },
 
         {
