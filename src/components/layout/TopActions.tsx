@@ -85,7 +85,7 @@ const TopActions = ({
           label: <Link to={routes.sessions}>Manage Sessions</Link>,
           key: "sessions",
           icon: React.createElement(TbSchool as IconType),
-          title: "Manage Sessions",
+          title: "Manage Sessions ",
         },
 
         {
