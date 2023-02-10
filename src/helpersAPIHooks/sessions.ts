@@ -121,7 +121,7 @@ export const useFetchSchoolSessionSetting = ({
           courseRecordTemplateId: result?.course_record_template_id,
           studentEnrollmentPolicyId: result?.student_enrollment_policy_id,
           gradingPolicyId: result?.grading_policy_id,
-          id: result.id,
+          id: result?.id,
         };
 
         const ans = data;
