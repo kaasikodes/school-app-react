@@ -2,8 +2,6 @@ import { Rule } from "antd/lib/form";
 
 export const generalValidationRules: Rule[] = [
   { required: true, message: "Enter field" },
-
-  // { message: "Field is required!" }, // was resulting in err
 ];
 export const generalValidationRulesOp: Rule[] = [
   { required: false },
