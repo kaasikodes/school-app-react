@@ -5,6 +5,7 @@ import {
   generalValidationRules,
   emailValidationRules,
   passwordValidationRules,
+  phoneNumberValidationRule,
 } from "../../formValidation";
 import { GooglePlusCircleFilled } from "@ant-design/icons";
 import { useRegisterSchool } from "../../helpersAPIHooks/auth";
@@ -211,7 +212,7 @@ const RegisterSchoolForm = () => {
           </Form.Item>
           <Form.Item
             noStyle
-            rules={textInputValidationRules}
+            rules={[...textInputValidationRules, phoneNumberValidationRule]}
             name={["phone", "number"]}
           >
             <Input
