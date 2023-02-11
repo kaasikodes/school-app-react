@@ -1,5 +1,5 @@
 import { Button, Form, Input, Select } from "antd";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   textInputValidationRules,
   generalValidationRules,
@@ -16,8 +16,11 @@ import {
   GlobalContext,
   EGlobalOps,
 } from "../../contexts/GlobalContextProvider";
+import { dialCodes } from "../../data";
 
 const RegisterSchoolForm = () => {
+  const [searchedDialCodes, setSarchedDialCodes] = useState(dialCodes);
+
   const signIn = useSignIn();
   const [form] = Form.useForm();
   const { mutate, isLoading } = useRegisterSchool();
@@ -186,16 +189,23 @@ const RegisterSchoolForm = () => {
           >
             {
               <Select
-                placeholder="Country Code"
-                // showSearch
-                // allowClear
-                // optionLabelProp="label"
                 className="rounded border-slate-400"
+                placeholder="Country Code"
+                onSearch={(value) =>
+                  setSarchedDialCodes(() =>
+                    dialCodes.filter(
+                      (item) => item.label.toLowerCase().indexOf(value) !== -1
+                    )
+                  )
+                }
+                showSearch
+                defaultActiveFirstOption={false}
+                showArrow={false}
+                filterOption={false}
+                notFoundContent={null}
+                options={searchedDialCodes}
+                allowClear
                 style={{ width: "25%" }}
-                options={[{ id: "234", code: "234" }].map((item) => ({
-                  label: `+${item.code}`,
-                  value: item.id,
-                }))}
               />
             }
           </Form.Item>
