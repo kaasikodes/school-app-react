@@ -83,6 +83,7 @@ const RegisterSchoolForm = () => {
               studentId: school.pivot.student_id,
               custodianId: school.pivot.custodian_id,
               adminId: school.pivot.admin_id,
+              currentRole: school.pivot.choosen_role,
               currentSessionId: school.current_session_id,
             };
           });
