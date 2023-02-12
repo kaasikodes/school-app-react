@@ -39,7 +39,7 @@ export const useFetchClasses = ({
   onSuccess,
 }: IFRQProps) => {
   const queryData = useQuery(
-    ["classes", pagination?.page, pagination?.limit, searchParams],
+    ["classes", pagination?.page, pagination?.limit, searchParams?.name],
     () =>
       getClasses({
         schoolId,
