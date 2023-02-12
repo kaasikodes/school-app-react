@@ -54,12 +54,12 @@ const ClassesTableView = ({
       dataIndex: "courseCount",
       key: "courseCount",
     },
-    {
-      title: "Author",
-      dataIndex: "author",
-      key: "author",
-      render: (author) => <span className="capitalize">{author?.name}</span>,
-    },
+    // {
+    //   title: "Author",
+    //   dataIndex: "author",
+    //   key: "author",
+    //   render: (author) => <span className="capitalize">{author?.name}</span>,
+    // },
     {
       title: "Created At",
       dataIndex: "createdAt",
