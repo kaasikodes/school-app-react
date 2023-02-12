@@ -42,6 +42,8 @@ const ClassesTableView = ({
     setShowD(false);
   };
 
+  // DB: Class Name is now unique in each school
+
   const columns: ColumnsType<TLevel> = [
     {
       title: "Name",
