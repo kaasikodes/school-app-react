@@ -18,7 +18,7 @@ enum EAction {
   VIEW = "View Department",
   NONE = "",
 }
-
+// Dept unique name in school added in :DB
 const DepartmentsTableView = ({
   departments,
   loading,
