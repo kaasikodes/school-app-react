@@ -6,10 +6,26 @@ import { IAuthProps } from "./auth";
 export interface IDepartmentAuthProps extends IAuthProps {
   schoolId: string;
 }
-interface IGetDepartmentProps extends IDepartmentAuthProps {
+export interface IGetDepartmentProps extends IDepartmentAuthProps {
   departmentId: string;
 }
 
+export const deleteDepartment = ({
+  token,
+  departmentId,
+}: IGetDepartmentProps) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/departments/${departmentId}`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const res: any = axios.delete(url, config);
+  return res;
+};
 export const getDepartment = ({ token, departmentId }: IGetDepartmentProps) => {
   const url = `${process.env.REACT_APP_APP_URL}/api/departments/${departmentId}`;
 

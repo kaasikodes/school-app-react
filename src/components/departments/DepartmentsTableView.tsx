@@ -1,10 +1,17 @@
 import { Button, Drawer, Dropdown, Menu, Space, Table } from "antd";
 import { ColumnsType, TablePaginationConfig, TableProps } from "antd/lib/table";
 import { TDepartment } from "../../appTypes/departments";
-import { EllipsisOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { EllipsisOutlined, LoadingOutlined } from "@ant-design/icons";
+import { useContext, useState } from "react";
 import EditDepartmentForm from "./EditDepartmentForm";
 import ViewDepartmentForm from "./ViewDepartment";
+import { useDeleteSingleDepartment } from "../../helpersAPIHooks/departments";
+import form from "antd/lib/form";
+import { useAuthUser } from "react-auth-kit";
+import { IAuthDets } from "../../appTypes/auth";
+import { GlobalContext } from "../../contexts/GlobalContextProvider";
+import { useQueryClient } from "react-query";
+import { openNotification } from "../../helpers/notifications";
 
 interface IProps {
   departments: TDepartment[];
@@ -16,6 +23,7 @@ interface IProps {
 enum EAction {
   EDIT = "Edit Deparment",
   VIEW = "View Department",
+  DELETE = "Delete Department",
   NONE = "",
 }
 // Dept unique name in school added in :DB
@@ -25,15 +33,64 @@ const DepartmentsTableView = ({
   pagination,
   onChange,
 }: IProps) => {
+  const queryClient = useQueryClient();
+  const auth = useAuthUser();
+
+  const authDetails = auth() as unknown as IAuthDets;
+
+  const token = authDetails.userToken;
+
+  const globalCtx = useContext(GlobalContext);
+  const { state: globalState } = globalCtx;
+  const schoolId = globalState?.currentSchool?.id as string;
+  const adminId = globalState?.currentSchool?.adminId as string;
   const [showD, setShowD] = useState(false);
   const [action, setAction] = useState<EAction>(EAction.NONE);
   const [departmentId, setDepartmentId] = useState("");
+  const { mutate } = useDeleteSingleDepartment();
 
   const handleAction = (props: { action: EAction; departmentId: string }) => {
+    if (props.action === "Delete Department") {
+      const params = {
+        schoolId,
+        departmentId: props.departmentId,
+        token,
+      };
+      // delete logic here
+      openNotification({
+        state: "info",
+        title: "Wait a second ...",
+        description: <LoadingOutlined />,
+      });
+      mutate(params, {
+        onError: (err: any) => {
+          openNotification({
+            state: "error",
+            title: "Error Occurred",
+            description:
+              err?.response.data.message ?? err?.response.data.error.message,
+          });
+        },
+        onSuccess: (res: any) => {
+          openNotification({
+            state: "success",
+
+            title: "Success",
+            description: res.data.message,
+            // duration: 0.4,
+          });
+
+          queryClient.invalidateQueries({
+            queryKey: ["departments"],
+            // exact: true,
+          });
+        },
+      });
+      return;
+    }
     setDepartmentId(props.departmentId);
     setAction(props.action);
     setShowD(true);
-    console.log("cAST", props);
   };
 
   const handleClose = () => {
@@ -98,6 +155,15 @@ const DepartmentsTableView = ({
                       departmentId: `${record.id}`,
                     }),
                 },
+                {
+                  key: "3",
+                  label: <span className="w-full text-left">Delete</span>,
+                  onClick: () =>
+                    handleAction({
+                      action: EAction.DELETE,
+                      departmentId: `${record.id}`,
+                    }),
+                },
               ]}
             />
           }
@@ -110,6 +176,7 @@ const DepartmentsTableView = ({
       ),
     },
   ];
+
   return (
     <div>
       <Table

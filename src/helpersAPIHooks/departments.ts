@@ -4,8 +4,10 @@ import { TDepartment } from "../appTypes/departments";
 import { IPaginationProps, ISearchParams } from "../appTypes/requestParams";
 
 import {
+  deleteDepartment,
   getDepartment,
   getDepartments,
+  IGetDepartmentProps,
   saveSchoolDepartment,
   saveSchoolDepartmentInBulk,
   updateSchoolDepartment,
@@ -172,4 +174,7 @@ export const useAddSingleDepartment = () => {
 };
 export const useUpdateSingleDepartment = () => {
   return useMutation(updateSchoolDepartment);
+};
+export const useDeleteSingleDepartment = () => {
+  return useMutation(deleteDepartment);
 };
