@@ -61,7 +61,7 @@ export const loginUser = async (props: ILoginProps) => {
   };
 
   await setCSRFToken();
-  const res: any = axios.post(url, data, config);
+  const res: any = await axios.post(url, data, config);
   return res;
 };
 interface ILProps extends IAuthProps {
