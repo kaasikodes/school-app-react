@@ -1,4 +1,4 @@
-import { Form, Input, Button, Select, Spin } from "antd";
+import { Form, Input, Button, Select, Spin, Checkbox } from "antd";
 import React, { useContext, useState } from "react";
 import { openNotification } from "../../helpers/notifications";
 
@@ -19,6 +19,7 @@ import {
 import { useFetchDepartments } from "../../helpersAPIHooks/departments";
 import { generalValidationRules } from "../../formValidation";
 import { TCourse } from "../../appTypes/courses";
+import { useFetchClasses } from "../../helpersAPIHooks/classes";
 
 interface IProps {
   closeDrawer: Function;
@@ -92,6 +93,10 @@ const EditCourseForm = ({ closeDrawer, id }: IProps) => {
     }
   };
   const [searchTerm, setSearchTerm] = useState("");
+  const { data: classesData } = useFetchClasses({
+    schoolId,
+    token,
+  });
 
   const {
     data: departmentData,
@@ -109,7 +114,7 @@ const EditCourseForm = ({ closeDrawer, id }: IProps) => {
       name: searchTerm,
     },
   });
-  const { isSuccess } = useFetchSingleCourse({
+  const { isSuccess, data: course } = useFetchSingleCourse({
     id,
     schoolId,
     token,
@@ -118,6 +123,7 @@ const EditCourseForm = ({ closeDrawer, id }: IProps) => {
         name: data.name,
         description: data.description,
         departmentId: data.department?.id,
+        levels: data?.levels?.map((item) => item.id),
       });
     },
   });
@@ -171,6 +177,21 @@ const EditCourseForm = ({ closeDrawer, id }: IProps) => {
           </Form.Item>
           <Form.Item label={`Description (optional)`} name="description">
             <Input.TextArea placeholder="Describe the course" rows={4} />
+          </Form.Item>
+          <Form.Item
+            // rules={generalValidationRulesOp}
+            label="What classes will this be taught in ?(optional)"
+            name={"levels"}
+          >
+            <Checkbox.Group
+              options={classesData?.data.map((item) => ({
+                value: item.id,
+                label: item.name,
+                disabled: course.levels?.find((level) => level.id === item.id)
+                  ? true
+                  : false,
+              }))}
+            />
           </Form.Item>
 
           <Form.Item>
