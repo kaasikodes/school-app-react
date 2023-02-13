@@ -52,6 +52,7 @@ const EditCourseForm = ({ closeDrawer, id }: IProps) => {
         name: data.name,
         description: data.description,
         departmentId: data.departmentId,
+        // A UNIQUE KEY constraint is also emphasized on course_level on DB
         levels: data.levels.filter(
           //this is to prevent duplicate creations
           (id: number) =>
