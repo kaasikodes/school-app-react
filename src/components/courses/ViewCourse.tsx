@@ -20,6 +20,7 @@ import {
   useFetchSingleCourse,
   useUpdateSingleCourse,
 } from "../../helpersAPIHooks/courses";
+import { TCourse } from "../../appTypes/courses";
 
 interface IProps {
   closeDrawer: Function;
@@ -97,10 +98,11 @@ const ViewCourse = ({ closeDrawer, id }: IProps) => {
     id,
     schoolId,
     token,
-    onSuccess: (data: TLevel) => {
+    onSuccess: (data: TCourse) => {
       form.setFieldsValue({
         name: data.name,
         description: data.description,
+        department: data.department?.name,
       });
     },
   });
@@ -121,6 +123,9 @@ const ViewCourse = ({ closeDrawer, id }: IProps) => {
         >
           <Form.Item label={`Course name`} name="name">
             <Input placeholder="Course name" required />
+          </Form.Item>
+          <Form.Item label={`Department`} name="department">
+            <Input placeholder="Department" required />
           </Form.Item>
           <Form.Item label={`Description (optional)`} name="description">
             <Input.TextArea placeholder="Describe the course" rows={4} />

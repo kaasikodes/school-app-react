@@ -304,10 +304,10 @@ export const useFetchSingleCourse = ({
                 : "",
             })
           ),
-          department: item?.department
+          department: item?.data?.department
             ? {
-                id: item.department.id,
-                name: item.department.name,
+                id: item?.data.department.id,
+                name: item?.data.department.name,
               }
             : undefined,
           createdAt: item.data?.created_at
