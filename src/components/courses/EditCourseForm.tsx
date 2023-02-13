@@ -52,6 +52,11 @@ const EditCourseForm = ({ closeDrawer, id }: IProps) => {
         name: data.name,
         description: data.description,
         departmentId: data.departmentId,
+        levels: data.levels.filter(
+          //this is to prevent duplicate creations
+          (id: number) =>
+            course?.levels?.map((item) => item.id).indexOf(id) === -1
+        ),
         courseId: id,
       };
       // return;

@@ -419,7 +419,7 @@ export const updateSchoolCourse = ({
   description,
   departmentId,
 
-  // adminId,
+  levels,
   courseId,
 }: IUpdateCourseProps) => {
   const url = `${process.env.REACT_APP_APP_URL}/api/courses/${courseId}/update`;
@@ -435,7 +435,7 @@ export const updateSchoolCourse = ({
     description,
     schoolId,
     departmentId,
-    // adminId,
+    levels,
     courseId,
   };
 
