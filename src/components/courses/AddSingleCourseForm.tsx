@@ -1,5 +1,5 @@
-import { Form, Input, Button, Checkbox } from "antd";
-import React, { useContext } from "react";
+import { Form, Input, Button, Checkbox, Select, Spin } from "antd";
+import React, { useContext, useState } from "react";
 import { openNotification } from "../../helpers/notifications";
 
 import { LoadingOutlined } from "@ant-design/icons";
@@ -8,7 +8,7 @@ import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
 import {
-  generalValidationRulesOp,
+  generalValidationRules,
   textInputValidationRules,
   textInputValidationRulesOp,
 } from "../../formValidation";
@@ -20,6 +20,7 @@ import {
 import { ISaveClassProps } from "../../helpers/classes";
 import { useAddSingleCourse } from "../../helpersAPIHooks/courses";
 import { ISaveCourseProps } from "../../helpers/courses";
+import { useFetchDepartments } from "../../helpersAPIHooks/departments";
 
 interface IProps {
   closeDrawer: Function;
@@ -52,7 +53,7 @@ const AddSingleCourseForm = ({ closeDrawer }: IProps) => {
         name: data.name,
         description: data.description,
         levels: data.levels,
-        // adminId,
+        departmentId: data.departmentId,
       };
       // return;
       openNotification({
@@ -93,11 +94,27 @@ const AddSingleCourseForm = ({ closeDrawer }: IProps) => {
     }
   };
 
+  const [searchTerm, setSearchTerm] = useState("");
   const { data: classesData, isSuccess: isCSuccess } = useFetchClasses({
     schoolId,
     token,
   });
-
+  const {
+    data: departmentData,
+    isError,
+    isFetching,
+    isSuccess,
+  } = useFetchDepartments({
+    schoolId,
+    token,
+    pagination: {
+      limit: 4,
+      page: 1,
+    },
+    searchParams: {
+      name: searchTerm,
+    },
+  });
   return (
     <div>
       <Form
@@ -112,6 +129,36 @@ const AddSingleCourseForm = ({ closeDrawer }: IProps) => {
           rules={textInputValidationRules}
         >
           <Input placeholder="Course name" />
+        </Form.Item>
+        <Form.Item
+          label={`Department`}
+          name="departmentId"
+          rules={generalValidationRules}
+        >
+          <Select
+            onSearch={(val) => setSearchTerm(val)}
+            showSearch
+            value={searchTerm}
+            defaultActiveFirstOption={false}
+            showArrow={false}
+            filterOption={false}
+            // onChange={handleChange}
+            notFoundContent={"No Data"}
+          >
+            {/* TO DO
+            Convert all select to api searchable dropdowns */}
+            {isSuccess ? (
+              departmentData.data.map((item) => (
+                <Select.Option key={item.id} value={item.id}>
+                  {item.name}
+                </Select.Option>
+              ))
+            ) : (
+              <div className="flex justify-center items-center w-full">
+                <Spin size="small" />
+              </div>
+            )}
+          </Select>
         </Form.Item>
         <Form.Item
           label={`Description (optional)`}

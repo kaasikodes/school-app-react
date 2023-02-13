@@ -4,7 +4,7 @@ export type TDepartment = {
   id: number;
   name: string;
   description?: string;
-  courseCount: number;
+  courseCount?: number;
   author?: TAdmin;
   createdAt?: string;
   updatedAt?: string;

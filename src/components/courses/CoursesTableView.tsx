@@ -62,10 +62,12 @@ const CourseTableView = ({
       key: "levelCount",
     },
     {
-      title: "Author",
-      dataIndex: "author",
-      key: "author",
-      render: (author) => <span className="capitalize">{author?.name}</span>,
+      title: "Department",
+      dataIndex: "department",
+      key: "department",
+      render: (_, item) => (
+        <span className="capitalize">{item?.department?.name}</span>
+      ),
     },
     {
       title: "Created At",

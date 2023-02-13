@@ -86,10 +86,10 @@ export const useFetchCourses = ({
             name: item.data.name,
             description: item.data.description,
             levelCount: item?.levelCount,
-            author: item?.author
+            department: item?.department
               ? {
-                  id: item.author.id,
-                  name: item.author.name,
+                  id: item.department.id,
+                  name: item.department.name,
                 }
               : undefined,
             createdAt: item.data?.created_at
@@ -221,10 +221,10 @@ export const useFetchCoursesGroupedByLevel = ({
             name: item.data.name,
             description: item.data.description,
             levelCount: item?.levelCount,
-            author: item?.author
+            department: item?.department
               ? {
-                  id: item.author.id,
-                  name: item.author.name,
+                  id: item.department.id,
+                  name: item.department.name,
                 }
               : undefined,
             createdAt: item.data?.created_at
@@ -304,10 +304,10 @@ export const useFetchSingleCourse = ({
                 : "",
             })
           ),
-          author: item?.author
+          department: item?.department
             ? {
-                id: item.author.id,
-                name: item.author.name,
+                id: item.department.id,
+                name: item.department.name,
               }
             : undefined,
           createdAt: item.data?.created_at

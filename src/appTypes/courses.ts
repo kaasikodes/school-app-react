@@ -1,4 +1,4 @@
-import { TAdmin } from "./admins";
+import { TDepartment } from "./departments";
 import { TLevel } from "./levels";
 
 export type TCourse = {
@@ -7,7 +7,7 @@ export type TCourse = {
   description?: string;
   levelCount?: number;
   levels?: TLevel[];
-  author?: TAdmin;
+  department?: TDepartment;
   createdAt?: string;
   updatedAt?: string;
 };
