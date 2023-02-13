@@ -87,7 +87,7 @@ const StudentsTable = () => {
         });
       },
       onSuccess: (data) => {
-        setPagination((pag) => ({ ...pag, total: data.total }));
+        setPagination((pag) => ({ ...pag, total: data?.total }));
       },
       select: (res: any) => {
         const result = res.data.data;
@@ -107,7 +107,7 @@ const StudentsTable = () => {
         return {
           data: data,
           limit: 4,
-          total: res.data.meta.total,
+          total: res.data?.meta?.total,
         };
       },
     }

@@ -37,6 +37,7 @@ import Approvals from "./pages/Approvals";
 import Requisitions from "./pages/Requisitions";
 import AcademicRecords from "./pages/AcademicRecords";
 import SingleCustodian from "./pages/custodians/SingleCustodian";
+import ComingSoon from "./components/general/ComingSoon";
 
 const queryClient = new QueryClient();
 
@@ -130,6 +131,9 @@ function App() {
                   path={routes.singleClassCourse}
                   element={<SingleClassCourse />}
                 />
+
+                {/* reports */}
+                <Route path={routes.reports} element={<ComingSoon />} />
 
                 {/* settings */}
                 <Route path={routes.settings} element={<Settings />} />
