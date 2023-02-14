@@ -134,6 +134,8 @@ function App() {
 
                 {/* reports */}
                 <Route path={routes.reports} element={<ComingSoon />} />
+                {/* Announcements */}
+                <Route path={routes.announcements} element={<ComingSoon />} />
 
                 {/* settings */}
                 <Route path={routes.settings} element={<Settings />} />

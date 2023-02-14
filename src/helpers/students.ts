@@ -152,3 +152,30 @@ export const downloadBulkStudentsUploadTemplate = (
 
   return url;
 };
+
+export interface ISaveStudentInBulkProps extends IStudentAuthProps {
+  jsonData: string;
+  adminId: string;
+}
+export const saveSchoolStudentInBulk = ({
+  token,
+  schoolId,
+  jsonData,
+  adminId,
+}: ISaveStudentInBulkProps) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/students/add-bulk?schoolId=${schoolId}`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  let data = {
+    jsonData: JSON.parse(jsonData),
+    adminId,
+  };
+
+  const res: any = axios.post(url, data, config);
+  return res;
+};

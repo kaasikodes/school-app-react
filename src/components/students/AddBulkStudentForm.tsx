@@ -17,6 +17,7 @@ import {
 import { downloadBulkStaffUploadTemplate } from "../../helpers/staff";
 import { useAddStaffInBulk } from "../../helpersAPIHooks/staff";
 import { downloadBulkStudentsUploadTemplate } from "../../helpers/students";
+import { useAddStudentInBulk } from "../../helpersAPIHooks/students";
 
 interface IProps {
   closeDrawer: Function;
@@ -78,11 +79,11 @@ const AddBulkStudentForm: React.FC<IProps> = ({ closeDrawer }) => {
 
         // validate the columns
         if (
-          columns[0] !== "first name" ||
-          columns[1] !== "middle name" ||
-          columns[2] !== "last name" ||
-          columns[3] !== "staff no" ||
-          columns[4] !== "email"
+          columns[0] !== "student first name" ||
+          columns[1] !== "student middle name" ||
+          columns[2] !== "student last name" ||
+          columns[3] !== "student gender" ||
+          columns[4] !== "student ID"
         ) {
           console.log("DataNNN", dataParse, columns[0]);
 
@@ -135,7 +136,7 @@ const AddBulkStudentForm: React.FC<IProps> = ({ closeDrawer }) => {
     }
   };
 
-  const { mutate, isLoading } = useAddStaffInBulk();
+  const { mutate, isLoading } = useAddStudentInBulk();
 
   const handleSubmit = (e: React.MouseEvent) => {
     if (schoolId) {
@@ -175,7 +176,7 @@ const AddBulkStudentForm: React.FC<IProps> = ({ closeDrawer }) => {
           closeDrawer();
 
           queryClient.invalidateQueries({
-            queryKey: ["staff"],
+            queryKey: ["students"],
             // exact: true,
           });
         },

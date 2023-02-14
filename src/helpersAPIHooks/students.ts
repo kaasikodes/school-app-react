@@ -1,7 +1,11 @@
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { IStudentEntry } from "../components/students/StudentsTable";
 import { openNotification } from "../helpers/notifications";
-import { getAllStudents, IGetMultipleStudentProps } from "../helpers/students";
+import {
+  getAllStudents,
+  IGetMultipleStudentProps,
+  saveSchoolStudentInBulk,
+} from "../helpers/students";
 
 export const useFetchAllStudents = ({
   page,
@@ -60,4 +64,8 @@ export const useFetchAllStudents = ({
   );
 
   return queryData;
+};
+
+export const useAddStudentInBulk = () => {
+  return useMutation(saveSchoolStudentInBulk);
 };

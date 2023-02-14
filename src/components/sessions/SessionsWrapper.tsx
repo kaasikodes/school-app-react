@@ -99,7 +99,7 @@ const SessionsWrapper = () => {
               </Typography.Title>
 
               <div className="mt-4">
-                <Steps progressDot current={0} direction="vertical">
+                <Steps progressDot current={1} direction="vertical">
                   <Step
                     title={
                       <Typography.Text

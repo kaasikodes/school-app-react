@@ -1,11 +1,12 @@
 import { DiYeoman } from "react-icons/di";
-import { MenuProps, Typography } from "antd";
+import { Avatar, MenuProps, Typography } from "antd";
 import { Layout, Menu } from "antd";
 import React from "react";
 import { IconType } from "react-icons";
 import { Link } from "react-router-dom";
 import { TCSchool } from "../../contexts/GlobalContextProvider";
 import { ILink } from "../../data/dashboard";
+import { routes } from "../../routes";
 
 const { Sider } = Layout;
 
@@ -82,8 +83,11 @@ const Sidebar = ({
       }}
     >
       {/* the logo is buggy and will need to be fixed ....   */}
-      <div className="flex justify-start pt-2 mb-4 gap-2 pl-4 items-center">
-        <DiYeoman className=" text-4xl text-yellow-400" />
+      <Link
+        to={routes.index}
+        className="flex flex-col justify-center pt-3 pb-2 gap-1 pl-2 items-center border-0 border-b border-white"
+      >
+        <Avatar src="" size={45} className="border-white border-2" />
         {!(
           (!!localStorage.getItem("isMenuCollapsed") &&
             JSON.parse(localStorage.getItem("isMenuCollapsed") as string)) ||
@@ -92,11 +96,13 @@ const Sidebar = ({
           <Typography.Text
             style={{ color: "#fff", textTransform: "uppercase" }}
             strong
+            ellipsis
+            title={currentSchool.name}
           >
-            {currentSchool.name}
+            <span className="">{currentSchool.name}</span>
           </Typography.Text>
         )}
-      </div>
+      </Link>
 
       <Menu
         theme="dark"
