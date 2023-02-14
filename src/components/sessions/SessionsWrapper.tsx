@@ -1,4 +1,4 @@
-import { Breadcrumb, Card, Drawer, Steps, Typography } from "antd";
+import { Breadcrumb, Button, Card, Drawer, Steps, Typography } from "antd";
 
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
@@ -13,11 +13,13 @@ import AssignStaffToCourse from "../courses/settings/AssignStaffToCourse";
 import SessionStudentEnrollmentPolicy from "../students/SessionStudentEnrollmentPolicy";
 import SessionStudentPromotionPolicy from "../students/SessionStudentPromotionPolicy";
 import AddSessionForm from "./AddSessionForm";
+import SetUpCurrentSessionForm from "./SetUpCurrentSessionForm";
 
 const { Step } = Steps;
 
 enum EAction {
-  START_NEW_SESSION = "Start New Session",
+  START_NEW_SESSION = "Start new session",
+  SET_UP_CURRENT_SESSION = "Set up current session",
   STUDENT_ENROLLMENT_POLICY = "Student Enrollment Policy",
   STUDENT_PROMOTION_POLICY = "Student Promotion Policy",
   COURSE_ENROLLMENT_POLICY = "Course Enrollment Policy",
@@ -49,6 +51,9 @@ const SessionsWrapper = () => {
       >
         {action === EAction.START_NEW_SESSION && (
           <AddSessionForm closeDrawer={() => setShowD(false)} />
+        )}
+        {action === EAction.SET_UP_CURRENT_SESSION && (
+          <SetUpCurrentSessionForm closeDrawer={() => setShowD(false)} />
         )}
         {action === EAction.STUDENT_ENROLLMENT_POLICY && (
           <SessionStudentEnrollmentPolicy />
@@ -104,10 +109,12 @@ const SessionsWrapper = () => {
                     title={
                       <Typography.Text
                         className="cursor-pointer"
-                        onClick={() => handleAction(EAction.START_NEW_SESSION)}
+                        onClick={() =>
+                          handleAction(EAction.SET_UP_CURRENT_SESSION)
+                        }
                       >
                         <span className="text-[#109fff]">
-                          Start new session
+                          Set up Current Session
                         </span>
                       </Typography.Text>
                     }
@@ -122,7 +129,7 @@ const SessionsWrapper = () => {
                         }
                       >
                         <span className="text-[#109fff]">
-                          Student Enrollment Policy
+                          Setup Departments
                         </span>
                       </Typography.Text>
                     }
@@ -136,9 +143,7 @@ const SessionsWrapper = () => {
                           handleAction(EAction.COURSE_ENROLLMENT_POLICY)
                         }
                       >
-                        <span className="text-[#109fff]">
-                          Course Enrollment Policy
-                        </span>
+                        <span className="text-[#109fff]">Setup Classes</span>
                       </Typography.Text>
                     }
                     description="Establish the policy for the student enrollment policy"
@@ -149,7 +154,7 @@ const SessionsWrapper = () => {
                         className="cursor-pointer"
                         onClick={() => handleAction(EAction.GRADING_POLICY)}
                       >
-                        <span className="text-[#109fff]">Grading Policy</span>
+                        <span className="text-[#109fff]">Setup courses</span>
                       </Typography.Text>
                     }
                     description="What is the grading policy used for this session (research on common ones & also allow them to create custom policies)"
@@ -163,7 +168,7 @@ const SessionsWrapper = () => {
                         }
                       >
                         <span className="text-[#109fff]">
-                          {EAction.STUDENT_PROMOTION_POLICY}
+                          Create/Assign Course Assessment Template
                         </span>
                       </Typography.Text>
                     }
@@ -178,9 +183,7 @@ const SessionsWrapper = () => {
                           handleAction(EAction.SETUP_CLASSES_FOR_SESSION)
                         }
                       >
-                        <span className="text-[#109fff]">
-                          {EAction.SETUP_CLASSES_FOR_SESSION}
-                        </span>
+                        <span className="text-[#109fff]">Setup Staff</span>
                       </Typography.Text>
                     }
                     description={
@@ -198,28 +201,11 @@ const SessionsWrapper = () => {
                         }
                       >
                         <span className="text-[#109fff]">
-                          Set up Class Teachers
+                          Assign Class Teachers
                         </span>
                       </Typography.Text>
                     }
                     description="Assign teachers to head a class"
-                  />
-                  <Step
-                    title={
-                      <Typography.Text
-                        className="cursor-pointer"
-                        onClick={() =>
-                          handleAction(
-                            EAction.SETUP_COURSES_TAUGHT_IN_EACH_CLASS
-                          )
-                        }
-                      >
-                        <span className="text-[#109fff]">
-                          Establish the class courses will be taught in
-                        </span>
-                      </Typography.Text>
-                    }
-                    description="Assign staff to the courses they will be teaching this session.| OPTIONS: student, admin, custodian | the policy should also detect wether the course teacher needs to approve of a student participating in a course"
                   />
 
                   <Step
@@ -241,6 +227,21 @@ const SessionsWrapper = () => {
                         in your school this session.
                       </span>
                     }
+                  />
+                  <Step
+                    title={
+                      <Typography.Text
+                        className="cursor-pointer"
+                        onClick={() =>
+                          handleAction(
+                            EAction.SETUP_COURSES_TAUGHT_IN_EACH_CLASS
+                          )
+                        }
+                      >
+                        <span className="text-[#109fff]">Enroll Students</span>
+                      </Typography.Text>
+                    }
+                    description="Assign staff to the courses they will be teaching this session.| OPTIONS: student, admin, custodian | the policy should also detect wether the course teacher needs to approve of a student participating in a course"
                   />
 
                   <Step
@@ -285,7 +286,7 @@ const SessionsWrapper = () => {
                     description="Have all classes submitted their CA | Also applies to class teachers = Have all course taeacher submitted their CA"
                   />
                   <Step
-                    title={<Link to="/courses/id">Submit/Send CA</Link>}
+                    title={<Link to="/courses/id">Issue Result</Link>}
                     description="for Disbursement to student, and those
                     concerned(once clicked no going back cos it will be sent to parents)"
                   />
@@ -297,9 +298,9 @@ const SessionsWrapper = () => {
               </div>
             </Card>
           </div>
-          <div className="flex justify-end items-start">
+          <div className="flex justify-end items-start ">
             <Card className="shadow-lg ">
-              <Typography.Title level={5}>Previous Sessions</Typography.Title>
+              <Typography.Title level={5}>All Sessions</Typography.Title>
               <div className="flex flex-col gap-2">
                 {Array(2)
                   .fill(0)
@@ -310,6 +311,9 @@ const SessionsWrapper = () => {
                   ))}
               </div>
             </Card>
+            <Button onClick={() => handleAction(EAction.START_NEW_SESSION)}>
+              Add Session
+            </Button>
           </div>
         </div>
       </div>
