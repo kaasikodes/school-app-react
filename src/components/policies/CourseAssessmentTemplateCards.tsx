@@ -16,6 +16,7 @@ import CourseAssessmentTemplateCard, {
 } from "./CourseAssessmentTemplateCard";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useFetchSchoolSessionSetting } from "../../helpersAPIHooks/sessions";
+import { useFetchCourseRecordTemplates } from "../../helpersAPIHooks/schoolCRecordTemplates";
 
 interface IProps {
   assignSessionTemplate: boolean;
@@ -57,41 +58,10 @@ const CourseAssessmentTemplateCards = ({
     isError,
     isFetching,
     isSuccess,
-  } = useQuery(
-    ["course-record-templates"],
-    () => {
-      return getCRTemplates({
-        token,
-        schoolId,
-      });
-    },
-    {
-      onError: (err: any) => {
-        openNotification({
-          state: "error",
-          title: "Error occurs",
-          description: `Oops, an err occured: ${err?.message}`,
-        });
-      },
-
-      select: (res: any) => {
-        const result = res.data.data;
-
-        const templates: TCourseRecordingTempate[] = result.map(
-          (item: any) => ({
-            id: item.id,
-            title: item.title,
-            sessionsUsedIn: item.sessions_used_in?.map((item: any) => ({
-              id: item.session_id.id,
-              name: item.session_id.name,
-            })),
-          })
-        );
-
-        return templates;
-      },
-    }
-  );
+  } = useFetchCourseRecordTemplates({
+    token,
+    schoolId,
+  });
 
   const { mutate } = useMutation(
     () =>

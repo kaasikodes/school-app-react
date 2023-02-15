@@ -63,7 +63,7 @@ export const getCRTemplate = (props: IGetCRTProps) => {
   return res;
 };
 
-interface IGetCRTsProps extends IAuthProps {
+export interface IGetCRTsProps extends IAuthProps {
   schoolId: string;
 }
 export const getCRTemplates = (props: IGetCRTsProps) => {

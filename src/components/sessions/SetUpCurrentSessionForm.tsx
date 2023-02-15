@@ -10,6 +10,7 @@ import { addSchoolSession } from "../../helpers/sessions";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";
 import SessionDetailsForm from "./SessionDetailsForm";
+import SessionConfigurationForm from "./SessionConfigurationForm";
 
 interface IProps {
   closeDrawer: Function;
@@ -68,36 +69,7 @@ const SetUpCurrentSessionForm = ({ closeDrawer, refresh }: IProps) => {
           <SessionDetailsForm />
         </Tabs.TabPane>
         <Tabs.TabPane tab="Configuration" key={"bulk"}>
-          <Form
-            requiredMark={false}
-            labelCol={{ span: 24 }}
-            onFinish={handleFinish}
-          >
-            <Form.Item
-              label={`What assessment template will be used ?`}
-              name="assessmentTemplateId"
-            >
-              <Select />
-            </Form.Item>
-            <Form.Item
-              label={`Can custodians view result of current ongoing session without approval ?`}
-              name="approvalForResult"
-            >
-              <Switch unCheckedChildren="No" checkedChildren="Yes" />
-            </Form.Item>
-            <Form.Item
-              label={`Do class teachers need to approve all course assesments before compilation ?`}
-              name="isClassTeacherNeeded"
-            >
-              <Switch unCheckedChildren="No" checkedChildren="Yes" />
-            </Form.Item>
-
-            <Form.Item>
-              <Button htmlType="submit" type="primary" className="w-full">
-                Save Configuration
-              </Button>
-            </Form.Item>
-          </Form>
+          <SessionConfigurationForm />
         </Tabs.TabPane>
       </Tabs>
     </div>
