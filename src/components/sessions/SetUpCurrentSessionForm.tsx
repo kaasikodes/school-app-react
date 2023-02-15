@@ -9,6 +9,7 @@ import moment from "moment";
 import { addSchoolSession } from "../../helpers/sessions";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";
+import SessionDetailsForm from "./SessionDetailsForm";
 
 interface IProps {
   closeDrawer: Function;
@@ -64,35 +65,7 @@ const SetUpCurrentSessionForm = ({ closeDrawer, refresh }: IProps) => {
     <div>
       <Tabs>
         <Tabs.TabPane tab="Details" key={"single"}>
-          <Form
-            requiredMark={false}
-            labelCol={{ span: 24 }}
-            onFinish={handleFinish}
-          >
-            <Form.Item label={`Session name`} name="name">
-              <Input placeholder="Session name" required />
-            </Form.Item>
-            <Form.Item label={`Description (optional)`} name="description">
-              <Input.TextArea placeholder="Describe the school" rows={4} />
-            </Form.Item>
-            <Form.Item label={`Starts`} name="starts">
-              <DatePicker
-                className="w-full"
-                disabledDate={(d) =>
-                  !d ||
-                  d.isAfter("2042-12-31") ||
-                  d.isSameOrBefore(
-                    moment(new Date().toLocaleDateString()).format("YYYY-MM-DD")
-                  )
-                }
-              />
-            </Form.Item>
-            <Form.Item>
-              <Button htmlType="submit" type="primary" className="w-full">
-                Save Details
-              </Button>
-            </Form.Item>
-          </Form>
+          <SessionDetailsForm />
         </Tabs.TabPane>
         <Tabs.TabPane tab="Configuration" key={"bulk"}>
           <Form

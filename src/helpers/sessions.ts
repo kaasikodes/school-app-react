@@ -6,7 +6,7 @@ import { IAuthProps } from "./auth";
 export interface ISchoolAuthProps extends IAuthProps {
   schoolId: string;
 }
-interface IGetSessProps extends IAuthProps {
+export interface IGetSessProps extends IAuthProps {
   sessionId: string;
 }
 interface IGetMultipleSessProps extends ISchoolAuthProps {

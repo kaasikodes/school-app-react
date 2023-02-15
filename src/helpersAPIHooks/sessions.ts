@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { IPaginationProps, ISearchParams } from "../appTypes/requestParams";
 import { TSession } from "../appTypes/sessions";
 import { openNotification } from "../helpers/notifications";
@@ -6,7 +6,12 @@ import {
   getSchoolSessionSetting,
   IGetSchoolSessSettingProps,
 } from "../helpers/schools";
-import { getSessions } from "../helpers/sessions";
+import {
+  getSession,
+  getSessions,
+  IGetSessProps,
+  updateSchoolSession,
+} from "../helpers/sessions";
 
 interface IFRQProps {
   pagination?: IPaginationProps;
@@ -132,4 +137,50 @@ export const useFetchSchoolSessionSetting = ({
   );
 
   return queryData;
+};
+
+export const useFetchSingleSession = ({ sessionId, token }: IGetSessProps) => {
+  const queryData = useQuery(
+    ["single-sessions", sessionId],
+    () =>
+      getSession({
+        token,
+        sessionId,
+      }),
+    {
+      // refetchInterval: false,
+      // refetchIntervalInBackground: false,
+      // refetchOnWindowFocus: false,
+      onError: (err: any) => {
+        // show notification
+        openNotification({
+          state: "error",
+          title: "Error Occurred",
+          description:
+            err?.response.data.message ?? err?.response.data.error.message,
+        });
+      },
+
+      select: (res: any) => {
+        const fetchedData = res.data.data;
+        const item = fetchedData;
+
+        const data: TSession = {
+          id: item.id,
+          name: item.name,
+          description: item.description,
+          starts: item.starts,
+          ends: item.ends,
+        };
+
+        return data;
+      },
+    }
+  );
+
+  return queryData;
+};
+
+export const useUpdateSchoolsSession = () => {
+  return useMutation(updateSchoolSession);
 };
