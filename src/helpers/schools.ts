@@ -8,6 +8,13 @@ export interface IGetSchoolSessSettingProps extends IAuthProps {
   schoolId: string;
   sessionId: string;
 }
+export interface ISaveSchoolSessSettingProps extends IAuthProps {
+  schoolId: string;
+  sessionId?: string;
+  templateId: string;
+  gradePolicyId: string;
+  studentEnrollmentPolicyId: string;
+}
 interface IGetSchoolsProps extends IAuthProps {
   page?: number;
   limit?: number;
@@ -94,6 +101,28 @@ export const saveSchool = (props: ISaveSchoolProps) => {
     studentLimit: props.studentLimit,
     staffLimit: props.staffLimit,
     id: props.id,
+  };
+
+  const res: any = axios.post(url, data, config);
+  return res;
+};
+export const saveSchoolSessionSetting = (
+  props: ISaveSchoolSessSettingProps
+) => {
+  const { token } = props;
+  const url = `${process.env.REACT_APP_APP_URL}/api//schools/${props.schoolId}/save-school-session-setting`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const data = {
+    sessionId: props.sessionId,
+    templateId: props.templateId,
+    gradePolicyId: props.gradePolicyId,
+    studentEnrollmentPolicyId: props.studentEnrollmentPolicyId,
   };
 
   const res: any = axios.post(url, data, config);
