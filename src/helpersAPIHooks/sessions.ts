@@ -5,6 +5,7 @@ import { openNotification } from "../helpers/notifications";
 import {
   getSchoolSessionSetting,
   IGetSchoolSessSettingProps,
+  saveSchoolSessionSetting,
 } from "../helpers/schools";
 import {
   getSession,
@@ -184,3 +185,6 @@ export const useFetchSingleSession = ({ sessionId, token }: IGetSessProps) => {
 export const useUpdateSchoolsSession = () => {
   return useMutation(updateSchoolSession);
 };
+
+export const useSaveSchoolSessSettings = () =>
+  useMutation(saveSchoolSessionSetting);

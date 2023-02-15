@@ -110,7 +110,7 @@ export const saveSchoolSessionSetting = (
   props: ISaveSchoolSessSettingProps
 ) => {
   const { token } = props;
-  const url = `${process.env.REACT_APP_APP_URL}/api//schools/${props.schoolId}/save-school-session-setting`;
+  const url = `${process.env.REACT_APP_APP_URL}/api/schools/${props.schoolId}/save-school-session-setting`;
 
   const config = {
     headers: {

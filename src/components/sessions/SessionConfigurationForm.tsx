@@ -10,6 +10,7 @@ import { openNotification } from "../../helpers/notifications";
 import {
   useFetchSchoolSessionSetting,
   useFetchSingleSession,
+  useSaveSchoolSessSettings,
   useUpdateSchoolsSession,
 } from "../../helpersAPIHooks/sessions";
 import ComponentLoader from "../loaders/ComponentLoader";
@@ -52,7 +53,7 @@ const SessionConfigurationForm = () => {
     }
   }, [isSessSettingSuccess, schoolSessionSetting, form]);
 
-  const { mutate, isLoading } = useUpdateSchoolsSession();
+  const { mutate, isLoading } = useSaveSchoolSessSettings();
 
   const handleFinish = (data: any) => {
     openNotification({
@@ -66,9 +67,9 @@ const SessionConfigurationForm = () => {
         schoolId,
         token,
         sessionId,
-        name: data.name,
-        description: data.description,
-        starts: data?.starts?.format("YYYY/MM/DD"),
+        templateId: data.templateId,
+        gradePolicyId: data.gradePolicyId,
+        studentEnrollmentPolicyId: data.studentEnrollmentPolicyId,
       },
       {
         onSuccess: (res: any) => {
@@ -78,7 +79,7 @@ const SessionConfigurationForm = () => {
             description: res.data.message,
           });
           queryClient.invalidateQueries({
-            queryKey: ["single-session", sessionId],
+            queryKey: ["school-session-setting", schoolId, sessionId],
             // exact: true,
           });
         },
