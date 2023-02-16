@@ -2,6 +2,7 @@ import { Breadcrumb, Button, Card, Drawer, Steps, Typography } from "antd";
 
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { routes } from "../../routes";
 import CreateAssessmentTemplate from "../assessments/settings/CreateAssessmentTemplate";
 import GradingPolicy from "../assessments/settings/GradingPolicy";
 import ClassesForSessionSetUp from "../classes/settings/ClassesForSessionSetUp";
@@ -122,44 +123,31 @@ const SessionsWrapper = () => {
                   />
                   <Step
                     title={
-                      <Typography.Text
-                        className="cursor-pointer"
-                        onClick={() =>
-                          handleAction(EAction.STUDENT_ENROLLMENT_POLICY)
-                        }
-                      >
+                      <Link to={routes.departments}>
                         <span className="text-[#109fff]">
                           Setup Departments
                         </span>
-                      </Typography.Text>
+                      </Link>
                     }
                     description="Establish the policy for the student enrollment policy"
                   />
                   <Step
                     title={
-                      <Typography.Text
-                        className="cursor-pointer"
-                        onClick={() =>
-                          handleAction(EAction.COURSE_ENROLLMENT_POLICY)
-                        }
-                      >
+                      <Link to={routes.classes}>
                         <span className="text-[#109fff]">Setup Classes</span>
-                      </Typography.Text>
+                      </Link>
                     }
                     description="Establish the policy for the student enrollment policy"
                   />
                   <Step
                     title={
-                      <Typography.Text
-                        className="cursor-pointer"
-                        onClick={() => handleAction(EAction.GRADING_POLICY)}
-                      >
+                      <Link to={routes.courses}>
                         <span className="text-[#109fff]">Setup courses</span>
-                      </Typography.Text>
+                      </Link>
                     }
                     description="What is the grading policy used for this session (research on common ones & also allow them to create custom policies)"
                   />
-                  <Step
+                  {/* <Step ->is XXXXXX_NEEDED?
                     title={
                       <Typography.Text
                         className="cursor-pointer"
@@ -173,18 +161,13 @@ const SessionsWrapper = () => {
                       </Typography.Text>
                     }
                     description="What is the grading policy used for this session (research on common ones & also allow them to create custom policies)"
-                  />
+                  /> */}
 
                   <Step
                     title={
-                      <Typography.Text
-                        className="cursor-pointer"
-                        onClick={() =>
-                          handleAction(EAction.SETUP_CLASSES_FOR_SESSION)
-                        }
-                      >
+                      <Link to={routes.staff}>
                         <span className="text-[#109fff]">Setup Staff</span>
-                      </Typography.Text>
+                      </Link>
                     }
                     description={
                       <span title="Establish the courses that will be taught at each class in your school this session.">
@@ -230,53 +213,13 @@ const SessionsWrapper = () => {
                   />
                   <Step
                     title={
-                      <Typography.Text
-                        className="cursor-pointer"
-                        onClick={() =>
-                          handleAction(
-                            EAction.SETUP_COURSES_TAUGHT_IN_EACH_CLASS
-                          )
-                        }
-                      >
+                      <Link to={routes.students}>
                         <span className="text-[#109fff]">Enroll Students</span>
-                      </Typography.Text>
+                      </Link>
                     }
                     description="Assign staff to the courses they will be teaching this session.| OPTIONS: student, admin, custodian | the policy should also detect wether the course teacher needs to approve of a student participating in a course"
                   />
 
-                  <Step
-                    title={
-                      <Typography.Text
-                        className="cursor-pointer"
-                        onClick={() =>
-                          handleAction(
-                            EAction.CREATE_OR_SELECT_ASSESSMENT_TEMPLATE
-                          )
-                        }
-                      >
-                        <span className="text-[#109fff]">
-                          {EAction.CREATE_OR_SELECT_ASSESSMENT_TEMPLATE}
-                        </span>
-                      </Typography.Text>
-                    }
-                    description="Select or create a template to be applied to assessments for this session"
-                  />
-                  {/* if the student enrollment policy says that the admin should enroll students for this session */}
-                  {
-                    <Step
-                      title={<Link to="/students">Enroll students</Link>}
-                      description="Enroll students for their courses this session"
-                    />
-                  }
-
-                  <Step
-                    title={
-                      <Link to="/courses/id">
-                        Review Course assesment Submissions
-                      </Link>
-                    }
-                    description="Have all classes submitted their CA | Also applies to class teachers = Have all course taeacher submitted their CA"
-                  />
                   <Step
                     title={<Link to="/courses/id">Compile CA</Link>}
                     description="Click on the compile button  to generate result (how to handle the queing of this like payroll) [you can download as well as roll back]"
