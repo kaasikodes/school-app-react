@@ -1,7 +1,12 @@
 import { Breadcrumb, Button, Card, Drawer, Steps, Typography } from "antd";
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { useAuthUser } from "react-auth-kit";
 import { Link } from "react-router-dom";
+import { BeatLoader } from "react-spinners";
+import { IAuthDets } from "../../appTypes/auth";
+import { GlobalContext } from "../../contexts/GlobalContextProvider";
+import { useFetchSessions } from "../../helpersAPIHooks/sessions";
 import { routes } from "../../routes";
 import CreateAssessmentTemplate from "../assessments/settings/CreateAssessmentTemplate";
 import GradingPolicy from "../assessments/settings/GradingPolicy";
@@ -42,6 +47,25 @@ const SessionsWrapper = () => {
   };
   const whatSize = action === EAction.START_NEW_SESSION;
   //   const whatSize = action === EAction.NO_ACTION;
+  const auth = useAuthUser();
+
+  const authDetails = auth() as unknown as IAuthDets;
+
+  const user = authDetails.user;
+  const globalCtx = useContext(GlobalContext);
+  const { state: globalState } = globalCtx;
+  const currentSchool = globalState.currentSchool;
+
+  const currentSchoolSessionId = currentSchool?.currentSessionId as string;
+
+  const token = authDetails.userToken;
+  const { data: sessions, isSuccess: isSessSuccess } = useFetchSessions({
+    token,
+    schoolId: currentSchool?.id as string,
+  });
+  const currentSchoolSessionDetail = sessions?.data.find(
+    (item) => item.id === +currentSchoolSessionId
+  );
   return (
     <>
       <Drawer
@@ -90,15 +114,15 @@ const SessionsWrapper = () => {
 
           <Breadcrumb>
             <Breadcrumb.Item>
-              <Link to="/courses">Sessions</Link>
+              <Link to={routes.sessions}>Sessions</Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
-              <Link to="/courses/id">Current Session</Link>
+              <span>{currentSchoolSessionDetail?.name}</span>
             </Breadcrumb.Item>
           </Breadcrumb>
         </div>
-        <div className=" mt-4 grid md:grid-cols-2 grid-cols-1 gap-8">
-          <div>
+        <div className=" mt-4 grid md:grid-cols-3 grid-cols-1 gap-8">
+          <div className="col-span-2">
             <Card className="shadow-lg ">
               <Typography.Title level={5}>
                 Tasks to be completed
@@ -224,22 +248,29 @@ const SessionsWrapper = () => {
               </div>
             </Card>
           </div>
-          <div className="flex justify-end items-start ">
+          <div className="flex flex-col gap-4">
+            <div className="flex justify-end">
+              <Button
+                onClick={() => handleAction(EAction.START_NEW_SESSION)}
+                type="primary"
+              >
+                Add Session
+              </Button>
+            </div>
             <Card className="shadow-lg ">
               <Typography.Title level={5}>All Sessions</Typography.Title>
               <div className="flex flex-col gap-2">
-                {Array(2)
-                  .fill(0)
-                  .map((item) => (
-                    <Typography.Text>
-                      Session 1 (12/03/2019 - 1/04/2020)
-                    </Typography.Text>
-                  ))}
+                {isSessSuccess ? (
+                  sessions.data.map(({ id, name, starts, ends }) => (
+                    <Link to={`${routes.sessions}/${id}`}>
+                      {name} ({starts} - {ends ? ends : "present"})
+                    </Link>
+                  ))
+                ) : (
+                  <BeatLoader color="#7393B3" />
+                )}
               </div>
             </Card>
-            <Button onClick={() => handleAction(EAction.START_NEW_SESSION)}>
-              Add Session
-            </Button>
           </div>
         </div>
       </div>
