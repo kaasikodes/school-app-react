@@ -121,7 +121,7 @@ const SessionsWrapper = () => {
             </Breadcrumb.Item>
           </Breadcrumb>
         </div>
-        <div className=" mt-4 grid md:grid-cols-3 grid-cols-1 gap-8">
+        <div className="mt-8 grid md:grid-cols-3 grid-cols-1 gap-8">
           <div className="col-span-2">
             <Card className="shadow-lg ">
               <Typography.Title level={5}>
