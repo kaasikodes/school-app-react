@@ -119,7 +119,7 @@ const SessionsWrapper = () => {
                         </span>
                       </Typography.Text>
                     }
-                    description="This will begin a new academic session"
+                    description="This involves updating the current school session and configuring the settings that will be used during the academic session"
                   />
                   <Step
                     title={
@@ -129,7 +129,7 @@ const SessionsWrapper = () => {
                         </span>
                       </Link>
                     }
-                    description="Establish the policy for the student enrollment policy"
+                    description="This involves setting up the departments that will be used to group courses"
                   />
                   <Step
                     title={
@@ -137,7 +137,7 @@ const SessionsWrapper = () => {
                         <span className="text-[#109fff]">Setup Classes</span>
                       </Link>
                     }
-                    description="Establish the policy for the student enrollment policy"
+                    description="This involves setting up the classes which various courses will be taught in"
                   />
                   <Step
                     title={
@@ -145,23 +145,8 @@ const SessionsWrapper = () => {
                         <span className="text-[#109fff]">Setup courses</span>
                       </Link>
                     }
-                    description="What is the grading policy used for this session (research on common ones & also allow them to create custom policies)"
+                    description="This involves creating the courses that will be taught, as well as establishing the classes these courses will be taught in"
                   />
-                  {/* <Step ->is XXXXXX_NEEDED?
-                    title={
-                      <Typography.Text
-                        className="cursor-pointer"
-                        onClick={() =>
-                          handleAction(EAction.STUDENT_PROMOTION_POLICY)
-                        }
-                      >
-                        <span className="text-[#109fff]">
-                          Create/Assign Course Assessment Template
-                        </span>
-                      </Typography.Text>
-                    }
-                    description="What is the grading policy used for this session (research on common ones & also allow them to create custom policies)"
-                  /> */}
 
                   <Step
                     title={
@@ -170,9 +155,7 @@ const SessionsWrapper = () => {
                       </Link>
                     }
                     description={
-                      <span title="Establish the courses that will be taught at each class in your school this session.">
-                        What classes will be taught this session
-                      </span>
+                      "This involves adding the staff that will be responsible for handling classes, courses, as well other academic activities within the system."
                     }
                   />
                   <Step
