@@ -27,3 +27,5 @@ jobs:
 
       # run tests!
       - run: npm run test
+      # build app
+      - run: npm run build
