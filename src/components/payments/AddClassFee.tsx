@@ -8,7 +8,6 @@ import {
   Switch,
   Upload,
 } from "antd";
-import React from "react";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";
 import {

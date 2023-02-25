@@ -1,5 +1,4 @@
 import { Tabs } from "antd";
-import React from "react";
 import AdminActivities from "./singleAdmin/AdminActivities";
 import Profile from "./singleAdmin/Profile";
 

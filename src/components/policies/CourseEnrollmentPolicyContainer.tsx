@@ -1,5 +1,5 @@
 import { Button, Drawer } from "antd";
-import React, { useState } from "react";
+import { useState } from "react";
 import CourseEnrollmentPolicyCards from "./CourseEnrollmentPolicyCards";
 import CreateCourseEnrollmentPolicyForm from "./CreateCourseEnrollmentPolicyForm";
 

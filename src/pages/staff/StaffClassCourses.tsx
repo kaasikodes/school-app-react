@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import StaffCoursesForASingleClassWrapper from "../../components/staff/singleStaff/StaffCoursesForASingleClassWrapper";
 

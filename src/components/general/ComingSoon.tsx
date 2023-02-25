@@ -1,5 +1,4 @@
 import { Typography } from "antd";
-import React from "react";
 
 interface IProps {
   releaseDate?: string;

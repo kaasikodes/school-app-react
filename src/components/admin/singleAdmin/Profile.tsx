@@ -1,14 +1,5 @@
-import {
-  Avatar,
-  Divider,
-  Rate,
-  Skeleton,
-  Space,
-  Table,
-  Tag,
-  Typography,
-} from "antd";
-import React, { useContext } from "react";
+import { Avatar, Divider, Skeleton, Space, Table, Tag, Typography } from "antd";
+import { useContext } from "react";
 import { useAuthUser } from "react-auth-kit";
 import { useQuery } from "react-query";
 import { IAuthDets } from "../../../appTypes/auth";

@@ -1,7 +1,6 @@
 import { Typography, Button, Drawer, Input } from "antd";
-import React, { useState } from "react";
+import { useState } from "react";
 import AddClass from "./AddClass";
-import AddClassForm from "./AddClassForm";
 import ClassesViewContainer from "./ClassesViewContainer";
 
 const ClassesWrapper = () => {

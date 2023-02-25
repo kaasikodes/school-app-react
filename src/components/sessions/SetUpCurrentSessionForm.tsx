@@ -1,11 +1,8 @@
-import { Form, Input, Button, DatePicker, Tabs, Switch, Select } from "antd";
-import React, { useState } from "react";
+import { Tabs } from "antd";
 
 import { openNotification } from "../../helpers/notifications";
-import { saveSchool } from "../../helpers/schools";
 
 import { LoadingOutlined } from "@ant-design/icons";
-import moment from "moment";
 import { addSchoolSession } from "../../helpers/sessions";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";

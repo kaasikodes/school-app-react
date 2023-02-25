@@ -1,18 +1,12 @@
-import { Form, Input, Checkbox, Button, Spin, Col, Row } from "antd";
-
-import React, { useContext, useEffect } from "react";
-
-import { IAuthProps, loginUser } from "../../helpers/auth";
+import { Form, Input, Button, Spin, Col, Row } from "antd";
+import { useContext, useEffect } from "react";
 import { openNotification } from "../../helpers/notifications";
 import axios from "axios";
-
-import { useAuthUser, useSignIn } from "react-auth-kit";
-import { useNavigate } from "react-router-dom";
+import { useSignIn } from "react-auth-kit";
 import { IAuthDets, IAuthSchool } from "../../appTypes/auth";
 import { useLoginUser } from "../../helpersAPIHooks/auth";
 import {
   emailValidationRules,
-  passwordValidationRules,
   textInputValidationRules,
 } from "../../formValidation";
 import {

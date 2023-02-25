@@ -1,7 +1,6 @@
 import { MoreOutlined } from "@ant-design/icons";
 import { Button, Drawer, Dropdown, Menu, Typography } from "antd";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { previewText } from "../../utilities";
 import EditPaymentCategory from "./EditPaymentCategory";
 import PaymentCategoryDetails from "./PaymentCategoryDetails";

@@ -1,5 +1,5 @@
 import { TablePaginationConfig } from "antd";
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
@@ -42,7 +42,6 @@ const ClassesViewContainer = ({ searchTerm }: IProps) => {
   };
   const {
     data: classesData,
-    isError,
     isFetching,
     isSuccess,
   } = useFetchClasses({

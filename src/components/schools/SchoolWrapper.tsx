@@ -1,21 +1,11 @@
-import {
-  Button,
-  Drawer,
-  Pagination,
-  PaginationProps,
-  Spin,
-  Typography,
-} from "antd";
-import React, { useContext, useEffect, useState } from "react";
+import { Drawer, PaginationProps, Typography } from "antd";
+import { useContext, useEffect, useState } from "react";
 import { useAuthUser } from "react-auth-kit";
 
 import { IAuthDets } from "../../appTypes/auth";
 import { ERole } from "../../appTypes/roles";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
-import { openNotification } from "../../helpers/notifications";
-import { getSchools } from "../../helpers/schools";
-import { retrieveUser } from "../../helpers/users";
-import ComponentLoader from "../loaders/ComponentLoader";
+
 import AddSchoolForm from "./AddSchoolForm";
 import { ISchoolCardEntry } from "./SchoolCard";
 import SchoolCards from "./SchoolCards";

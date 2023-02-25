@@ -1,16 +1,11 @@
 import { Form, Input, Button, DatePicker } from "antd";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { openNotification } from "../../../helpers/notifications";
-import { saveSchool } from "../../../helpers/schools";
 
 import { LoadingOutlined } from "@ant-design/icons";
 import moment from "moment";
-import {
-  addSchoolSession,
-  getSession,
-  updateSchoolSession,
-} from "../../../helpers/sessions";
+import { getSession, updateSchoolSession } from "../../../helpers/sessions";
 import { ISessionEntry } from "./SessionsTable";
 import ComponentLoader from "../../loaders/ComponentLoader";
 import { useAuthUser } from "react-auth-kit";

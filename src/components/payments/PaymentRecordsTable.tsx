@@ -1,19 +1,11 @@
-import { Button, Table, Typography } from "antd";
+import { Table } from "antd";
 import moment from "moment";
-import React from "react";
 import { useAuthUser } from "react-auth-kit";
 import { useQuery } from "react-query";
 import { IAuthDets } from "../../appTypes/auth";
-import {
-  TLevelfee,
-  TPaymentCategry,
-  TSudentSessPaymentRec,
-} from "../../appTypes/payments";
+import { TSudentSessPaymentRec } from "../../appTypes/payments";
 import { openNotification } from "../../helpers/notifications";
-import {
-  getLevelFees,
-  getStudentSessPaymentRecs,
-} from "../../helpers/payments";
+import { getStudentSessPaymentRecs } from "../../helpers/payments";
 
 const PaymentRecordsTable = () => {
   const auth = useAuthUser();

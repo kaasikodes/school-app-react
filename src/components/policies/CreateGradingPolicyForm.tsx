@@ -1,4 +1,4 @@
-import { Form, Switch, Button, Input, InputNumber, Col, Row } from "antd";
+import { Form, Button, Input, InputNumber, Col, Row } from "antd";
 import React from "react";
 
 const CreateGradingPolicyForm = () => {

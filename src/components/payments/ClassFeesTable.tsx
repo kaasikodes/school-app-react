@@ -1,9 +1,8 @@
-import { Button, Table, Typography } from "antd";
-import React from "react";
+import { Button, Table } from "antd";
 import { useAuthUser } from "react-auth-kit";
 import { useQuery } from "react-query";
 import { IAuthDets } from "../../appTypes/auth";
-import { TLevelfee, TPaymentCategry } from "../../appTypes/payments";
+import { TLevelfee } from "../../appTypes/payments";
 import { openNotification } from "../../helpers/notifications";
 import { getLevelFees } from "../../helpers/payments";
 

@@ -1,6 +1,5 @@
-import { Typography, Breadcrumb, Form, Checkbox, Button, Input } from "antd";
+import { Typography, Breadcrumb, Form, Checkbox, Button } from "antd";
 
-import React from "react";
 import { useAuthUser } from "react-auth-kit";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";

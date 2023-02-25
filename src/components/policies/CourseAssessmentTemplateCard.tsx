@@ -1,5 +1,4 @@
-import React from "react";
-import { Button, Card, Dropdown, Menu, Tag, Typography } from "antd";
+import { Button, Dropdown, Menu, Tag, Typography } from "antd";
 import { MoreOutlined } from "@ant-design/icons";
 
 export type TCourseRecordingTempate = {

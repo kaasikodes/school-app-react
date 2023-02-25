@@ -1,4 +1,3 @@
-import React from "react";
 import { useAuthUser } from "react-auth-kit";
 import { useQuery } from "react-query";
 import { IAuthDets } from "../../appTypes/auth";

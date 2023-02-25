@@ -1,5 +1,5 @@
 import { Typography, Button, Drawer, Modal } from "antd";
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import EditSchoolForm from "./EditSchoolForm";
 import { ExclamationCircleOutlined, LoadingOutlined } from "@ant-design/icons";
 import { useAuthUser, useSignIn } from "react-auth-kit";
