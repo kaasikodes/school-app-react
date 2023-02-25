@@ -6,12 +6,10 @@ import {
   Button,
   Drawer,
   Modal,
-  Typography,
-  PaginationProps,
   TablePaginationConfig,
 } from "antd";
-import React, { useEffect, useState } from "react";
-import { endSchoolSession, getSessions } from "../../../helpers/sessions";
+import { useState } from "react";
+import { endSchoolSession } from "../../../helpers/sessions";
 import { EllipsisOutlined } from "@ant-design/icons";
 import EditSessionForm from "./EditSessionForm";
 import ViewSession from "./ViewSession";

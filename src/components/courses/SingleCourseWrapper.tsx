@@ -1,12 +1,4 @@
-import {
-  Typography,
-  Input,
-  Button,
-  Drawer,
-  Breadcrumb,
-  Tabs,
-  Modal,
-} from "antd";
+import { Typography, Input, Button, Breadcrumb, Tabs, Modal } from "antd";
 
 import { useState, useContext } from "react";
 import { useAuthUser } from "react-auth-kit";
@@ -18,10 +10,8 @@ import { useFetchSingleCourse } from "../../helpersAPIHooks/courses";
 import { routes } from "../../routes";
 import ComponentLoader from "../loaders/ComponentLoader";
 import AddCourseParticipantForm from "./AddCourseParticipantForm";
-import CourseLessonTable from "./CourseLessonTable";
 import CourseOverview from "./CourseOverview";
 import CourseParticipantTable from "./CourseParticipantTable";
-import CourseRecordAssessmentTable from "./CourseRecordAssessmentTable";
 
 interface IProps {
   courseId?: string;

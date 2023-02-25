@@ -1,7 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { useAuthUser } from "react-auth-kit";
 import { useNavigate, useParams } from "react-router-dom";
-import { IAuthDets } from "../../appTypes/auth";
 import { ERole } from "../../appTypes/roles";
 import SingleStaffWrapper from "../../components/staff/SingleStaffWrapper";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";

@@ -1,14 +1,9 @@
 import { Button, Form, Input, Spin } from "antd";
-import form from "antd/lib/form";
-import React from "react";
+
 import { useAuthUser } from "react-auth-kit";
 import { useMutation } from "react-query";
 import { IAuthDets } from "../../appTypes/auth";
-import {
-  emailValidationRules,
-  generalValidationRules,
-  textInputValidationRules,
-} from "../../formValidation";
+import { textInputValidationRules } from "../../formValidation";
 import { openNotification } from "../../helpers/notifications";
 import {
   createPaymentCategory,

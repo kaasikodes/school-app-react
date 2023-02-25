@@ -1,11 +1,10 @@
 import { Button, Form, Input, Select, Spin, Switch } from "antd";
-import React, { useContext, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useContext, useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import { saveSchoolCourse } from "../../../helpers/courses";
 import { LoadingOutlined } from "@ant-design/icons";
 import { openNotification } from "../../../helpers/notifications";
-import { getDepartments } from "../../../helpers/department";
-import ComponentLoader from "../../loaders/ComponentLoader";
+
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../../appTypes/auth";
 import { useFetchDepartments } from "../../../helpersAPIHooks/departments";

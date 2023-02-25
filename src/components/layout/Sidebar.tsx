@@ -1,4 +1,3 @@
-import { DiYeoman } from "react-icons/di";
 import { Avatar, MenuProps, Typography } from "antd";
 import { Layout, Menu } from "antd";
 import React from "react";

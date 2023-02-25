@@ -1,11 +1,8 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { Button, Form, Select, Spin } from "antd";
-import { useFetchAllStaff } from "../../helpersAPIHooks/staff";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
-import ComponentLoader from "../loaders/ComponentLoader";
-import ErrorComponent from "../errors/ErrorComponent";
 import { generalValidationRules } from "../../formValidation";
 import { useAddSessionCourseParticipantHook } from "../../helpersAPIHooks/courses";
 import { useFetchAllStudents } from "../../helpersAPIHooks/students";

@@ -1,5 +1,5 @@
 import { Form, Input, Button, Checkbox, Select, Spin } from "antd";
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { openNotification } from "../../helpers/notifications";
 
 import { LoadingOutlined } from "@ant-design/icons";
@@ -13,11 +13,7 @@ import {
   textInputValidationRulesOp,
 } from "../../formValidation";
 import { useQueryClient } from "react-query";
-import {
-  useAddSingleClass,
-  useFetchClasses,
-} from "../../helpersAPIHooks/classes";
-import { ISaveClassProps } from "../../helpers/classes";
+import { useFetchClasses } from "../../helpersAPIHooks/classes";
 import { useAddSingleCourse } from "../../helpersAPIHooks/courses";
 import { ISaveCourseProps } from "../../helpers/courses";
 import { useFetchDepartments } from "../../helpersAPIHooks/departments";
@@ -41,7 +37,6 @@ const AddSingleCourseForm = ({ closeDrawer }: IProps) => {
   const globalCtx = useContext(GlobalContext);
   const { state: globalState } = globalCtx;
   const schoolId = globalState?.currentSchool?.id as string;
-  const adminId = globalState?.currentSchool?.adminId as string;
 
   const { mutate, isLoading } = useAddSingleCourse();
 

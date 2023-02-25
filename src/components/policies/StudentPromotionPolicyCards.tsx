@@ -1,4 +1,3 @@
-import React from "react";
 import StudentPromotionPolicyCard from "./StudentPromotionPolicyCard";
 
 const policies = [

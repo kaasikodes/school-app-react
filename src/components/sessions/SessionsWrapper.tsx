@@ -13,7 +13,6 @@ import GradingPolicy from "../assessments/settings/GradingPolicy";
 import ClassesForSessionSetUp from "../classes/settings/ClassesForSessionSetUp";
 import SetupClassesTeacherForSession from "../classes/settings/SetupClassesTeacherForSession";
 import SetupCoursesTaughtInEachClass from "../classes/settings/SetupCoursesTaughtInEachClass";
-import AssignCourseTeacher from "../courses/AssignCourseTeacher";
 import SessionCourseEnrollmentPolicy from "../courses/SessionCourseEnrollmentPolicy";
 import AssignStaffToCourse from "../courses/settings/AssignStaffToCourse";
 import SessionStudentEnrollmentPolicy from "../students/SessionStudentEnrollmentPolicy";

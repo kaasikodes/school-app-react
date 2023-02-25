@@ -15,20 +15,11 @@ import { IAuthDets } from "../../appTypes/auth";
 import { IStaffEntry } from "../../appTypes/staff";
 import { IClassEntry } from "../../components/classes/ClassesTable";
 import { ICourseEntry } from "../../components/courses/SchoolSessionCoursesTable";
-import { IStudentEntry } from "../../components/students/StudentsTable";
 import { generalValidationRules } from "../../formValidation";
-import {
-  getCoursesGroupedByLevel,
-  IASCParticipant,
-  IASCTeacher,
-} from "../../helpers/courses";
+import { getCoursesGroupedByLevel, IASCTeacher } from "../../helpers/courses";
 import { openNotification } from "../../helpers/notifications";
 import { getSingleStaff } from "../../helpers/staff";
-import { getStudent } from "../../helpers/students";
-import {
-  useAddSessionCourseParticipantHook,
-  useAddSessionCourseTeacher,
-} from "../../helpersAPIHooks/courses";
+import { useAddSessionCourseTeacher } from "../../helpersAPIHooks/courses";
 
 const AssignSessionCoursesToStaff = () => {
   let { staffId } = useParams();

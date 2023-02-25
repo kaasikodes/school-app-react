@@ -1,13 +1,5 @@
-import {
-  Typography,
-  Input,
-  Button,
-  Drawer,
-  Breadcrumb,
-  TablePaginationConfig,
-} from "antd";
-import React, { useState } from "react";
-import { useMutation, useQuery } from "react-query";
+import { Typography, Input, Button, Drawer, Breadcrumb } from "antd";
+import { useState } from "react";
 
 import SchoolCoursesTable from "./SchoolCoursesTable";
 import AddSchoolCourse from "./AddSchoolCourse";
@@ -17,7 +9,6 @@ import { Link } from "react-router-dom";
 
 const CoursesWrapper = () => {
   const [showDrawer, setShowDrawer] = useState(false);
-  const [refresh, setRefresh] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const auth = useAuthUser();
 

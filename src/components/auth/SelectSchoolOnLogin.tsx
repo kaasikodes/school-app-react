@@ -1,9 +1,8 @@
 import { Avatar, Button, Input, Pagination, Spin } from "antd";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSignIn } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
 import { IAuthDets } from "../../appTypes/auth";
-import { loginUser } from "../../helpers/auth";
 import { openNotification } from "../../helpers/notifications";
 import { updateChoosenSchool } from "../../helpers/users";
 

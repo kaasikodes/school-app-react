@@ -4,19 +4,18 @@ import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";
 
 const EnrollStudentForm = () => {
+  // const auth = useAuthUser();
+
+  // const authDetails = auth() as unknown as IAuthDets;
+
+  // const user = authDetails.user;
+  // const token = authDetails.userToken;
+  // const schoolId = authDetails.choosenSchoolId;
   const [form] = Form.useForm();
 
   const handleSubmit = (data: any) => {
     console.log("Data ", data);
   };
-
-  const auth = useAuthUser();
-
-  const authDetails = auth() as unknown as IAuthDets;
-
-  const user = authDetails.user;
-  const token = authDetails.userToken;
-  const schoolId = authDetails.choosenSchoolId;
 
   return (
     <div className="flex flex-col gap-4">

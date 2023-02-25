@@ -3,7 +3,6 @@ import { Typography, Input, Button, Drawer, Breadcrumb } from "antd";
 import { useState } from "react";
 import { useAuthUser } from "react-auth-kit";
 import { Link } from "react-router-dom";
-import { IAuthDets } from "../../appTypes/auth";
 import AddCourse from "./AddCourse";
 import CoursesViewContainer from "./CoursesViewContainer";
 import { DownloadOutlined } from "@ant-design/icons";

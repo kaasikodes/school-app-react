@@ -1,5 +1,5 @@
-import { Button, Pagination, PaginationProps, Typography } from "antd";
-import React, { useEffect, useState } from "react";
+import { Pagination, PaginationProps } from "antd";
+import { useEffect, useState } from "react";
 import SchoolCard, { ISchoolCardEntry } from "./SchoolCard";
 
 interface IProps {

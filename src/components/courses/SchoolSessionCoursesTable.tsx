@@ -13,7 +13,6 @@ import {
 import { useQuery } from "react-query";
 
 import { getCourses } from "../../helpers/courses";
-import AssignCourseTeacher from "./AssignCourseTeacher";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";
 import { Link } from "react-router-dom";

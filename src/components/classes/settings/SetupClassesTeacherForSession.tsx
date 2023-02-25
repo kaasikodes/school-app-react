@@ -1,11 +1,10 @@
-import { Form, Button, Typography, Checkbox, Input, Select, Spin } from "antd";
-import pagination from "antd/lib/pagination";
-import React, { useContext, useState } from "react";
+import { Form, Button, Typography, Select, Spin } from "antd";
+import { useContext, useState } from "react";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../../appTypes/auth";
 import { GlobalContext } from "../../../contexts/GlobalContextProvider";
 import { generalValidationRules } from "../../../formValidation";
-import { IAStaffTHSClass, IAStaffTHSCourse } from "../../../helpers/courses";
+import { IAStaffTHSClass } from "../../../helpers/courses";
 import { openNotification } from "../../../helpers/notifications";
 import { useFetchClasses } from "../../../helpersAPIHooks/classes";
 import { useAssignStaffToHandleSessionClasses } from "../../../helpersAPIHooks/courses";

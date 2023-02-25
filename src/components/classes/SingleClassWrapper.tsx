@@ -1,12 +1,4 @@
-import {
-  Typography,
-  Button,
-  Drawer,
-  Input,
-  Breadcrumb,
-  Card,
-  Statistic,
-} from "antd";
+import { Typography, Breadcrumb, Card, Statistic } from "antd";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -17,10 +9,6 @@ interface IProps {
 // Not found page to account for classIds not found
 
 const SingleClassWrapper = ({ classId }: IProps) => {
-  const [showDrawer, setShowDrawer] = useState(false);
-  const [refresh, setRefresh] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-
   return (
     <div>
       <div className="flex flex-col justify-between">

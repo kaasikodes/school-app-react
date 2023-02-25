@@ -1,5 +1,5 @@
 import { Form, Input, Button } from "antd";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { openNotification } from "../../helpers/notifications";
 
 import { LoadingOutlined } from "@ant-design/icons";

@@ -6,7 +6,6 @@ import { useContext, useState } from "react";
 import EditDepartmentForm from "./EditDepartmentForm";
 import ViewDepartmentForm from "./ViewDepartment";
 import { useDeleteSingleDepartment } from "../../helpersAPIHooks/departments";
-import form from "antd/lib/form";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";

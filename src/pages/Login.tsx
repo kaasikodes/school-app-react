@@ -1,6 +1,5 @@
-import { useEffect } from "react";
 import { useIsAuthenticated } from "react-auth-kit";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import LoginWrapper from "../components/auth/LoginWrapper";
 import { routes } from "../routes";
 

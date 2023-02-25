@@ -1,9 +1,7 @@
 import { Button, Drawer } from "antd";
-import React, { useState } from "react";
+import { useState } from "react";
 import AddClassFee from "./AddClassFee";
-import AddPaymentCategory from "./AddPaymentCategory";
 import ClassFeesTable from "./ClassFeesTable";
-import PaymentCategories from "./PaymentCategories";
 
 const ClassSchoolFeesContainer = () => {
   const [showD, setShowD] = useState(false);
