@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import {
-  ExclamationCircleOutlined,
-  LoadingOutlined,
-  EllipsisOutlined,
-} from "@ant-design/icons";
+import { EllipsisOutlined } from "@ant-design/icons";
 import {
   Avatar,
   Button,
@@ -14,7 +10,6 @@ import {
   Table,
   TablePaginationConfig,
 } from "antd";
-import { getCourses } from "../../helpers/courses";
 
 import { useQuery } from "react-query";
 

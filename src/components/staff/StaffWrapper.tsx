@@ -1,24 +1,13 @@
 import { Button, Drawer, Input, Typography } from "antd";
 import { useState } from "react";
-import { useAuthUser } from "react-auth-kit";
-import { IAuthDets } from "../../appTypes/auth";
+
 import AddStaff from "./AddStaff";
 
-import AddStaffForm from "./AddStaffForm";
-import StaffTable from "./StaffTable";
 import StaffViewContainer from "./StaffViewContainer";
 
 const StaffWrapper = () => {
   const [showDrawer, setShowDrawer] = useState(false);
-  const [refresh, setRefresh] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const auth = useAuthUser();
-
-  const authDetails = auth() as unknown as IAuthDets;
-
-  const user = authDetails.user;
-  const token = authDetails.userToken;
-  const schoolId = authDetails.choosenSchoolId;
 
   return (
     <div>

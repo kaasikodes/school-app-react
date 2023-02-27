@@ -1,8 +1,6 @@
 import { Form, Input, Button, DatePicker } from "antd";
-import React, { useState } from "react";
 
 import { openNotification } from "../../helpers/notifications";
-import { saveSchool } from "../../helpers/schools";
 
 import { LoadingOutlined } from "@ant-design/icons";
 import moment from "moment";
