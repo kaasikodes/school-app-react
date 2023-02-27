@@ -1,16 +1,12 @@
-import { Form, Input, Button, DatePicker } from "antd";
-import React, { useContext, useEffect, useState } from "react";
+import { Form, Input } from "antd";
+import { useContext } from "react";
 import { openNotification } from "../../helpers/notifications";
 
 import { LoadingOutlined } from "@ant-design/icons";
 
 import ComponentLoader from "../loaders/ComponentLoader";
 
-import {
-  getDepartment,
-  IUpdateDeptProps,
-  saveSchoolDepartment,
-} from "../../helpers/department";
+import { IUpdateDeptProps } from "../../helpers/department";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";
 import { TDepartment } from "../../appTypes/departments";
@@ -18,7 +14,6 @@ import {
   useFetchSingleDepartment,
   useUpdateSingleDepartment,
 } from "../../helpersAPIHooks/departments";
-import form from "antd/lib/form";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
 import { useQueryClient } from "react-query";
 
