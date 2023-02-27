@@ -8,7 +8,6 @@ import {
   Switch,
   Upload,
 } from "antd";
-import React from "react";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";
 import {
@@ -31,7 +30,6 @@ const AddClassFee = () => {
 
   const authDetails = auth() as unknown as IAuthDets;
 
-  const user = authDetails.user;
   const token = authDetails.userToken;
   const schoolId = authDetails.choosenSchoolId;
   const sessionId = "0"; //should be from ctx
