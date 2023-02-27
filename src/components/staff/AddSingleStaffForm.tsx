@@ -1,5 +1,5 @@
 import { Form, Input, Button, Typography, message, Upload } from "antd";
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 
 import { openNotification } from "../../helpers/notifications";
 import { ISaveStaffProps } from "../../helpers/staff";
@@ -33,9 +33,8 @@ const AddSingleStaffForm = ({ closeDrawer }: IProps) => {
   const globalCtx = useContext(GlobalContext);
   const { state: globalState } = globalCtx;
   const schoolId = globalState?.currentSchool?.id as string;
-  const adminId = globalState?.currentSchool?.adminId as string;
 
-  const { mutate, isLoading } = useAddSingleStaff();
+  const { mutate } = useAddSingleStaff();
   const handleFinish = (data: any) => {
     if (schoolId) {
       const props: ISaveStaffProps = {

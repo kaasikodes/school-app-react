@@ -23,7 +23,7 @@ const MobileMenu = ({ links, onClose, show, handleLogOut }: IProps) => {
           />
         </div>
       }
-      visible={show}
+      open={show}
       onClose={() => onClose()}
       closable={false}
       className="mobile-menu"

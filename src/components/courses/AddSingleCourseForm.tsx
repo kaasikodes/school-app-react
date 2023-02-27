@@ -1,5 +1,5 @@
 import { Form, Input, Button, Checkbox, Select, Spin } from "antd";
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { openNotification } from "../../helpers/notifications";
 
 import { LoadingOutlined } from "@ant-design/icons";
@@ -37,7 +37,6 @@ const AddSingleCourseForm = ({ closeDrawer }: IProps) => {
   const globalCtx = useContext(GlobalContext);
   const { state: globalState } = globalCtx;
   const schoolId = globalState?.currentSchool?.id as string;
-  const adminId = globalState?.currentSchool?.adminId as string;
 
   const { mutate, isLoading } = useAddSingleCourse();
 

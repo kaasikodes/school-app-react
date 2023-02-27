@@ -1,5 +1,5 @@
 import { Form, Input, DatePicker } from "antd";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import moment from "moment";
 import { getSession } from "../../../helpers/sessions";

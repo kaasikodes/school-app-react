@@ -3,7 +3,6 @@ import { Button, Form, Select, Spin } from "antd";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
-
 import { generalValidationRules } from "../../formValidation";
 import { useAddSessionCourseParticipantHook } from "../../helpersAPIHooks/courses";
 import { useFetchAllStudents } from "../../helpersAPIHooks/students";

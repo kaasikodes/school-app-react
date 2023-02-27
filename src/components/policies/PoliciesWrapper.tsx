@@ -1,5 +1,5 @@
 import { Typography, Drawer, Tabs } from "antd";
-import React, { useState } from "react";
+import { useState } from "react";
 import AddStaffForm from "../staff/AddStaffForm";
 import AssessmentTemplateContainer from "./AssessmentTemplateContainer";
 import CourseEnrollmentPolicyContainer from "./CourseEnrollmentPolicyContainer";

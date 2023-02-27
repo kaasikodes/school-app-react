@@ -1,5 +1,3 @@
-import React from "react";
-
 import BarLoader from "react-spinners/BarLoader";
 
 const ComponentLoader = ({ height = "h-72" }: { height?: string }) => {

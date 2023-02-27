@@ -1,15 +1,12 @@
 import { Form, Input, Button, Select, Spin, Checkbox } from "antd";
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { openNotification } from "../../helpers/notifications";
-
 import { LoadingOutlined } from "@ant-design/icons";
-
 import ComponentLoader from "../loaders/ComponentLoader";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
 import { useQueryClient } from "react-query";
-
 import { IUpdateCourseProps } from "../../helpers/courses";
 import {
   useFetchSingleCourse,

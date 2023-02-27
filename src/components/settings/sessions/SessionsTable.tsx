@@ -8,7 +8,7 @@ import {
   Modal,
   TablePaginationConfig,
 } from "antd";
-import React, { useState } from "react";
+import { useState } from "react";
 import { endSchoolSession } from "../../../helpers/sessions";
 import { EllipsisOutlined } from "@ant-design/icons";
 import EditSessionForm from "./EditSessionForm";

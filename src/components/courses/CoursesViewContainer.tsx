@@ -1,9 +1,8 @@
 import { TablePaginationConfig } from "antd";
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
-import { useFetchClasses } from "../../helpersAPIHooks/classes";
 import { useFetchCourses } from "../../helpersAPIHooks/courses";
 import CoursesTableView from "./CoursesTableView";
 

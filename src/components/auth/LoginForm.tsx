@@ -1,12 +1,8 @@
 import { Form, Input, Button, Spin, Col, Row } from "antd";
-
 import { useContext, useEffect } from "react";
-
 import { openNotification } from "../../helpers/notifications";
 import axios from "axios";
-
 import { useSignIn } from "react-auth-kit";
-
 import { IAuthDets, IAuthSchool } from "../../appTypes/auth";
 import { useLoginUser } from "../../helpersAPIHooks/auth";
 import {

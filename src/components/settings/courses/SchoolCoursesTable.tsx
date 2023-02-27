@@ -1,9 +1,5 @@
-import React, { useState } from "react";
-import {
-  ExclamationCircleOutlined,
-  LoadingOutlined,
-  EllipsisOutlined,
-} from "@ant-design/icons";
+import { useState } from "react";
+import { EllipsisOutlined } from "@ant-design/icons";
 import {
   Button,
   Drawer,
@@ -17,7 +13,6 @@ import { getCourses } from "../../../helpers/courses";
 
 import { useQuery } from "react-query";
 
-import AssignCourseTeacher from "../../courses/AssignCourseTeacher";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../../appTypes/auth";
 import { Link } from "react-router-dom";

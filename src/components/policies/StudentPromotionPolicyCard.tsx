@@ -1,4 +1,3 @@
-import React from "react";
 import { Button, Dropdown, Menu, Tag, Typography } from "antd";
 import { MoreOutlined } from "@ant-design/icons";
 

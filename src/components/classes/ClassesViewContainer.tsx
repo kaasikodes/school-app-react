@@ -42,7 +42,6 @@ const ClassesViewContainer = ({ searchTerm }: IProps) => {
   };
   const {
     data: classesData,
-    isError,
     isFetching,
     isSuccess,
   } = useFetchClasses({
