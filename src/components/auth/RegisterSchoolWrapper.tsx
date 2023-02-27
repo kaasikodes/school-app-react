@@ -1,5 +1,3 @@
-import React from "react";
-
 import RegisterSchoolForm from "./RegisterSchoolForm";
 
 import AuthLayout from "./AuthLayout";

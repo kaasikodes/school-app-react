@@ -1,5 +1,5 @@
 import { Button, Form, Input, Select } from "antd";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   textInputValidationRules,
   generalValidationRules,

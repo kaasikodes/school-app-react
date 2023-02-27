@@ -1,6 +1,5 @@
-import { Form, Input, Checkbox, Button, Spin, Col, Row } from "antd";
-import React from "react";
-import { loginUser, signupUser } from "../../helpers/auth";
+import { Form, Input, Button, Spin, Col, Row } from "antd";
+import { signupUser } from "../../helpers/auth";
 import { openNotification } from "../../helpers/notifications";
 import axios from "axios";
 
