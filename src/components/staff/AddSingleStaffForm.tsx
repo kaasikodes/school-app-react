@@ -2,7 +2,7 @@ import { Form, Input, Button, Typography, message, Upload } from "antd";
 import React, { useContext, useState } from "react";
 
 import { openNotification } from "../../helpers/notifications";
-import { ISaveStaffProps, saveSchoolStaff } from "../../helpers/staff";
+import { ISaveStaffProps } from "../../helpers/staff";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useQueryClient } from "react-query";
 import { RcFile } from "antd/es/upload/interface";

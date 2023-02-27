@@ -1,5 +1,5 @@
 import { Form, Input, Button, Typography, message, Upload } from "antd";
-import React, { useState } from "react";
+import { useState } from "react";
 
 import { openNotification } from "../../helpers/notifications";
 import { saveSchoolStaff } from "../../helpers/staff";

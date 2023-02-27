@@ -1,8 +1,5 @@
-import { Form, Input, Button, DatePicker, Avatar } from "antd";
-import React, { useContext, useEffect, useState } from "react";
-import { openNotification } from "../../helpers/notifications";
-
-import { LoadingOutlined } from "@ant-design/icons";
+import { Form, Input, Avatar } from "antd";
+import React, { useContext } from "react";
 
 import ComponentLoader from "../loaders/ComponentLoader";
 import { useAuthUser } from "react-auth-kit";
