@@ -7,27 +7,20 @@ import {
   Button,
   Spin,
 } from "antd";
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { useAuthUser } from "react-auth-kit";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { IAuthDets } from "../../appTypes/auth";
 import { TLevel } from "../../appTypes/levels";
-import { IClassEntry } from "../../components/classes/ClassesTable";
-import { ICourseEntry } from "../../components/courses/SchoolSessionCoursesTable";
+
 import { ICGByLevel } from "../../components/students/singleStudent/StudentClasses";
 import { IStudentEntry } from "../../components/students/StudentsTable";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
 import { generalValidationRules } from "../../formValidation";
-import {
-  getCoursesGroupedByLevel,
-  IASCParticipant,
-} from "../../helpers/courses";
+import { IASCParticipant } from "../../helpers/courses";
 import { openNotification } from "../../helpers/notifications";
-import {
-  getStudent,
-  getStudentCoursesGroupedByLevel,
-} from "../../helpers/students";
+import { getStudent } from "../../helpers/students";
 import { useFetchClasses } from "../../helpersAPIHooks/classes";
 import { useAddSessionCourseParticipantHook } from "../../helpersAPIHooks/courses";
 
