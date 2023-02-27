@@ -1,6 +1,6 @@
-import { Button, Card, Drawer, Tag, Typography } from "antd";
+import { Button, Drawer } from "antd";
 
-import React, { useState } from "react";
+import { useState } from "react";
 
 import CreateGradingPolicyForm from "./CreateGradingPolicyForm";
 import GradingPolicyCards from "./GradingPolicyCards";

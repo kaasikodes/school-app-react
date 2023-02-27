@@ -1,4 +1,4 @@
-import { Typography, Input, Button, Drawer, Tabs } from "antd";
+import { Typography, Drawer, Tabs } from "antd";
 import React, { useState } from "react";
 import AddStaffForm from "../staff/AddStaffForm";
 import AssessmentTemplateContainer from "./AssessmentTemplateContainer";
@@ -9,8 +9,7 @@ import StudentPromotionPolicyContainer from "./StudentPromotionPolicyContainer";
 
 const PoliciesWrapper = () => {
   const [showDrawer, setShowDrawer] = useState(false);
-  const [refresh, setRefresh] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
+
   return (
     <div>
       <Typography.Title level={3}>Policies & Templates</Typography.Title>

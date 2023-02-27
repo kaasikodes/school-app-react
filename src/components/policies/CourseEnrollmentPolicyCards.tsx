@@ -1,6 +1,4 @@
-import React from "react";
 import CourseEnrollmentPolicyCard from "./CourseEnrollmentPolicyCard";
-import StudentEnrollmentPolicyCard from "./StudentEnrollmentPolicyCard";
 
 const policies = [
   {

@@ -1,19 +1,14 @@
 import { Button, Typography } from "antd";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useAuthUser } from "react-auth-kit";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { IAuthDets } from "../../appTypes/auth";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
 import { openNotification } from "../../helpers/notifications";
-import {
-  getCRTemplates,
-  setupSchoolSessionCRTemplate,
-} from "../../helpers/schoolCRecordTemplates";
+import { setupSchoolSessionCRTemplate } from "../../helpers/schoolCRecordTemplates";
 import ErrorComponent from "../errors/ErrorComponent";
 import ComponentLoader from "../loaders/ComponentLoader";
-import CourseAssessmentTemplateCard, {
-  TCourseRecordingTempate,
-} from "./CourseAssessmentTemplateCard";
+import CourseAssessmentTemplateCard from "./CourseAssessmentTemplateCard";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useFetchSchoolSessionSetting } from "../../helpersAPIHooks/sessions";
 import { useFetchCourseRecordTemplates } from "../../helpersAPIHooks/schoolCRecordTemplates";
