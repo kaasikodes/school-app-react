@@ -1,19 +1,14 @@
 import { Button, Dropdown, List, Menu, Space, Table, Typography } from "antd";
 
 import React, { useContext } from "react";
-import {
-  ExclamationCircleOutlined,
-  LoadingOutlined,
-  EllipsisOutlined,
-} from "@ant-design/icons";
+import { EllipsisOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { useAuthUser } from "react-auth-kit";
 import { useQuery } from "react-query";
 import { IAuthDets } from "../../../appTypes/auth";
 import { openNotification } from "../../../helpers/notifications";
 import { getStaffSessionLevelsAndCourses } from "../../../helpers/staff";
-import { IStaffEntry } from "../StaffTable";
-import { ColumnsType, TablePaginationConfig, TableProps } from "antd/lib/table";
+import { ColumnsType } from "antd/lib/table";
 import { GlobalContext } from "../../../contexts/GlobalContextProvider";
 
 interface IProps {
