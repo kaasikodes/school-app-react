@@ -10,7 +10,6 @@ import { IAuthDets } from "../../appTypes/auth";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
 import { useQueryClient } from "react-query";
 
-import { TLevel } from "../../appTypes/levels";
 import { IUpdateCourseProps } from "../../helpers/courses";
 import {
   useFetchSingleCourse,
