@@ -7,7 +7,6 @@ import DepartmentsViewContainer from "./DepartmentsViewContainer";
 
 const DepartmentsWrapper = () => {
   const [showDrawer, setShowDrawer] = useState(false);
-  const [refresh, setRefresh] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   return (
     <div>

@@ -14,7 +14,6 @@ import { useQueryClient } from "react-query";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";
 import { openNotification } from "../../helpers/notifications";
-import { Link } from "react-router-dom";
 
 interface IProps {
   closeDrawer: Function;
