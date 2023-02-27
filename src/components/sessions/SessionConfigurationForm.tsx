@@ -1,6 +1,5 @@
 import { Select, Switch, Button, Form } from "antd";
-import moment from "moment";
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useAuthUser } from "react-auth-kit";
 import { useQueryClient } from "react-query";
@@ -9,9 +8,7 @@ import { GlobalContext } from "../../contexts/GlobalContextProvider";
 import { openNotification } from "../../helpers/notifications";
 import {
   useFetchSchoolSessionSetting,
-  useFetchSingleSession,
   useSaveSchoolSessSettings,
-  useUpdateSchoolsSession,
 } from "../../helpersAPIHooks/sessions";
 import ComponentLoader from "../loaders/ComponentLoader";
 import { useFetchCourseRecordTemplates } from "../../helpersAPIHooks/schoolCRecordTemplates";

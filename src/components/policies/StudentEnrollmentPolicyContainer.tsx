@@ -1,8 +1,6 @@
-import { Button, Card, Drawer, Tag, Typography } from "antd";
-import { MoreOutlined } from "@ant-design/icons";
-import React, { useState } from "react";
+import { Button, Drawer } from "antd";
+import { useState } from "react";
 import StudentEnrollmentPolicyCards from "./StudentEnrollmentPolicyCards";
-import SessionStudentEnrollmentPolicy from "../students/SessionStudentEnrollmentPolicy";
 import CreateStudentEnrollmentPolicyForm from "./CreateStudentEnrollmentPolicyForm";
 
 const StudentEnrollmentPolicyContainer = () => {

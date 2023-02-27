@@ -1,4 +1,3 @@
-import React from "react";
 import GradingPolicyCard from "./GradingPolicyCard";
 
 const policies = [
