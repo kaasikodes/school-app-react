@@ -53,19 +53,14 @@ const CustodianWardsTable = ({ custodianId }: IProps) => {
   const schoolId = currentSchool?.id as string;
   const sessionId = currentSchool?.currentSessionId as string;
 
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm] = useState("");
   const [pagination, setPagination] = useState<TablePaginationConfig>({
     current: 1,
     pageSize: 100,
     total: 0,
     showSizeChanger: false,
   });
-  const { data, isLoading, isSuccess, error, refetch } = useQuery<
-    any,
-    any,
-    any,
-    any
-  >(
+  const { data, isLoading, isSuccess } = useQuery<any, any, any, any>(
     ["students", pagination.current],
     () => {
       return getAllStudents({
