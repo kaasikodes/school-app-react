@@ -10,14 +10,6 @@ const EnrollStudentForm = () => {
     console.log("Data ", data);
   };
 
-  const auth = useAuthUser();
-
-  const authDetails = auth() as unknown as IAuthDets;
-
-  const user = authDetails.user;
-  const token = authDetails.userToken;
-  const schoolId = authDetails.choosenSchoolId;
-
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-4">

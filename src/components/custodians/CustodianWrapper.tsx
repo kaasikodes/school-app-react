@@ -1,5 +1,5 @@
 import { Button, Drawer, Tabs, Typography } from "antd";
-import React, { useState } from "react";
+import { useState } from "react";
 import AddCustodianForm from "./AddCustodianForm";
 import CustodiansViewContainer from "./CustodiansViewContainer";
 
