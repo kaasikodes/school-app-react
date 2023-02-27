@@ -1,10 +1,9 @@
 import { Form, Input, Button } from "antd";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { openNotification } from "../../helpers/notifications";
 
 import { LoadingOutlined } from "@ant-design/icons";
 
-import { ISaveDepartmentProps } from "../../helpers/department";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
