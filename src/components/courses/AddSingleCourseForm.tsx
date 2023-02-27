@@ -13,11 +13,7 @@ import {
   textInputValidationRulesOp,
 } from "../../formValidation";
 import { useQueryClient } from "react-query";
-import {
-  useAddSingleClass,
-  useFetchClasses,
-} from "../../helpersAPIHooks/classes";
-import { ISaveClassProps } from "../../helpers/classes";
+import { useFetchClasses } from "../../helpersAPIHooks/classes";
 import { useAddSingleCourse } from "../../helpersAPIHooks/courses";
 import { ISaveCourseProps } from "../../helpers/courses";
 import { useFetchDepartments } from "../../helpersAPIHooks/departments";
