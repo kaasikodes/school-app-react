@@ -1,4 +1,3 @@
-import React from "react";
 import PaymentRecordsTable from "./PaymentRecordsTable";
 
 const PaymentRecordsContainer = () => {

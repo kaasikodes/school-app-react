@@ -1,4 +1,3 @@
-import React from "react";
 import { useAuthUser } from "react-auth-kit";
 import { useQuery } from "react-query";
 import { IAuthDets } from "../../appTypes/auth";
@@ -15,7 +14,7 @@ const PaymentCategories = () => {
   const user = authDetails.user;
   const token = authDetails.userToken;
   const schoolId = authDetails.choosenSchoolId;
-  const { data, isError, isFetching, isSuccess } = useQuery(
+  const { data, isSuccess } = useQuery(
     "payment-cats",
     () => getPaymentCategories({ schoolId: schoolId as string, token }),
     {
