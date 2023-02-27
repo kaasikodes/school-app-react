@@ -35,10 +35,10 @@ const MobileMenu = ({ links, onClose, show, handleLogOut }: IProps) => {
           .map((item: any) =>
             item.label !== "Logout" ? (
               <Link to={item.link}>
-                <a className="flex gap-2 items-center text-base cursor-pointer text-white active:text-[#109fff] hover:text-[#109fff]">
+                <div className="flex gap-2 items-center text-base cursor-pointer text-white active:text-[#109fff] hover:text-[#109fff]">
                   {React.createElement(item.icon)}
                   <span>{item.label}</span>
-                </a>
+                </div>
               </Link>
             ) : (
               <div
