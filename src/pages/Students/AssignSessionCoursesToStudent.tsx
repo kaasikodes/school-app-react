@@ -14,7 +14,6 @@ import { useParams } from "react-router-dom";
 import { IAuthDets } from "../../appTypes/auth";
 import { TLevel } from "../../appTypes/levels";
 
-import { ICGByLevel } from "../../components/students/singleStudent/StudentClasses";
 import { IStudentEntry } from "../../components/students/StudentsTable";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
 import { generalValidationRules } from "../../formValidation";
@@ -23,20 +22,6 @@ import { openNotification } from "../../helpers/notifications";
 import { getStudent } from "../../helpers/students";
 import { useFetchClasses } from "../../helpersAPIHooks/classes";
 import { useAddSessionCourseParticipantHook } from "../../helpersAPIHooks/courses";
-
-interface ICourse {
-  id: number;
-  name: string;
-  assessmentCount: number;
-  breakdown: string;
-  grade: string;
-  total: number;
-}
-
-interface IReturnProps {
-  coursesGroupedByLevel: ICGByLevel[];
-  courses: ICourse[];
-}
 
 const AssignSessionCoursesToStudent = () => {
   let { studentId } = useParams();
@@ -70,8 +55,7 @@ const AssignSessionCoursesToStudent = () => {
   const {
     data: student,
     isSuccess,
-    error,
-    refetch,
+
     isFetching,
   } = useQuery<any, any, any, any>(
     ["single-student", studentId],
@@ -111,11 +95,7 @@ const AssignSessionCoursesToStudent = () => {
     }
   );
 
-  const {
-    data: classesData,
-    isError,
-    isSuccess: isCSuccess,
-  } = useFetchClasses({
+  const { data: classesData, isSuccess: isCSuccess } = useFetchClasses({
     schoolId,
     token,
     pagination: {
@@ -139,8 +119,7 @@ const AssignSessionCoursesToStudent = () => {
 
   // student info from url
   // courses in the school as per each class
-  const { mutate, isLoading: isASCPLoading } =
-    useAddSessionCourseParticipantHook();
+  const { mutate } = useAddSessionCourseParticipantHook();
 
   const handleSubmit = (data: any) => {
     if (sessionId && studentId && schoolId) {
@@ -168,8 +147,6 @@ const AssignSessionCoursesToStudent = () => {
           });
         },
         onSuccess: (res: any) => {
-          const result = res.data.data;
-
           openNotification({
             state: "success",
 
