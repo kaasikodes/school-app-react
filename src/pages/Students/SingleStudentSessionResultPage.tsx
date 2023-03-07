@@ -1,4 +1,3 @@
-import React from "react";
 import StudentSessionResultWrapper from "../../components/students/singleStudent/StudentSessionResultWrapper";
 
 const SingleStudentSessionResultPage = () => {

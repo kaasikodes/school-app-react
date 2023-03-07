@@ -3,7 +3,6 @@ import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ERole } from "../../appTypes/roles";
 import CustodianWardsTable from "../../components/custodians/CustodianWardsTable";
-import StudentsTable from "../../components/students/StudentsTable";
 import StudentsWrapper from "../../components/students/StudentsWrapper";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
 import { openNotification } from "../../helpers/notifications";
