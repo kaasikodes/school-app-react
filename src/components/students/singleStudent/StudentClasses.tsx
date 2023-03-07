@@ -1,13 +1,4 @@
-import {
-  Button,
-  Dropdown,
-  List,
-  Menu,
-  Space,
-  Table,
-  Tag,
-  Typography,
-} from "antd";
+import { Button, Dropdown, Menu, Space, Table, Tag, Typography } from "antd";
 
 import { EllipsisOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
@@ -15,8 +6,7 @@ import { useAuthUser } from "react-auth-kit";
 import { useQuery } from "react-query";
 import { IAuthDets } from "../../../appTypes/auth";
 import { openNotification } from "../../../helpers/notifications";
-import { getStaffSessionLevelsAndCourses } from "../../../helpers/staff";
-import { ColumnsType, TablePaginationConfig, TableProps } from "antd/lib/table";
+import { ColumnsType } from "antd/lib/table";
 import { getStudentCoursesGroupedByLevel } from "../../../helpers/students";
 import { useContext, useState } from "react";
 import StudentClassResultOverview from "./StudentClassResultOverview";
@@ -52,7 +42,6 @@ const StudentClasses = ({ studentId }: IProps) => {
 
   const authDetails = auth() as unknown as IAuthDets;
 
-  const user = authDetails.user;
   const token = authDetails.userToken;
   const globalCtx = useContext(GlobalContext);
   const { state: globalState } = globalCtx;

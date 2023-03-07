@@ -1,4 +1,4 @@
-import { PageHeader, Table, Typography } from "antd";
+import { PageHeader, Table } from "antd";
 import React, { useContext } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
@@ -25,11 +25,7 @@ const StudentClassResultOverview = ({
   const { state: globalState } = globalCtx;
   const schoolId = globalState?.currentSchool?.id as string;
   const sessionId = globalState?.currentSchool?.currentSessionId as string;
-  const {
-    data: schoolSessionSetting,
-    isSuccess: isSessSettingSuccess,
-    isError: isSessSettingErr,
-  } = useFetchSchoolSessionSetting({
+  const { data: schoolSessionSetting } = useFetchSchoolSessionSetting({
     sessionId,
     schoolId,
     token,

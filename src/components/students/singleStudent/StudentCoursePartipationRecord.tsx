@@ -1,30 +1,14 @@
-import {
-  TablePaginationConfig,
-  Spin,
-  Typography,
-  Popconfirm,
-  Button,
-  Table,
-} from "antd";
-import form from "antd/lib/form";
-import React, { useContext, useState } from "react";
+import { Table } from "antd";
+import React, { useContext } from "react";
 import { useAuthUser } from "react-auth-kit";
-import { useQueryClient, useQuery } from "react-query";
-import { Form } from "react-router-dom";
+import { useQuery } from "react-query";
 import { IAuthDets } from "../../../appTypes/auth";
 import { GlobalContext } from "../../../contexts/GlobalContextProvider";
-import {
-  saveCourseParticipantAssessment,
-  getSessionCourseParticipants,
-  getSessionCourseSingleParticipant,
-} from "../../../helpers/courses";
+import { getSessionCourseSingleParticipant } from "../../../helpers/courses";
 import { openNotification } from "../../../helpers/notifications";
 import { getCRTemplate } from "../../../helpers/schoolCRecordTemplates";
 import { useFetchSchoolSessionSetting } from "../../../helpersAPIHooks/sessions";
-import {
-  originData,
-  IParticipantEntry,
-} from "../../courses/CourseParticipantTable";
+import { IParticipantEntry } from "../../courses/CourseParticipantTable";
 
 interface IProps {
   courseId: string;
@@ -41,7 +25,6 @@ const StudentCoursePartipationRecord = ({
 
   const authDetails = auth() as unknown as IAuthDets;
 
-  const user = authDetails.user;
   const token = authDetails.userToken;
 
   const globalCtx = useContext(GlobalContext);
@@ -49,20 +32,7 @@ const StudentCoursePartipationRecord = ({
   const schoolId = globalState?.currentSchool?.id as string;
   const sessionId = globalState?.currentSchool?.currentSessionId as string;
 
-  const [pagination, setPagination] = useState<TablePaginationConfig>({
-    current: 1,
-    pageSize: 4,
-    showSizeChanger: false,
-  });
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const [breakDownKeys, setbreakDownKeys] = useState<string[]>([]);
-
-  const {
-    data: schoolSessionSetting,
-    isSuccess: isSessSettingSuccess,
-    isError: isSessSettingErr,
-  } = useFetchSchoolSessionSetting({
+  const { data: schoolSessionSetting } = useFetchSchoolSessionSetting({
     sessionId,
     schoolId,
     token,
@@ -95,8 +65,6 @@ const StudentCoursePartipationRecord = ({
         columns.forEach(
           (item: any) => item.editable && brkKeys.push(item.dataIndex)
         );
-        setbreakDownKeys(brkKeys);
-        console.log("settled =>", brkKeys);
       },
       select: (res: any) => {
         const result = res.data.data;
