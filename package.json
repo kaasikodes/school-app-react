@@ -36,8 +36,8 @@
       "react-app/jest"
     ],
     "rules": {
-      "no-unused-vars": "off",
-      "no-unused-labels": "off",
+      "no-unused-vars": "warn",
+      "no-unused-labels": "warn",
       "no-unused-expressions": "off"
     }
   },
