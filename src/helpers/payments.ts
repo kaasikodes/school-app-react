@@ -1,5 +1,4 @@
 import axios from "axios";
-import moment from "moment";
 import { IAuthProps } from "./auth";
 
 export interface IPaymentCatAuthProps extends IAuthProps {

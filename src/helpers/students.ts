@@ -1,8 +1,7 @@
 import axios from "axios";
-import moment from "moment";
 import { IAuthProps } from "./auth";
 
-const token = localStorage.getItem("inokpa") as unknown as string;
+// const token = localStorage.getItem("inokpa") as unknown as string;
 
 export interface IStudentAuthProps extends IAuthProps {
   schoolId: string;
