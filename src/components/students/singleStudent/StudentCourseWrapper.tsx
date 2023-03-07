@@ -8,7 +8,6 @@ import { useFetchSingleClass } from "../../../helpersAPIHooks/classes";
 import { useFetchSingleCourse } from "../../../helpersAPIHooks/courses";
 import { routes } from "../../../routes";
 import CourseLessonTable from "../../courses/CourseLessonTable";
-import CourseParticipantTable from "../../courses/CourseParticipantTable";
 import CourseRecordAssessmentTable from "../../courses/CourseRecordAssessmentTable";
 import ComponentLoader from "../../loaders/ComponentLoader";
 import StudentCoursePartipationRecord from "./StudentCoursePartipationRecord";
@@ -22,14 +21,12 @@ interface IProps {
 
 const StudentCourseWrapper = ({ studentId, courseId, classId }: IProps) => {
   const [showDrawer, setShowDrawer] = useState(false);
-  const [refresh, setRefresh] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const auth = useAuthUser();
 
   const authDetails = auth() as unknown as IAuthDets;
 
-  const user = authDetails.user;
-
+  console.log("TEMP VARIABLE UNUSED FIX", showDrawer, searchTerm);
   const token = authDetails.userToken;
 
   const globalCtx = useContext(GlobalContext);
