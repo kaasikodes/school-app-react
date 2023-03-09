@@ -6,26 +6,17 @@ import {
   InputNumber,
   message,
   Select,
-  Typography,
   Upload,
   Collapse,
-  Col,
-  Row,
-  Switch,
-  Checkbox,
-  Spin,
 } from "antd";
 import React, { useState } from "react";
-import { InboxOutlined } from "@ant-design/icons";
 import type { UploadProps } from "antd";
-import { IStudentEntry } from "./StudentsTable";
-import { ICourseEntry } from "../courses/SchoolSessionCoursesTable";
-import { useMutation, useQuery } from "react-query";
 
-import { getCourses } from "../../helpers/courses";
+import { useQuery } from "react-query";
+
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";
-import { getStudent, IEnrollStudentProps } from "../../helpers/students";
+import { getStudent } from "../../helpers/students";
 import { UploadOutlined } from "@ant-design/icons";
 import { TPaymentCategry } from "../../appTypes/payments";
 import { getClasses } from "../../helpers/classes";
@@ -33,30 +24,7 @@ import { openNotification } from "../../helpers/notifications";
 import PageLoader from "../loaders/PageLoader";
 import { getPaymentCategories } from "../../helpers/payments";
 
-const options = [
-  { studentNo: "123", value: "Koplom Dung", id: 2 },
-  { studentNo: "143", value: "Alex Jones", id: 34 },
-  { studentNo: "120", value: "Potter Catter", id: 23 },
-];
-
 const { Panel } = Collapse;
-
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 4 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 20 },
-  },
-};
-const formItemLayoutWithOutLabel = {
-  wrapperCol: {
-    xs: { span: 24, offset: 0 },
-    sm: { span: 20, offset: 4 },
-  },
-};
 
 interface IProps {
   handleClose: Function;
@@ -67,19 +35,14 @@ const EnrollExistingStudentForm = ({ handleClose, studentId }: IProps) => {
 
   const authDetails = auth() as unknown as IAuthDets;
 
-  const user = authDetails.user;
   const token = authDetails.userToken;
   const schoolId = authDetails.choosenSchoolId;
   const sessionId = authDetails.choosenSchoolCurrentSessionId ?? "1";
   const [form] = Form.useForm();
-  const [exStudent, setExStudent] = useState(false);
+  const [exStudent] = useState(false);
 
   // student
-  const {
-    data: student,
-
-    isSuccess: isStSuccess,
-  } = useQuery(
+  const { isSuccess: isStSuccess } = useQuery(
     ["student", studentId],
     () =>
       getStudent({ schoolId: schoolId as string, token, studentId, sessionId }),
@@ -114,7 +77,6 @@ const EnrollExistingStudentForm = ({ handleClose, studentId }: IProps) => {
           email,
           phone,
         };
-        console.log("STUDENT", student);
         form.setFieldsValue({ ...student });
       },
     }
