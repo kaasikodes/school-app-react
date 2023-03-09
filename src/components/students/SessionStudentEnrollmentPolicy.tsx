@@ -1,12 +1,4 @@
-import {
-  Button,
-  Checkbox,
-  DatePicker,
-  Form,
-  Input,
-  InputNumber,
-  Switch,
-} from "antd";
+import { Button, DatePicker, Form, InputNumber, Switch } from "antd";
 import moment from "moment";
 import React, { useState } from "react";
 
