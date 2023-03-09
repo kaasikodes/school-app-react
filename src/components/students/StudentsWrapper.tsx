@@ -1,7 +1,6 @@
-import { Button, Drawer, Tabs, Typography } from "antd";
+import { Button, Drawer, Typography } from "antd";
 import React, { useState } from "react";
 import AddStudent from "./AddStudent";
-import EnrollStudentForm from "./EnrollStudentForm";
 import StudentsTable from "./StudentsTable";
 
 const StudentsWrapper = () => {
