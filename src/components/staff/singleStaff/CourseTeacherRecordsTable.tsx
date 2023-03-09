@@ -1,4 +1,4 @@
-import { Button, Drawer, Dropdown, Menu, Modal, Space, Table } from "antd";
+import { Button, Dropdown, Menu, Modal, Space, Table } from "antd";
 import { ColumnsType, TablePaginationConfig, TableProps } from "antd/lib/table";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { useState } from "react";

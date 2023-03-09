@@ -3,20 +3,11 @@ import { useState } from "react";
 
 import SchoolCoursesTable from "./SchoolCoursesTable";
 import AddSchoolCourse from "./AddSchoolCourse";
-import { useAuthUser } from "react-auth-kit";
-import { IAuthDets } from "../../../appTypes/auth";
+
 import { Link } from "react-router-dom";
 
 const CoursesWrapper = () => {
   const [showDrawer, setShowDrawer] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const auth = useAuthUser();
-
-  const authDetails = auth() as unknown as IAuthDets;
-
-  const user = authDetails.user;
-  const token = authDetails.userToken;
-  const schoolId = authDetails.choosenSchoolId;
 
   return (
     <div>
@@ -36,9 +27,9 @@ const CoursesWrapper = () => {
         <div className="flex gap-4">
           <Input.Search
             placeholder="Search courses"
-            onSearch={(val) => setSearchTerm(val)}
+            // onSearch={(val) => setSearchTerm(val)}
             allowClear
-            onChange={(e) => e.target.value === "" && setSearchTerm("")}
+            // onChange={(e) => e.target.value === "" && setSearchTerm("")}
           />
           <Button onClick={() => setShowDrawer(true)} type="primary">
             Add Course
