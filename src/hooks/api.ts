@@ -5,7 +5,7 @@ interface IMutateProps {
   requestFn: Function;
 }
 
-export const mutateData = ({ requestFn }: IMutateProps) => {
+export const useMutateData = ({ requestFn }: IMutateProps) => {
   const { isLoading, isError, isSuccess, mutate } = useMutation(() =>
     requestFn()
   );
@@ -19,7 +19,7 @@ interface IFetchDataProps {
   selectFn?: Function;
 }
 
-export const fetchData = (props: IFetchDataProps) => {
+export const useFetchData = (props: IFetchDataProps) => {
   return useQuery(props.key, () => props.requestFn(), {
     onError: (err: any) => {
       // show notification
