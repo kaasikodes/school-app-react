@@ -41,7 +41,7 @@ const CoursesWrapper = () => {
       </div>
 
       <Drawer
-        visible={showDrawer}
+        open={showDrawer}
         onClose={() => setShowDrawer(false)}
         title="Add Course"
       >
