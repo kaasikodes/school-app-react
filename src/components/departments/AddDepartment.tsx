@@ -1,5 +1,4 @@
 import { Tabs } from "antd";
-import React from "react";
 import AddBulkDepartmentsForm from "./AddBulkDepartmentsForm";
 import AddSingleDepartmentForm from "./AddSingleDepartmentForm";
 
