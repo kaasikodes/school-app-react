@@ -38,7 +38,7 @@ const ViewDepartmentForm = ({ closeDrawer, id }: IProps) => {
   const schoolId = globalState?.currentSchool?.id as string;
   const adminId = globalState?.currentSchool?.adminId as string;
 
-  const { mutate, isLoading } = useUpdateSingleDepartment();
+  const { mutate } = useUpdateSingleDepartment();
 
   const handleFinish = (data: any) => {
     if (schoolId) {
