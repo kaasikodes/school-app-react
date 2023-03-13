@@ -1,8 +1,5 @@
 import { Button, Form, Input } from "antd";
 
-import { useAuthUser } from "react-auth-kit";
-import { IAuthDets } from "../../appTypes/auth";
-
 const EnrollStudentForm = () => {
   // const auth = useAuthUser();
 
