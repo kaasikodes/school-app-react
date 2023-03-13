@@ -8,7 +8,7 @@ const CustodianWrapper = () => {
   return (
     <>
       <Drawer
-        visible={showD}
+        open={showD}
         title={`Add Custodian`}
         onClose={() => setShowD(false)}
       >
