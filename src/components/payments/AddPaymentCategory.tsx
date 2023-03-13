@@ -16,10 +16,9 @@ const AddPaymentCategory = () => {
 
   const authDetails = auth() as unknown as IAuthDets;
 
-  const user = authDetails.user;
   const token = authDetails.userToken;
   const schoolId = authDetails.choosenSchoolId;
-  const { mutate, isLoading } = useMutation(createPaymentCategory);
+  const { mutate } = useMutation(createPaymentCategory);
 
   const handleSubmit = (data: any) => {
     console.log(data, "pop");
