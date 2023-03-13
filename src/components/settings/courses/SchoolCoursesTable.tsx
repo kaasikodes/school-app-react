@@ -129,7 +129,7 @@ const SchoolCoursesTable = ({ searchTerm }: IProps) => {
       title: "Active",
       dataIndex: "isActive",
       key: "isActive",
-      render: (text: any) => (text == true ? "Yes" : "No"),
+      render: (val: any) => (!!val === true ? "Yes" : "No"),
     },
 
     {
