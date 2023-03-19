@@ -143,7 +143,6 @@ const CourseParticipantTable = ({
 
   const authDetails = auth() as unknown as IAuthDets;
 
-  const user = authDetails.user;
   const token = authDetails.userToken;
 
   const globalCtx = useContext(GlobalContext);
@@ -160,6 +159,7 @@ const CourseParticipantTable = ({
   const [breakDownKeys, setbreakDownKeys] = useState<string[]>([]);
 
   const [data, setData] = useState(originData);
+  console.log(data, "just so no t unused");
   const [editingKey, setEditingKey] = useState("");
 
   const isEditing = (record: IParticipantEntry) => record.key === editingKey;
@@ -278,7 +278,7 @@ const CourseParticipantTable = ({
                   okText="Yes"
                   cancelText="No"
                 >
-                  <a>Cancel</a>
+                  <span>Cancel</span>
                 </Popconfirm>
               </span>
             ) : (
@@ -298,11 +298,7 @@ const CourseParticipantTable = ({
       },
     },
   ];
-  const {
-    data: schoolSessionSetting,
-    isSuccess: isSessSettingSuccess,
-    isError: isSessSettingErr,
-  } = useFetchSchoolSessionSetting({
+  const { data: schoolSessionSetting } = useFetchSchoolSessionSetting({
     sessionId,
     schoolId,
     token,
