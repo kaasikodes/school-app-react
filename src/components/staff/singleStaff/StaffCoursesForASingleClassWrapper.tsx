@@ -18,13 +18,11 @@ interface IProps {
 const StaffCoursesForASingleClassWrapper = ({ classId, staffId }: IProps) => {
   // suppose to fetch the course teacher record belonging to a staff
   const [showDrawer, setShowDrawer] = useState(false);
-  const [refresh, setRefresh] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const auth = useAuthUser();
 
   const authDetails = auth() as unknown as IAuthDets;
 
-  const user = authDetails.user;
   const token = authDetails.userToken;
 
   const globalCtx = useContext(GlobalContext);
