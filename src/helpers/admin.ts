@@ -1,19 +1,10 @@
 import axios from "axios";
-import moment from "moment";
 import { IAuthProps } from "./auth";
 
 export interface IStaffAuthProps extends IAuthProps {
   schoolId: string;
 }
 
-interface ISaveStaffProps extends IStaffAuthProps {
-  staffNo: string;
-  id?: string;
-  userId?: string;
-  email: string;
-  name?: string;
-  password?: string;
-}
 interface IGetSingleStaffProps extends IStaffAuthProps {
   adminId: string;
 }
