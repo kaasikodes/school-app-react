@@ -39,6 +39,7 @@ const AssignSessionCoursesToStaff = () => {
   const handleSearch = (e: any) => {
     const val = e.target.value;
     setSearchTerm(val);
+    console.log(searchTerm);
   };
 
   const handleCategoryClick = (val: number) => {
@@ -166,7 +167,7 @@ const AssignSessionCoursesToStaff = () => {
 
   // student info from url
   // courses in the school as per each class
-  const { mutate, isLoading: isASCPLoading } = useAddSessionCourseTeacher();
+  const { mutate } = useAddSessionCourseTeacher();
 
   const handleSubmit = (data: any) => {
     if (sessionId && staffId && schoolId) {
