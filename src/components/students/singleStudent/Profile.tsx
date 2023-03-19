@@ -1,13 +1,4 @@
-import {
-  Avatar,
-  Divider,
-  Rate,
-  Skeleton,
-  Space,
-  Table,
-  Tag,
-  Typography,
-} from "antd";
+import { Avatar, Divider, Skeleton, Space, Table, Tag, Typography } from "antd";
 import React from "react";
 import { useAuthUser } from "react-auth-kit";
 import { useQuery } from "react-query";
@@ -54,7 +45,6 @@ const Profile = ({ studentId }: IProps) => {
 
   const authDetails = auth() as unknown as IAuthDets;
 
-  const user = authDetails.user;
   const token = authDetails.userToken;
   const schoolId = authDetails.choosenSchoolId;
   const { data: student, isFetching } = useQuery(
