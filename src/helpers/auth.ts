@@ -70,8 +70,6 @@ interface ILProps extends IAuthProps {
 export const logoutUser = ({ token, id }: ILProps) => {
   const url = `${process.env.REACT_APP_APP_URL}/api/logout/${id}`;
 
-  const data = {};
-
   const config = {
     headers: {
       Accept: "application/json",

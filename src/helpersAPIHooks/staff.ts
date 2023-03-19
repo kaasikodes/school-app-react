@@ -1,15 +1,11 @@
 import moment from "moment";
 import { useMutation, useQuery } from "react-query";
 
-import { TLevel } from "../appTypes/levels";
 import { IPaginationProps, ISearchParams } from "../appTypes/requestParams";
 import { TStaff, TStaffCourseTeacherRecord } from "../appTypes/staff";
 import {
   addSessionCourseParticipant,
   addSessionCourseTeacher,
-  saveSchoolCourse,
-  saveSchoolCoursesInBulk,
-  updateSchoolCourse,
 } from "../helpers/courses";
 import { openNotification } from "../helpers/notifications";
 import {

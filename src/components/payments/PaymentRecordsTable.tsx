@@ -74,12 +74,7 @@ const PaymentRecordsTable = () => {
       key: "createdAt",
     },
   ];
-  const {
-    data: levelFees,
-    isLoading,
-
-    isSuccess: isLSuccess,
-  } = useQuery(
+  const { data: levelFees, isLoading } = useQuery(
     "student-sess-payment-recs",
     () =>
       getStudentSessPaymentRecs({
