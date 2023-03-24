@@ -43,7 +43,6 @@ const DepartmentsViewContainer = ({ searchTerm }: IProps) => {
   };
   const {
     data: departmentData,
-    isError,
     isFetching,
     isSuccess,
   } = useFetchDepartments({
