@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* CUSTOMIZATIONS */
+
+/* made the mobile menu have a diff color from  the default drawer color */
+.mobile-menu .ant-drawer-content {
+  background: rgb(6, 32, 70) !important;
+  color: #fff !important;
+}

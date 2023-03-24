@@ -14,27 +14,19 @@ interface IProps {
 const MobileMenu = ({ links, onClose, show, handleLogOut }: IProps) => {
   return (
     <Drawer
-      title={
-        <div className="px-6 py-2 bg-slate-900 text-white flex justify-between items-center">
-          <Button
-            onClick={() => onClose()}
-            type="text"
-            icon={<IoMdClose color="#ffffff" size={25} />}
-          />
-        </div>
-      }
+      title={<span className="text-white">Menu</span>}
       open={show}
       onClose={() => onClose()}
-      closable={false}
       className="mobile-menu"
       placement="left"
+      closeIcon={<IoMdClose color="#fff" />}
     >
-      <div className="flex flex-col gap-4 bg-slate-900 text-white p-6">
+      <div className="flex flex-col gap-4 pb-6 text-white">
         {links
           ?.filter((item) => item.label !== "Filler")
           .map((item: any) =>
             item.label !== "Logout" ? (
-              <Link to={item.link}>
+              <Link to={item.link} onClick={() => onClose()}>
                 <div className="flex gap-2 items-center text-base cursor-pointer text-white active:text-[#109fff] hover:text-[#109fff]">
                   {React.createElement(item.icon)}
                   <span>{item.label}</span>
