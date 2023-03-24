@@ -181,6 +181,7 @@ const DepartmentsTableView = ({
       <Table
         columns={columns}
         size="small"
+        scroll={{ x: "max-content" }}
         dataSource={departments}
         loading={loading}
         pagination={pagination}

@@ -221,7 +221,8 @@ const DepartmentsTable = ({ refresh, setRefresh, searchTerm }: IProps) => {
             onChange={onChange}
             pagination={pagination}
             loading={fetching}
-            size="small"
+            size="small" 
+scroll={{ x: "max-content" }}
           />
           <Drawer
             open={showDrawer}

@@ -192,6 +192,7 @@ const StudentClasses = ({ studentId }: IProps) => {
             columns={columns}
             loading={isFetching}
             size="small"
+            scroll={{ x: "max-content" }}
             dataSource={levelsAndCourses?.coursesGroupedByLevel.map((item) => ({
               ...item,
               key: item.levelId,

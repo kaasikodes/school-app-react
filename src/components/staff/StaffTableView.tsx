@@ -120,6 +120,7 @@ const StaffTableView = ({ staff, loading, pagination, onChange }: IProps) => {
       <Table
         columns={columns}
         size="small"
+        scroll={{ x: "max-content" }}
         dataSource={staff}
         loading={loading}
         pagination={pagination}

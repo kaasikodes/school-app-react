@@ -110,6 +110,7 @@ const CourseTeacherRecordsTable = ({
       <Table
         columns={columns}
         size="small"
+        scroll={{ x: "max-content" }}
         dataSource={records}
         loading={loading}
         pagination={pagination}

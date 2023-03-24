@@ -137,6 +137,7 @@ const CourseTableView = ({
       <Table
         columns={columns}
         size="small"
+        scroll={{ x: "max-content" }}
         dataSource={courses}
         loading={loading}
         pagination={pagination}
