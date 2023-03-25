@@ -159,7 +159,12 @@ const Profile = ({ staffId }: IProps) => {
         <Typography.Title level={4}>
           <span className="text-slate-400">Groups</span>{" "}
         </Typography.Title>
-        <Table dataSource={data} columns={columns} size="small" />
+        <Table
+          dataSource={data}
+          columns={columns}
+          size="small"
+          scroll={{ x: "max-content" }}
+        />
       </div>
     </div>
   );

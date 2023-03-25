@@ -286,6 +286,7 @@ const StudentsTable = () => {
           pagination={pagination}
           loading={isLoading}
           size="small"
+          scroll={{ x: "max-content" }}
         />
       )}
     </div>

@@ -219,6 +219,7 @@ const ClassesTable = ({ refresh, setRefresh, searchTerm }: IProps) => {
             pagination={pagination}
             loading={fetching}
             size="small"
+            scroll={{ x: "max-content" }}
           />
           <Drawer
             visible={showDrawer}

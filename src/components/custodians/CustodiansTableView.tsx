@@ -124,6 +124,7 @@ const CustodiansTableView = ({
       <Table
         columns={columns}
         size="small"
+        scroll={{ x: "max-content" }}
         dataSource={custodians}
         loading={loading}
         pagination={pagination}

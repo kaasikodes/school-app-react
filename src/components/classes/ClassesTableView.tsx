@@ -117,6 +117,7 @@ const ClassesTableView = ({
       <Table
         columns={columns}
         size="small"
+        scroll={{ x: "max-content" }}
         dataSource={classes}
         loading={loading}
         pagination={pagination}

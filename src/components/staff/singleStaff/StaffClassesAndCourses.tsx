@@ -173,6 +173,7 @@ const StaffClassesAndCourses = ({ staffId, show = "both" }: IProps) => {
             columns={columns}
             loading={isFetching}
             size="small"
+            scroll={{ x: "max-content" }}
             dataSource={levelsAndCourses?.coursesGroupedByLevel}
           />
         </div>

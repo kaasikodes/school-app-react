@@ -128,6 +128,7 @@ const PaymentRecordsTable = () => {
         dataSource={levelFees?.data}
         pagination={{ total: levelFees?.totalCount }}
         size="small"
+        scroll={{ x: "max-content" }}
       />
     </div>
   );
