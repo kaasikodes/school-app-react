@@ -12,10 +12,10 @@ const AddStudent = ({ closeDrawer }: IProps) => {
     <div>
       <Tabs>
         <Tabs.TabPane tab="Single" key={"single"}>
-          {/* <AddSingleStudentForm closeDrawer={closeDrawer} /> */}
+          <AddSingleStudentForm closeDrawer={closeDrawer} />
         </Tabs.TabPane>
         <Tabs.TabPane tab="Bulk" key={"bulk"}>
-          {/* <AddBulkStudentForm closeDrawer={closeDrawer} /> */}
+          <AddBulkStudentForm closeDrawer={closeDrawer} />
         </Tabs.TabPane>
       </Tabs>
     </div>
