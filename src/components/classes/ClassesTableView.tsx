@@ -56,6 +56,12 @@ const ClassesTableView = ({
       dataIndex: "courseCount",
       key: "courseCount",
     },
+    {
+      title: "Class Teacher",
+      dataIndex: "teacher",
+      key: "teacher",
+      render: (val, item) => <span>{item?.classTeacher?.name}</span>,
+    },
     // {
     //   title: "Author",
     //   dataIndex: "author",
