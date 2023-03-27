@@ -13,11 +13,7 @@ interface IProps {
   onChange?: TableProps<TLevel>["onChange"];
 }
 
-enum EAction {
-  EDIT = "Edit Class",
-  VIEW = "View Class",
-  NONE = "",
-}
+type TAction = "Edit Class" | "View Class" | "";
 
 const ClassesTableView = ({
   classes,
@@ -26,19 +22,18 @@ const ClassesTableView = ({
   onChange,
 }: IProps) => {
   const [showD, setShowD] = useState(false);
-  const [action, setAction] = useState<EAction>(EAction.NONE);
+  const [action, setAction] = useState<TAction>("");
   const [classId, setClassId] = useState("");
 
-  const handleAction = (props: { action: EAction; classId: string }) => {
+  const handleAction = (props: { action: TAction; classId: string }) => {
     setClassId(props.classId);
     setAction(props.action);
     setShowD(true);
-    console.log("cAST", props);
   };
 
   const handleClose = () => {
     setClassId("");
-    setAction(EAction.NONE);
+    setAction("");
     setShowD(false);
   };
 
@@ -93,7 +88,7 @@ const ClassesTableView = ({
                   label: <span className="w-full text-left">Edit</span>,
                   onClick: () =>
                     handleAction({
-                      action: EAction.EDIT,
+                      action: "Edit Class",
                       classId: `${record.id}`,
                     }),
                 },
@@ -102,7 +97,7 @@ const ClassesTableView = ({
                   label: <span className="w-full text-left">View</span>,
                   onClick: () =>
                     handleAction({
-                      action: EAction.VIEW,
+                      action: "View Class",
                       classId: `${record.id}`,
                     }),
                 },
@@ -131,10 +126,10 @@ const ClassesTableView = ({
       />
 
       <Drawer open={showD} title={action} onClose={handleClose}>
-        {action === EAction.EDIT && (
+        {action === "Edit Class" && (
           <EditClassForm id={classId} closeDrawer={handleClose} />
         )}
-        {action === EAction.VIEW && (
+        {action === "View Class" && (
           <ViewClass id={classId} closeDrawer={handleClose} />
         )}
       </Drawer>
