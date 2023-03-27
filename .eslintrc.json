@@ -1,0 +1,21 @@
+{
+  "extends": ["react-app", "react-app/jest", "prettier"],
+  "rules": {
+    "eqeqeq": "error",
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": "warn",
+    "max-lines": [
+      1,
+      {
+        "max": 500
+      }
+    ],
+
+    "max-params": [
+      1,
+      {
+        "max": 5
+      }
+    ]
+  }
+}

@@ -28,7 +28,7 @@ const CourseTeacherRecordsTable = ({
   const [showD, setShowD] = useState(false);
   const [action, setAction] = useState<EAction>(EAction.NONE);
   const [courseId, setCourseId] = useState("");
-
+  console.log(courseId);
   const handleAction = (props: { action: EAction; courseId: string }) => {
     setCourseId(props.courseId);
     setAction(props.action);

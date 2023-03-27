@@ -3,13 +3,11 @@ import {
   Form,
   Input,
   InputNumber,
-  message,
   Select,
   Upload,
   Collapse,
 } from "antd";
 import React, { useState } from "react";
-import type { UploadProps } from "antd";
 
 import { useQuery } from "react-query";
 

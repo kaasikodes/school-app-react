@@ -26,7 +26,7 @@ const RegisterSchoolForm = () => {
   const [form] = Form.useForm();
   const { mutate, isLoading } = useRegisterSchool();
   const globalCtx = useContext(GlobalContext);
-  const { state: globalState, dispatch: globalDispatch } = globalCtx;
+  const { dispatch: globalDispatch } = globalCtx;
 
   useEffect(() => {
     openNotification({

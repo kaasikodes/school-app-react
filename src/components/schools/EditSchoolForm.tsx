@@ -20,38 +20,36 @@ const EditSchoolForm = ({ id, closeDrawer }: IProps) => {
   const authDetails = auth() as unknown as IAuthDets;
   const signIn = useSignIn();
 
-  const user = authDetails.user;
   const token = authDetails.userToken;
   const [school, setSchool] = useState<ISchoolCardEntry | null>(null);
   const [fetching, setFetching] = useState(false);
 
-  const loadSchool = async () => {
-    if (token) {
-      try {
-        setFetching(true);
-
-        const result = await getSchool({ token, id });
-        console.log(result);
-        const fetchedSchool: ISchoolCardEntry = {
-          item: {
-            id: result.data.id,
-            name: result.data.name,
-            description: result.data.description,
-          },
-          selected: false,
-        };
-
-        setSchool(fetchedSchool);
-        setFetching(false);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
-
   useEffect(() => {
+    const loadSchool = async () => {
+      if (token) {
+        try {
+          setFetching(true);
+
+          const result = await getSchool({ token, id });
+          console.log(result);
+          const fetchedSchool: ISchoolCardEntry = {
+            item: {
+              id: result.data.id,
+              name: result.data.name,
+              description: result.data.description,
+            },
+            selected: false,
+          };
+
+          setSchool(fetchedSchool);
+          setFetching(false);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
     loadSchool();
-  }, []);
+  }, [id, token]);
   const handleFinish = (data: any) => {
     console.log(data, "sasa");
     openNotification({
@@ -69,10 +67,10 @@ const EditSchoolForm = ({ id, closeDrawer }: IProps) => {
       .then((res: any) => {
         console.log(res);
         //  sign in again with changes reflected
-        const schools = authDetails.schools.map((school) =>
-          school.id === id
-            ? { ...school, name: data.name, description: data.description }
-            : school
+        const schools = authDetails.schools.map((item) =>
+          item.id === id
+            ? { ...item, name: data.name, description: data.description }
+            : item
         );
 
         const newAuth: IAuthDets = {

@@ -19,7 +19,6 @@ const SetUpCurrentSessionForm = ({ closeDrawer, refresh }: IProps) => {
 
   const authDetails = auth() as unknown as IAuthDets;
 
-  const user = authDetails.user;
   const token = authDetails.userToken;
   const schoolId = authDetails.choosenSchoolId;
 
@@ -59,6 +58,7 @@ const SetUpCurrentSessionForm = ({ closeDrawer, refresh }: IProps) => {
         });
       });
   };
+  console.log(handleFinish);
   return (
     <div>
       <Tabs>

@@ -51,12 +51,7 @@ const ClassFeesTable = () => {
         ),
     },
   ];
-  const {
-    data: levelFees,
-    isLoading,
-
-    isSuccess: isLSuccess,
-  } = useQuery(
+  const { data: levelFees, isLoading } = useQuery(
     "levels",
     () => getLevelFees({ schoolId: schoolId as string, token, sessionId }),
     {

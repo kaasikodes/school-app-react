@@ -42,7 +42,6 @@ const DepartmentsTableView = ({
   const globalCtx = useContext(GlobalContext);
   const { state: globalState } = globalCtx;
   const schoolId = globalState?.currentSchool?.id as string;
-  const adminId = globalState?.currentSchool?.adminId as string;
   const [showD, setShowD] = useState(false);
   const [action, setAction] = useState<EAction>(EAction.NONE);
   const [departmentId, setDepartmentId] = useState("");

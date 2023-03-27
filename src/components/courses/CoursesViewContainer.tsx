@@ -42,7 +42,6 @@ const CoursesViewContainer = ({ searchTerm }: IProps) => {
   };
   const {
     data: coursesData,
-    isError,
     isFetching,
     isSuccess,
   } = useFetchCourses({

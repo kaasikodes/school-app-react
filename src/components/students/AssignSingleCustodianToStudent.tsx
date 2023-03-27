@@ -12,8 +12,6 @@ import { useQueryClient } from "react-query";
 import { IAuthDets } from "../../appTypes/auth";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
 import { openNotification } from "../../helpers/notifications";
-import { ISaveStaffProps } from "../../helpers/staff";
-import { useAddSingleStaff } from "../../helpersAPIHooks/staff";
 import { useAddSingleCusodian } from "../../helpersAPIHooks/custodians";
 import { ISaveCustProps } from "../../helpers/custodians";
 
@@ -35,7 +33,7 @@ const AssignSingleCustodianToStudent = ({ handleClose, studentId }: IProps) => {
   const { state: globalState } = globalCtx;
   const schoolId = globalState?.currentSchool?.id as string;
 
-  const { mutate, isLoading } = useAddSingleCusodian();
+  const { mutate } = useAddSingleCusodian();
   const handleFinish = (data: any) => {
     if (schoolId) {
       const props: ISaveCustProps = {

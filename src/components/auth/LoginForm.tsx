@@ -21,7 +21,7 @@ const LoginForm = () => {
   const [form] = Form.useForm();
   const { mutate, isLoading } = useLoginUser();
   const globalCtx = useContext(GlobalContext);
-  const { state: globalState, dispatch: globalDispatch } = globalCtx;
+  const { dispatch: globalDispatch } = globalCtx;
 
   useEffect(() => {
     openNotification({
