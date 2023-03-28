@@ -1,5 +1,5 @@
 import { Button, Form, Input, Select, Spin, Switch } from "antd";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { saveSchoolCourse } from "../../../helpers/courses";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -16,7 +16,6 @@ interface IProps {
 
 const AddSchoolCourse = ({ handleClose }: IProps) => {
   const queryClient = useQueryClient();
-  const [searchTerm, setSearchTerm] = useState("");
 
   const auth = useAuthUser();
 

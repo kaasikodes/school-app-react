@@ -28,7 +28,7 @@ const SchoolCards = ({
       .sort((item) => (item.item.id === choosenSchoolId ? -1 : 0));
     const defaultPSchools = sortedSchools.slice(0, pageSize);
     setPSchools(defaultPSchools);
-  }, [schools]);
+  }, [schools, choosenSchoolId]);
 
   const onChange: PaginationProps["onChange"] = (page) => {
     setCurrentPage(page);

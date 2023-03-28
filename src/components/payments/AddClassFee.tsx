@@ -113,8 +113,7 @@ const AddClassFee = () => {
   // pcs
   const {
     data: paymentCategories,
-    isError,
-    isFetching,
+
     isSuccess: isPCSuccess,
   } = useQuery(
     "payment-cats",
@@ -150,7 +149,7 @@ const AddClassFee = () => {
     }
   );
 
-  const { mutate, isLoading } = useMutation(createClassFee);
+  const { mutate } = useMutation(createClassFee);
 
   const handleSubmit = (data: any) => {
     if (schoolId && sessionId) {
@@ -182,8 +181,6 @@ const AddClassFee = () => {
           });
         },
         onSuccess: (res: any) => {
-          const result = res.data.data;
-
           openNotification({
             state: "success",
 

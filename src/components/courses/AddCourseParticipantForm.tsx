@@ -26,8 +26,6 @@ const AddCourseParticipantForm = ({
 
   const authDetails = auth() as unknown as IAuthDets;
 
-  const user = authDetails.user;
-
   const token = authDetails.userToken;
 
   const globalCtx = useContext(GlobalContext);
@@ -41,8 +39,7 @@ const AddCourseParticipantForm = ({
     searchTerm: hint,
   });
   const [form] = Form.useForm();
-  const { mutate, isLoading: isASCPLoading } =
-    useAddSessionCourseParticipantHook();
+  const { mutate } = useAddSessionCourseParticipantHook();
 
   const handleSubmit = (data: any) => {
     const studentId = data.studentId;
@@ -76,8 +73,6 @@ const AddCourseParticipantForm = ({
           });
         },
         onSuccess: (res: any) => {
-          const result = res.data.data;
-
           openNotification({
             state: "success",
 

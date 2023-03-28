@@ -42,8 +42,8 @@ const Profile = ({ custodianId }: IProps) => {
   const auth = useAuthUser();
 
   const authDetails = auth() as unknown as IAuthDets;
-
-  const user = authDetails.user;
+  // TO DO
+  // Refactor to useApiAuth hook
   const token = authDetails.userToken;
   const schoolId = authDetails.choosenSchoolId;
   const { data: custodian, isFetching } = useQuery(

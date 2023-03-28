@@ -29,7 +29,7 @@ const CustodiansTableView = ({
   const [showD, setShowD] = useState(false);
   const [action, setAction] = useState<EAction>(EAction.NONE);
   const [staffId, setStaffId] = useState("");
-
+  console.log(staffId);
   const handleAction = (props: { action: EAction; staffId: string }) => {
     setStaffId(props.staffId);
     setAction(props.action);

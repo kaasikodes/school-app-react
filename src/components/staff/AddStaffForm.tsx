@@ -33,9 +33,8 @@ const AddStaffForm = ({ closeDrawer }: IProps) => {
   const globalCtx = useContext(GlobalContext);
   const { state: globalState } = globalCtx;
   const schoolId = globalState?.currentSchool?.id as string;
-  const adminId = globalState?.currentSchool?.adminId as string;
 
-  const { mutate, isLoading } = useAddSingleStaff();
+  const { mutate } = useAddSingleStaff();
   const handleFinish = (data: any) => {
     if (schoolId) {
       const props: ISaveStaffProps = {

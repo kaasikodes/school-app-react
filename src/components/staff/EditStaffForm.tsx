@@ -38,7 +38,7 @@ const EditStaffForm = ({ closeDrawer, id }: IProps) => {
   const schoolId = globalState?.currentSchool?.id as string;
   // const adminId = globalState?.currentSchool?.adminId as string;
 
-  const { mutate, isLoading } = useUpdateSingleStaff();
+  const { mutate } = useUpdateSingleStaff();
 
   const handleFinish = (data: any) => {
     if (schoolId) {
@@ -88,14 +88,14 @@ const EditStaffForm = ({ closeDrawer, id }: IProps) => {
     id,
     schoolId,
     token,
-    onSuccess: (data: TStaff) => {
+    onSuccess: (item: TStaff) => {
       form.setFieldsValue({
-        name: data.name,
-        staffNo: data.staffNo,
-        email: data.email,
-        firstName: data.name.split(" ")[0],
-        lastName: data.name.split(" ")[2] ?? data.name.split(" ")[1],
-        middleName: data.name.split(" ")[2] ? data.name.split(" ")[1] : null,
+        name: item.name,
+        staffNo: item.staffNo,
+        email: item.email,
+        firstName: item.name.split(" ")[0],
+        lastName: item.name.split(" ")[2] ?? item.name.split(" ")[1],
+        middleName: item.name.split(" ")[2] ? item.name.split(" ")[1] : null,
       });
     },
   });
