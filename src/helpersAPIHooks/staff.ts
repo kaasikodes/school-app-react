@@ -128,7 +128,8 @@ export const useFetchAllStaff = ({
   token,
   schoolId,
   onSuccess,
-}: IFRQProps) => {
+  sessionId,
+}: IFRQProps & { sessionId?: number }) => {
   const queryData = useQuery(
     ["staff", pagination?.page, pagination?.limit, searchParams],
     () =>
@@ -161,6 +162,9 @@ export const useFetchAllStaff = ({
 
         const data: TStaff[] = result.map(
           (item: any): TStaff => ({
+            sessionLevelCount: item.data.class_teacher_records?.filter(
+              (val: any) => val.school_session_id === sessionId
+            ).length,
             id: item.data.id,
             name: item.data?.user.name,
             staffNo: item.data.staff_no,
