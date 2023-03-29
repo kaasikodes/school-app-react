@@ -11,5 +11,5 @@ export type TLevel = {
   createdAt?: string;
   updatedAt?: string;
   courses?: TCourse[];
-  classTeacher?: TStaff;
+  classTeacher?: Pick<TStaff, "name" | "id" | "email">;
 };

@@ -1,9 +1,8 @@
 import { TablePaginationConfig } from "antd";
-import { useContext, useState } from "react";
-import { useAuthUser } from "react-auth-kit";
-import { IAuthDets } from "../../appTypes/auth";
-import { GlobalContext } from "../../contexts/GlobalContextProvider";
+import { useState } from "react";
+
 import { useFetchClasses } from "../../helpersAPIHooks/classes";
+import useApiAuth from "../../hooks/useApiAuth";
 import ClassesTableView from "./ClassesTableView";
 
 interface IProps {
@@ -11,15 +10,7 @@ interface IProps {
 }
 
 const ClassesViewContainer = ({ searchTerm }: IProps) => {
-  const auth = useAuthUser();
-
-  const authDetails = auth() as unknown as IAuthDets;
-
-  const token = authDetails.userToken;
-
-  const globalCtx = useContext(GlobalContext);
-  const { state: globalState } = globalCtx;
-  const schoolId = globalState?.currentSchool?.id as string;
+  const { token, schoolId, sessionId } = useApiAuth();
 
   const [pagination, setPagination] = useState<TablePaginationConfig>({
     current: 1,
@@ -45,7 +36,8 @@ const ClassesViewContainer = ({ searchTerm }: IProps) => {
     isFetching,
     isSuccess,
   } = useFetchClasses({
-    schoolId,
+    sessionId,
+    schoolId: `${schoolId}`,
     token,
     pagination: {
       limit: pagination.pageSize,
