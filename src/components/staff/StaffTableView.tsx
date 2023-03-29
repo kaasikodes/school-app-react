@@ -61,8 +61,9 @@ const StaffTableView = ({ staff, loading, pagination, onChange }: IProps) => {
           Class Count
         </span>
       ),
-      dataIndex: "levelCount",
-      key: "levelCount",
+      dataIndex: "sessionLevelCount",
+      key: "sessionLevelCount",
+      render: (_, item) => <span>{item.sessionLevelCount}</span>,
     },
 
     {

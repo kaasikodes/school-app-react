@@ -1,9 +1,8 @@
 import { TablePaginationConfig } from "antd";
-import React, { useContext, useState } from "react";
-import { useAuthUser } from "react-auth-kit";
-import { IAuthDets } from "../../appTypes/auth";
-import { GlobalContext } from "../../contexts/GlobalContextProvider";
+import React, { useState } from "react";
+
 import { useFetchAllStaff } from "../../helpersAPIHooks/staff";
+import useApiAuth from "../../hooks/useApiAuth";
 import StaffTableView from "./StaffTableView";
 
 interface IProps {
@@ -11,15 +10,7 @@ interface IProps {
 }
 
 const StaffViewContainer = ({ searchTerm }: IProps) => {
-  const auth = useAuthUser();
-
-  const authDetails = auth() as unknown as IAuthDets;
-
-  const token = authDetails.userToken;
-
-  const globalCtx = useContext(GlobalContext);
-  const { state: globalState } = globalCtx;
-  const schoolId = globalState?.currentSchool?.id as string;
+  const { sessionId, token, schoolId } = useApiAuth();
 
   const [pagination, setPagination] = useState<TablePaginationConfig>({
     current: 1,
@@ -45,8 +36,9 @@ const StaffViewContainer = ({ searchTerm }: IProps) => {
     isFetching,
     isSuccess,
   } = useFetchAllStaff({
-    schoolId,
+    schoolId: `${schoolId}`,
     token,
+    sessionId,
     pagination: {
       limit: pagination.pageSize,
 
