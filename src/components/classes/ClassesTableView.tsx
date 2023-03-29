@@ -52,7 +52,7 @@ const ClassesTableView = ({
       key: "courseCount",
     },
     {
-      title: "Class Teacher",
+      title: "Session Class Teacher",
       dataIndex: "teacher",
       key: "teacher",
       render: (val, item) => <span>{item?.classTeacher?.name}</span>,
