@@ -10,6 +10,20 @@ export type TLevel = {
   author?: TAdmin;
   createdAt?: string;
   updatedAt?: string;
-  courses?: TCourse[];
+  courses?: Pick<
+    TCourse & {
+      courseSessionTeacherStaffId?: number;
+      courseSessionTeacherStaffUser?: {
+        name: string;
+        email: string;
+        staffNo: string;
+      };
+    },
+    | "id"
+    | "name"
+    | "courseSessionTeacherStaffId"
+    | "courseSessionTeacherStaffUser"
+  >[];
+
   classTeacher?: Pick<TStaff, "name" | "id" | "email">;
 };

@@ -1,10 +1,10 @@
-import { Button, Collapse, message, Steps, Tag, Typography } from "antd";
+import { Button, message, Steps } from "antd";
 import { useState } from "react";
-import { AssignStaffAsSessionTeacher } from "./AssignStaffAsSessionTeacher";
+import { AssignStaffToCourseResult } from "./AssignStaffToCourseResult";
 import SelectClassForm from "./SelectClassForm";
+import { SelectTeacherForCourses } from "./SelectTeacherForCourses";
 
 const { Step } = Steps;
-const { Panel } = Collapse;
 
 const AssignStaffToCourse = () => {
   const [currentClass, setCurrentClass] = useState<number>();
@@ -19,49 +19,15 @@ const AssignStaffToCourse = () => {
     },
     {
       title: "Assign teachers to courses",
-      content: <AssignStaffAsSessionTeacher />,
+      content: currentClass ? (
+        <SelectTeacherForCourses classId={currentClass} />
+      ) : null,
     },
     {
       title: "Confirm Selection",
-      content: (
-        <div>
-          <Typography.Title level={5}>{currentClass} Courses</Typography.Title>
-          <div className="flex flex-col gap-4">
-            <Collapse accordion>
-              {["Physics", "Chemistry", "Geography"].map((item) => (
-                <Panel header={item} key={item}>
-                  <div className="flex flex-col gap-4">
-                    <div className="flex gap-3">
-                      <Typography.Text className="font-semibold">
-                        Teachers:
-                      </Typography.Text>
-                      <div>
-                        {["Matt Walsh", "Peter Simon"].map((item) => (
-                          <Tag key={item} color="#2db7f5">
-                            {item}
-                          </Tag>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="flex gap-3">
-                      <Typography.Text className="font-semibold">
-                        Main Teacher:
-                      </Typography.Text>
-                      <div>
-                        {["Matt Walsh"].map((item) => (
-                          <Tag key={item} color="#87d068">
-                            {item}
-                          </Tag>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </Panel>
-              ))}
-            </Collapse>
-          </div>
-        </div>
-      ),
+      content: currentClass ? (
+        <AssignStaffToCourseResult classId={currentClass} />
+      ) : null,
     },
   ];
 
