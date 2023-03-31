@@ -19,7 +19,7 @@ import {
 } from "../../contexts/GlobalContextProvider";
 import { dialCodes } from "../../data";
 
-const RegisterSchoolForm = () => {
+const RegisterSchoolForm: React.FC<{ goBack: () => void }> = ({ goBack }) => {
   const [searchedDialCodes, setSarchedDialCodes] = useState(dialCodes);
 
   const signIn = useSignIn();
@@ -251,8 +251,9 @@ const RegisterSchoolForm = () => {
             type="ghost"
             className="w-full items-center"
             icon={<GooglePlusCircleFilled className="text-xl " />}
+            onClick={goBack}
           >
-            Sign up with Google
+            Go back
           </Button>
         </div>
       </Form.Item>
