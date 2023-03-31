@@ -9,13 +9,20 @@ interface IGetCLassProps extends IClassAuthProps {
   classId: string;
 }
 
-export const getClass = ({ token, classId }: IGetCLassProps) => {
+export const getClass = ({
+  token,
+  classId,
+  sessionId,
+}: IGetCLassProps & { sessionId?: number }) => {
   const url = `${process.env.REACT_APP_APP_URL}/api/levels/${classId}`;
 
   const config = {
     headers: {
       Accept: "application/json",
       Authorization: `Bearer ${token}`,
+    },
+    params: {
+      sessionId,
     },
   };
 

@@ -1,4 +1,4 @@
-import { Form, Typography } from "antd";
+import { Button, Form, Typography } from "antd";
 import React from "react";
 import { FormLevelsInput } from "../../../customFormComponents/FormLevelsInput";
 
@@ -7,8 +7,9 @@ const SelectClassForm: React.FC<{
 }> = ({ handleCurrentClass }) => {
   const [form] = Form.useForm();
   const handleFin = (data: any) => {
-    handleCurrentClass(data.classId);
+    handleCurrentClass(+data.classId);
   };
+
   return (
     <div className="w-full flex flex-col gap-4 items-stretch">
       <Typography.Title level={5}>
@@ -21,7 +22,15 @@ const SelectClassForm: React.FC<{
           requiredMark={false}
           layout="vertical"
         >
-          <FormLevelsInput Form={Form} />
+          <FormLevelsInput
+            Form={Form}
+            control={{ name: "classId", label: "Class" }}
+          />
+          <div className="flex flex-end">
+            <Button type="primary" htmlType="submit">
+              Next
+            </Button>
+          </div>
         </Form>
       </div>
     </div>

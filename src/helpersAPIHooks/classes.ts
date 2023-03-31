@@ -129,14 +129,16 @@ export const useFetchSingleClass = ({
   token,
   schoolId,
   onSuccess,
-}: IFRQSingleProps) => {
+  sessionId,
+}: IFRQSingleProps & { sessionId?: number }) => {
   const queryData = useQuery(
-    ["class", id],
+    ["class", id, sessionId],
     () =>
       getClass({
         schoolId,
         token,
         classId: id,
+        sessionId,
       }),
     {
       // refetchInterval: false,
@@ -164,6 +166,43 @@ export const useFetchSingleClass = ({
           name: item.data.name,
           description: item.data.description,
           courseCount: item?.courseCount,
+
+          courses: item.data.courses.map(
+            (
+              item: any
+            ): Pick<
+              TCourse & {
+                courseSessionTeacherStaffId?: number;
+                courseSessionTeacherStaffUser?: {
+                  name: string;
+                  email: string;
+                  staffNo: string;
+                };
+              },
+              | "id"
+              | "name"
+              | "courseSessionTeacherStaffId"
+              | "courseSessionTeacherStaffUser"
+            > => {
+              const courseSessionTeacherStaff = (
+                item?.course_teacher_records as unknown as any[]
+              )[0];
+              return {
+                id: item.id,
+                name: item.name,
+                courseSessionTeacherStaffId: item?.course_teacher_records
+                  ? courseSessionTeacherStaff?.staff_id
+                  : undefined,
+                courseSessionTeacherStaffUser: item?.course_teacher_records
+                  ? {
+                      name: courseSessionTeacherStaff.staff.user.name,
+                      email: courseSessionTeacherStaff.staff.user.email,
+                      staffNo: courseSessionTeacherStaff.staff.staff_no,
+                    }
+                  : undefined,
+              };
+            }
+          ),
           author: item?.author
             ? {
                 id: item.author.id,
