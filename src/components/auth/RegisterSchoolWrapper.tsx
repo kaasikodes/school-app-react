@@ -5,13 +5,39 @@ import { routes } from "../../routes";
 import { useState } from "react";
 import { SelectRegistrationType } from "./SelectRegistrationType";
 import { RegisterStaffForm } from "./RegisterStaffForm";
+import { RegisterCustodianForm } from "./RegisterCustodianForm";
+
+type TUserType = "admin" | "staff" | "custodian" | "student";
 
 const RegisterSchoolWrapper = () => {
-  const [userType, setUserType] = useState<
-    "admin" | "staff" | "custodian" | "student"
-  >();
+  const [userType, setUserType] = useState<TUserType>();
   const handleFin = (data: any) => {
     setUserType(data.userType);
+  };
+  const headingText = (val?: TUserType): string => {
+    let text = "Create Account";
+    switch (val) {
+      case "admin":
+        text = "Create School Account";
+
+        break;
+      case "staff":
+        text = "Create Staff Account";
+
+        break;
+      case "custodian":
+        text = "Create Custodian Account";
+
+        break;
+      case "student":
+        text = "Create Student Account";
+
+        break;
+
+      default:
+        break;
+    }
+    return text;
   };
   return (
     <>
@@ -21,7 +47,7 @@ const RegisterSchoolWrapper = () => {
           link: routes.login,
           promptText: "Already have an account!",
         }}
-        heading="Create School Account"
+        heading={headingText(userType)}
       >
         {userType === undefined && (
           <SelectRegistrationType handleFin={handleFin} />
@@ -30,6 +56,12 @@ const RegisterSchoolWrapper = () => {
           <RegisterSchoolForm goBack={() => setUserType(undefined)} />
         )}
         {userType === "staff" && (
+          <RegisterStaffForm goBack={() => setUserType(undefined)} />
+        )}
+        {userType === "custodian" && (
+          <RegisterCustodianForm goBack={() => setUserType(undefined)} />
+        )}
+        {userType === "student" && (
           <RegisterStaffForm goBack={() => setUserType(undefined)} />
         )}
       </AuthLayout>
