@@ -1,13 +1,11 @@
 import { Button, Form, Input, Select } from "antd";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import {
-  textInputValidationRules,
   generalValidationRules,
   emailValidationRules,
   passwordValidationRules,
-  phoneNumberValidationRule,
 } from "../../formValidation";
-import { LeftOutlined } from "@ant-design/icons";
+import { LeftCircleOutlined as LeftOutlined } from "@ant-design/icons";
 import { useRegisterSchool } from "../../helpersAPIHooks/auth";
 import { IRegSchoolProps } from "../../helpers/auth";
 import { openNotification } from "../../helpers/notifications";
@@ -17,11 +15,10 @@ import {
   GlobalContext,
   EGlobalOps,
 } from "../../contexts/GlobalContextProvider";
-import { dialCodes } from "../../data";
 
-const RegisterSchoolForm: React.FC<{ goBack: () => void }> = ({ goBack }) => {
-  const [searchedDialCodes, setSarchedDialCodes] = useState(dialCodes);
-
+export const RegisterStudentForm: React.FC<{ goBack: () => void }> = ({
+  goBack,
+}) => {
   const signIn = useSignIn();
   const [form] = Form.useForm();
   const { mutate, isLoading } = useRegisterSchool();
@@ -152,113 +149,58 @@ const RegisterSchoolForm: React.FC<{ goBack: () => void }> = ({ goBack }) => {
     });
   };
   return (
-    <Form
-      layout="vertical"
-      requiredMark={false}
-      onFinish={handleFinish}
-      form={form}
-    >
-      <Form.Item
-        // label="Full Name"
-        name="userFullName"
-        rules={textInputValidationRules}
+    <div className="flex flex-col gap-4">
+      <Form
+        layout="vertical"
+        requiredMark={false}
+        onFinish={handleFinish}
+        form={form}
       >
-        <Input placeholder="Full Name" />
-      </Form.Item>
-      <Form.Item
-        // label="School Name"
-        name="schoolName"
-        rules={textInputValidationRules}
-      >
-        <Input placeholder="School Name" />
-      </Form.Item>
-      <Form.Item
-        // label="Email"
-        name="userEmail"
-        rules={emailValidationRules}
-      >
-        <Input placeholder="School Email" />
-      </Form.Item>
-      <Form.Item
-        name="phone"
-        //   label="Phone"
-      >
-        <Input.Group compact>
-          <Form.Item
-            noStyle
-            rules={generalValidationRules}
-            name={["phone", "code"]}
-          >
-            {
-              <Select
-                className="rounded border-slate-400"
-                placeholder="Country Code"
-                onSearch={(value) =>
-                  setSarchedDialCodes(() =>
-                    dialCodes.filter(
-                      (item) => item.label.toLowerCase().indexOf(value) !== -1
-                    )
-                  )
-                }
-                showSearch
-                defaultActiveFirstOption={false}
-                showArrow={false}
-                filterOption={false}
-                notFoundContent={null}
-                options={searchedDialCodes}
-                allowClear
-                style={{ width: "25%" }}
-              />
-            }
-          </Form.Item>
-          <Form.Item
-            noStyle
-            rules={[...textInputValidationRules, phoneNumberValidationRule]}
-            name={["phone", "number"]}
-          >
-            <Input
-              style={{ width: "75%" }}
-              placeholder="Phone Number"
-              className="rounded border-slate-400 text-left"
-              autoComplete="phone"
-            />
-          </Form.Item>
-        </Input.Group>
-      </Form.Item>
-      <Form.Item
-        name="password"
-        // label="Password"
-        rules={passwordValidationRules}
-      >
-        <Input.Password
-          placeholder="Password"
-          className="rounded border-slate-400"
-          style={{ padding: "6px 5px" }}
-          autoComplete="new-password"
-        />
-      </Form.Item>
-      <Form.Item>
-        <div className="flex flex-col gap-4">
-          <Button
-            type="primary"
-            className="w-full"
-            htmlType="submit"
-            loading={isLoading}
-          >
-            Register
-          </Button>
-          <Button
-            type="ghost"
-            className="w-full items-center"
-            icon={<LeftOutlined className="text-xl " />}
-            onClick={goBack}
-          >
-            Go back
-          </Button>
-        </div>
-      </Form.Item>
-    </Form>
+        <Form.Item
+          label="School"
+          name="schoolId"
+          rules={generalValidationRules}
+        >
+          <Select placeholder="Select School" />
+        </Form.Item>
+
+        <Form.Item label="Email " name="userEmail" rules={emailValidationRules}>
+          <Input placeholder="User Email" />
+        </Form.Item>
+
+        <Form.Item
+          name="inviteCode"
+          label="Invitation code"
+          rules={passwordValidationRules}
+        >
+          <Input.Password
+            placeholder="Invite Code"
+            className="rounded border-slate-400"
+            style={{ padding: "6px 5px" }}
+            // autoComplete="new-password"
+          />
+        </Form.Item>
+        <Form.Item>
+          <div className="flex flex-col gap-4">
+            <Button
+              type="primary"
+              className="w-full"
+              htmlType="submit"
+              loading={isLoading}
+            >
+              Register
+            </Button>
+            <Button
+              type="ghost"
+              className="w-full items-center"
+              icon={<LeftOutlined className="text-xl " />}
+              onClick={goBack}
+            >
+              Go back
+            </Button>
+          </div>
+        </Form.Item>
+      </Form>
+    </div>
   );
 };
-
-export default RegisterSchoolForm;
