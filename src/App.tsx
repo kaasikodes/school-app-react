@@ -3,7 +3,6 @@ import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { AuthProvider } from "react-auth-kit";
 import { RequireAuth } from "react-auth-kit";
-
 import Root from "./pages/Root";
 import Login from "./pages/Login";
 import Schools from "./pages/Schools";
@@ -38,6 +37,7 @@ import Requisitions from "./pages/Requisitions";
 import AcademicRecords from "./pages/AcademicRecords";
 import SingleCustodian from "./pages/custodians/SingleCustodian";
 import ComingSoon from "./components/general/ComingSoon";
+import InviteUsers from "./pages/InviteUsers";
 
 const queryClient = new QueryClient();
 
@@ -139,6 +139,8 @@ function App() {
 
                 {/* settings */}
                 <Route path={routes.settings} element={<Settings />} />
+                {/* invites */}
+                <Route path={routes.inviteUsers} element={<InviteUsers />} />
               </Route>
             </Routes>
           </Router>
