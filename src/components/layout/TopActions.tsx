@@ -82,6 +82,12 @@ const TopActions = ({
           title: "Manage Schools",
         },
         {
+          label: <Link to={routes.inviteUsers}>Invite users</Link>,
+          key: "OO",
+          icon: React.createElement(TbSchool as IconType),
+          title: "Invite users",
+        },
+        {
           label: <Link to={routes.sessions}>Manage Sessions</Link>,
           key: "sessions",
           icon: React.createElement(TbSchool as IconType),
