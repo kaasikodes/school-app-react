@@ -7,7 +7,6 @@ import {
 } from "../../formValidation";
 import { useQueryClient } from "react-query";
 import useCreateSingleInvitation from "../../helpersAPIHooks/invites/useCreateSingleInvitation";
-import useApiAuth from "../../hooks/useApiAuth";
 
 interface IProps {
   closeDrawer: Function;
@@ -22,16 +21,12 @@ export const AddSingleInvitationForm = ({ closeDrawer }: IProps) => {
   const [form] = Form.useForm();
 
   const { mutate, isLoading } = useCreateSingleInvitation();
-  const { token, schoolId, sessionId } = useApiAuth();
 
   const handleFinish = (data: any) => {
     mutate(
       {
         userType: data.userType,
         email: data.userEmail,
-        token,
-        schoolId,
-        sessionId,
       },
       {
         onError: (err: any) => {
@@ -58,7 +53,7 @@ export const AddSingleInvitationForm = ({ closeDrawer }: IProps) => {
           closeDrawer();
 
           queryClient.invalidateQueries({
-            queryKey: ["invitations"],
+            queryKey: ["invites"],
             // exact: true,
           });
         },
