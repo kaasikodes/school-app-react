@@ -1,7 +1,6 @@
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Input } from "antd";
 import { useContext, useEffect } from "react";
 import {
-  generalValidationRules,
   emailValidationRules,
   passwordValidationRules,
 } from "../../formValidation";
@@ -15,15 +14,27 @@ import {
   GlobalContext,
   EGlobalOps,
 } from "../../contexts/GlobalContextProvider";
+import { TAutoDetail } from "./RegisterSchoolWrapper";
+import { FormSchoolsInput } from "../../customFormComponents/FormSchoolInput";
 
-export const RegisterCustodianForm: React.FC<{ goBack: () => void }> = ({
-  goBack,
-}) => {
+export const RegisterCustodianForm: React.FC<{
+  goBack: () => void;
+  autoDetail?: TAutoDetail;
+}> = ({ goBack, autoDetail }) => {
   const signIn = useSignIn();
   const [form] = Form.useForm();
   const { mutate, isLoading } = useRegisterSchool();
   const globalCtx = useContext(GlobalContext);
   const { dispatch: globalDispatch } = globalCtx;
+  useEffect(() => {
+    if (autoDetail) {
+      form.setFieldsValue({
+        schoolId: autoDetail.schoolId,
+        code: autoDetail.code,
+        userEmail: autoDetail.email,
+      });
+    }
+  }, [form, autoDetail]);
 
   useEffect(() => {
     openNotification({
@@ -156,20 +167,17 @@ export const RegisterCustodianForm: React.FC<{ goBack: () => void }> = ({
         onFinish={handleFinish}
         form={form}
       >
-        <Form.Item
-          label="School"
-          name="schoolId"
-          rules={generalValidationRules}
-        >
-          <Select placeholder="Select School" />
-        </Form.Item>
+        <FormSchoolsInput
+          Form={Form}
+          control={{ label: "School", name: "schoolId" }}
+        />
 
         <Form.Item label="Email " name="userEmail" rules={emailValidationRules}>
           <Input placeholder="User Email" />
         </Form.Item>
 
         <Form.Item
-          name="inviteCode"
+          name="code"
           label="Invitation code"
           rules={passwordValidationRules}
         >
@@ -188,7 +196,7 @@ export const RegisterCustodianForm: React.FC<{ goBack: () => void }> = ({
               htmlType="submit"
               loading={isLoading}
             >
-              Register
+              Accept Invite
             </Button>
             <Button
               type="ghost"

@@ -2,15 +2,31 @@ import RegisterSchoolForm from "./RegisterSchoolForm";
 
 import AuthLayout from "./AuthLayout";
 import { routes } from "../../routes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SelectRegistrationType } from "./SelectRegistrationType";
 import { RegisterStaffForm } from "./RegisterStaffForm";
 import { RegisterCustodianForm } from "./RegisterCustodianForm";
+import { useSearchParams } from "react-router-dom";
 
 type TUserType = "admin" | "staff" | "custodian" | "student";
 
+export type TAutoDetail = { code: string; schoolId: number; email: string };
+
 const RegisterSchoolWrapper = () => {
+  const [searchParams] = useSearchParams();
+
   const [userType, setUserType] = useState<TUserType>();
+  const [autoDetails, setAutoDetails] = useState<TAutoDetail>();
+  useEffect(() => {
+    if (searchParams.get("type")) {
+      setUserType(searchParams.get("type") as unknown as TUserType);
+      setAutoDetails({
+        code: searchParams.get("code") as unknown as string,
+        email: searchParams.get("email") as unknown as string,
+        schoolId: +(searchParams.get("schoolId") as unknown as string),
+      });
+    }
+  }, [searchParams]);
   const handleFin = (data: any) => {
     setUserType(data.userType);
   };
@@ -59,7 +75,10 @@ const RegisterSchoolWrapper = () => {
           <RegisterStaffForm goBack={() => setUserType(undefined)} />
         )}
         {userType === "custodian" && (
-          <RegisterCustodianForm goBack={() => setUserType(undefined)} />
+          <RegisterCustodianForm
+            goBack={() => setUserType(undefined)}
+            autoDetail={autoDetails}
+          />
         )}
         {userType === "student" && (
           <RegisterStaffForm goBack={() => setUserType(undefined)} />

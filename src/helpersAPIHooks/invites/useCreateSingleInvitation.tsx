@@ -1,17 +1,19 @@
 import { useMutation } from "react-query";
 import { IAuthProps } from "../../helpers/auth";
 import axios from "axios";
+import useApiAuth from "../../hooks/useApiAuth";
 
-type TUserType = "admin" | "staff" | "custodian" | "student";
-type TCreateProps = {
+export type TUserType = "admin" | "staff" | "custodian" | "student";
+export type TCreateInviteProps = {
   email: string;
   userType: TUserType;
 };
 
 const createInvitation = async (
-  props: TCreateProps & IAuthProps & { schoolId: number; sessionId: number }
+  props: TCreateInviteProps &
+    IAuthProps & { schoolId: number; sessionId: number }
 ) => {
-  const url = `${process.env.REACT_APP_APP_URL}/invitations/create`;
+  const url = `${process.env.REACT_APP_APP_URL}/api/invites/create`;
   const config = {
     headers: {
       Accept: "application/json",
@@ -26,7 +28,10 @@ const createInvitation = async (
   return response;
 };
 export const useCreateSingleInvitation = () => {
-  return useMutation(createInvitation);
+  const { token, schoolId, sessionId } = useApiAuth();
+  return useMutation((props: TCreateInviteProps) =>
+    createInvitation({ ...props, token, sessionId, schoolId })
+  );
 };
 
 export default useCreateSingleInvitation;
