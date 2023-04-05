@@ -7,16 +7,30 @@ import { SelectRegistrationType } from "./SelectRegistrationType";
 import { RegisterStaffForm } from "./RegisterStaffForm";
 import { RegisterCustodianForm } from "./RegisterCustodianForm";
 import { useSearchParams } from "react-router-dom";
+import { RegisterStudentForm } from "./RegisterStudentForm";
+import { useGetUserByEmail } from "../../helpersAPIHooks/users/useFetchSingleUser";
+import { RegisterAdminForm } from "./RegisterAdminForm";
 
-type TUserType = "admin" | "staff" | "custodian" | "student";
+type TUserType = "admin" | "staff" | "custodian" | "student" | "school-owner";
 
-export type TAutoDetail = { code: string; schoolId: number; email: string };
+export type TAutoDetail = {
+  code: string;
+  schoolId: number;
+  email: string;
+  sessionId: number;
+  userName: string;
+};
 
 const RegisterSchoolWrapper = () => {
   const [searchParams] = useSearchParams();
+  // check from backend if user exists with email, if he does populate name otherwise set to empty string
+  const { data } = useGetUserByEmail({
+    email: searchParams.get("email"),
+  });
 
   const [userType, setUserType] = useState<TUserType>();
   const [autoDetails, setAutoDetails] = useState<TAutoDetail>();
+
   useEffect(() => {
     if (searchParams.get("type")) {
       setUserType(searchParams.get("type") as unknown as TUserType);
@@ -24,29 +38,35 @@ const RegisterSchoolWrapper = () => {
         code: searchParams.get("code") as unknown as string,
         email: searchParams.get("email") as unknown as string,
         schoolId: +(searchParams.get("schoolId") as unknown as string),
+        sessionId: +(searchParams.get("schoolId") as unknown as string),
+        userName: data?.name ?? "",
       });
     }
-  }, [searchParams]);
+  }, [searchParams, data]);
   const handleFin = (data: any) => {
     setUserType(data.userType);
   };
   const headingText = (val?: TUserType): string => {
     let text = "Create Account";
     switch (val) {
-      case "admin":
+      case "school-owner":
         text = "Create School Account";
+        break;
+      case "admin":
+        text = "Create Administrator Account";
 
         break;
+
       case "staff":
-        text = "Create Staff Account";
+        text = "Accept Staff Invitation";
 
         break;
       case "custodian":
-        text = "Create Custodian Account";
+        text = "Accept Custodian Invitation";
 
         break;
       case "student":
-        text = "Create Student Account";
+        text = "Accept Student Invitation";
 
         break;
 
@@ -68,11 +88,20 @@ const RegisterSchoolWrapper = () => {
         {userType === undefined && (
           <SelectRegistrationType handleFin={handleFin} />
         )}
-        {userType === "admin" && (
+        {userType === "school-owner" && (
           <RegisterSchoolForm goBack={() => setUserType(undefined)} />
         )}
+        {userType === "admin" && (
+          <RegisterAdminForm
+            goBack={() => setUserType(undefined)}
+            autoDetail={autoDetails}
+          />
+        )}
         {userType === "staff" && (
-          <RegisterStaffForm goBack={() => setUserType(undefined)} />
+          <RegisterStaffForm
+            goBack={() => setUserType(undefined)}
+            autoDetail={autoDetails}
+          />
         )}
         {userType === "custodian" && (
           <RegisterCustodianForm
@@ -81,7 +110,10 @@ const RegisterSchoolWrapper = () => {
           />
         )}
         {userType === "student" && (
-          <RegisterStaffForm goBack={() => setUserType(undefined)} />
+          <RegisterStudentForm
+            goBack={() => setUserType(undefined)}
+            autoDetail={autoDetails}
+          />
         )}
       </AuthLayout>
     </>

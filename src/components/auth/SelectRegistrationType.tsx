@@ -14,6 +14,7 @@ export const SelectRegistrationType: React.FC<{
           <Radio.Group className="w-full ">
             <div className="flex flex-col gap-4">
               {[
+                { name: "School Owner", type: "school-owner" },
                 { name: "Administrator", type: "admin" },
                 { name: "Staff", type: "staff" },
                 { name: "Custodian", type: "custodian" },
