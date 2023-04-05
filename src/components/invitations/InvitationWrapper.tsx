@@ -1,7 +1,7 @@
 import { Typography, Button, Tabs, Drawer } from "antd";
 import { useState } from "react";
 import { InvitationContainer } from "./InvitationContainer";
-import AddDepartment from "./AddInvitation";
+import AddInvitation from "./AddInvitation";
 
 export const InvitationWrapper = () => {
   const [showDrawer, setShowDrawer] = useState(false);
@@ -15,6 +15,9 @@ export const InvitationWrapper = () => {
         </Button>
       </div>
       <Tabs>
+        <Tabs.TabPane tab="Administrators" key="Administrators">
+          <InvitationContainer type="admin" />
+        </Tabs.TabPane>
         <Tabs.TabPane tab="Staff" key="staff">
           <InvitationContainer type="staff" />
         </Tabs.TabPane>
@@ -31,7 +34,7 @@ export const InvitationWrapper = () => {
         onClose={() => setShowDrawer(false)}
         title="Invite Users"
       >
-        <AddDepartment closeDrawer={() => setShowDrawer(false)} />
+        <AddInvitation closeDrawer={() => setShowDrawer(false)} />
       </Drawer>
     </div>
   );

@@ -6,7 +6,7 @@ interface IProps {
   closeDrawer: Function;
 }
 
-const AddDepartment = ({ closeDrawer }: IProps) => {
+const AddInvitation = ({ closeDrawer }: IProps) => {
   return (
     <div>
       <Tabs>
@@ -21,4 +21,4 @@ const AddDepartment = ({ closeDrawer }: IProps) => {
   );
 };
 
-export default AddDepartment;
+export default AddInvitation;

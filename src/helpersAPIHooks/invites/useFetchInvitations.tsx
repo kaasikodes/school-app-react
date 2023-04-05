@@ -18,7 +18,7 @@ export type TInvite = TCreateInviteProps & {
   schoolId: number;
   code: string;
   accepted: number;
-  accceptedAt: string;
+  acceptedAt: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -62,7 +62,7 @@ export const getAllInvites = async ({
       email: item.email,
       code: item.code,
       userType: item.user_type,
-      accceptedAt: item.accepted_at,
+      acceptedAt: item.accepted_at,
       accepted: item.accepted,
       createdAt: item.created_at,
       updatedAt: item.updated_at,

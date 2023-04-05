@@ -86,7 +86,11 @@ export const AddSingleInvitationForm = ({ closeDrawer }: IProps) => {
               { label: "Student", value: "student" },
               { label: "Custodian", value: "custodian" },
               { label: "Staff", value: "staff" },
-              { label: "Admin", value: "admin", disabled: true },
+              {
+                label: "Admin",
+                value: "admin",
+                //  disabled: true
+              },
             ]}
           />
         </Form.Item>
