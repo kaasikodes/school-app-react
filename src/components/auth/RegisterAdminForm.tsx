@@ -16,7 +16,7 @@ import {
 import { TAutoDetail } from "./RegisterSchoolWrapper";
 import { FormSchoolsInput } from "../../customFormComponents/FormSchoolInput";
 
-export const RegisterStudentForm: React.FC<{
+export const RegisterAdminForm: React.FC<{
   goBack: () => void;
   autoDetail?: TAutoDetail;
 }> = ({ goBack, autoDetail }) => {
@@ -52,7 +52,7 @@ export const RegisterStudentForm: React.FC<{
         inviteCode: data.inviteCode,
         schoolId: data.schoolId,
         sessionId: autoDetail?.sessionId, // if not provided backend will use the current session Id in the backend
-        userType: "student",
+        userType: "admin",
         userName: data.userName,
       },
       {
