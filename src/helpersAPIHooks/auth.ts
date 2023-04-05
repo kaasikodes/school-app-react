@@ -1,11 +1,16 @@
 import { useMutation } from "react-query";
-import { loginUser, registerSchool } from "../helpers/auth";
+import {
+  loginUser,
+  registerSchool,
+  registerUserThroughInvitation,
+} from "../helpers/auth";
 
 export const useRegisterSchool = () => {
   return useMutation(registerSchool);
 };
-export const useRegisterStaff = () => {
-  return useMutation(registerSchool);
+
+export const useRegisterUserThroughInvitation = () => {
+  return useMutation(registerUserThroughInvitation);
 };
 export const useLoginUser = () => {
   return useMutation(loginUser);

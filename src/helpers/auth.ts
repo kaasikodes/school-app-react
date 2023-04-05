@@ -1,4 +1,5 @@
 import axios from "axios";
+import { TUserType } from "../helpersAPIHooks/invites/useCreateSingleInvitation";
 axios.defaults.withCredentials = true;
 
 export interface IAuthProps {
@@ -45,7 +46,38 @@ interface ILoginProps {
   email: string;
   password: string;
 }
+interface IRegisterThruInviteProps {
+  email: string;
+  inviteCode: string;
+  userType: TUserType;
+  schoolId: number;
+  sessionId?: number;
+  userName?: string;
+}
 
+export const registerUserThroughInvitation = async (
+  props: IRegisterThruInviteProps
+) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/register/${props.schoolId}/user-type`;
+
+  const data = {
+    email: props.email,
+    inviteCode: props.inviteCode,
+    sessionId: props.sessionId,
+    userType: props.userType,
+    userName: props.userName,
+  };
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+    },
+  };
+
+  await setCSRFToken();
+  const res: any = await axios.post(url, data, config);
+  return res;
+};
 export const loginUser = async (props: ILoginProps) => {
   const url = `${process.env.REACT_APP_APP_URL}/api/login`;
 
