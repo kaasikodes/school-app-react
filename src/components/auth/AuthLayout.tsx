@@ -1,5 +1,5 @@
 import React from "react";
-import { ApartmentOutlined } from "@ant-design/icons";
+import { ScheduleOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
 interface IProps {
@@ -17,9 +17,12 @@ const AuthLayout = ({ alternativeAction, children, heading }: IProps) => {
     <div className="grid grid-cols-1 lg:grid-cols-2 h-screen">
       {/* image n animation */}
       <div className="bg-white hidden lg:flex shadow-lg">
-        asa
+        {/* asa */}
         <div
-          className={`fixed lg:w-2/4 top-0  bg-cover bg-no-repeat bg-gradient-to-tl from-sky-700 to-blue-800 left-0 z-20 h-screen bg-[url(https://images.pexels.com/photos/7929411/pexels-photo-7929411.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)]  shadow-lg flex flex-col gap-4 items-center justify-end pt-12 pb-6`}
+          className={`fixed lg:w-2/4 top-0  bg-contain bg-no-repeat  from-sky-700 to-blue-800 left-0 z-20 h-screen shadow-lg bg-top flex flex-col gap-4 items-center justify-end pt-12  pb-6`}
+          style={{
+            backgroundImage: `url("/assets/school-illustration-03.png")`,
+          }}
         >
           {/* <div className="w-2/4">
             <img
@@ -28,15 +31,13 @@ const AuthLayout = ({ alternativeAction, children, heading }: IProps) => {
               className=" object-contain"
             />
           </div> */}
-          <p className="text-white text-center font-light italic w-4/5 ">
-            Smooth result compilation no matter the amount of students present,
-            save time by uploading students in bulk, and have parents monitor
-            the academic progress of their students in real time.
-          </p>
-          <div className=" text-white mt-4">
-            <p className="font-bold text-lg text-center mb-0">Inokpa</p>
+          <div className="h-72" />
+          <div className=" text-sky-900 mt-4">
+            <p className="font-bold text-lg uppercase text-center mb-0">
+              Inokpa
+            </p>
 
-            <span className="font-light text-xs  text-sky-300 italic">
+            <span className="font-light text-xs  text-[#1890FF] italic">
               School Management Simplified
             </span>
           </div>
@@ -46,7 +47,7 @@ const AuthLayout = ({ alternativeAction, children, heading }: IProps) => {
       <div className="flex flex-col gap-4 items-center pt-8">
         {/* heading */}
         <div className="flex flex-col items-center">
-          <ApartmentOutlined size={400} className="text-2xl" />
+          <ScheduleOutlined size={400} className="text-2xl" />
           <h4 className="text-2xl"> {heading}</h4>
           <p>
             {alternativeAction.promptText}{" "}

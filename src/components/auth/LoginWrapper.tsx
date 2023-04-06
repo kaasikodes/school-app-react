@@ -10,7 +10,7 @@ const LoginWrapper = () => {
         link: routes.registerSchool,
         promptText: "Don't have an account!",
       }}
-      heading="Login"
+      heading={"Login"}
     >
       <LoginForm />
     </AuthLayout>

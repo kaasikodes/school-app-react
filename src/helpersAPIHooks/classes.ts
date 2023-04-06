@@ -186,7 +186,9 @@ export const useFetchSingleClass = ({
             > => {
               const courseSessionTeacherStaff = (
                 item?.course_teacher_records as unknown as any[]
-              )[0];
+              )?.length
+                ? (item?.course_teacher_records as unknown as any[])[0]
+                : undefined;
               return {
                 id: item.id,
                 name: item.name,
@@ -195,9 +197,9 @@ export const useFetchSingleClass = ({
                   : undefined,
                 courseSessionTeacherStaffUser: item?.course_teacher_records
                   ? {
-                      name: courseSessionTeacherStaff.staff.user.name,
-                      email: courseSessionTeacherStaff.staff.user.email,
-                      staffNo: courseSessionTeacherStaff.staff.staff_no,
+                      name: courseSessionTeacherStaff?.staff.user.name,
+                      email: courseSessionTeacherStaff?.staff.user.email,
+                      staffNo: courseSessionTeacherStaff?.staff.staff_no,
                     }
                   : undefined,
               };
