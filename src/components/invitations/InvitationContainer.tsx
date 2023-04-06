@@ -38,6 +38,7 @@ export const InvitationContainer: React.FC<{
         onChange={onChange}
         data={data?.data}
         loading={isLoading}
+        pagination={{ ...pagination, total: data?.total }}
       />
     </div>
   );

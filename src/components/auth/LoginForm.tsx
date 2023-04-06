@@ -154,7 +154,6 @@ const LoginForm = () => {
   return (
     <div>
       <Form
-        className=""
         name="basic"
         requiredMark={false}
         labelCol={{
@@ -169,12 +168,16 @@ const LoginForm = () => {
         labelAlign="left"
         form={form}
       >
-        <Form.Item label="Email" name="email" rules={emailValidationRules}>
+        <Form.Item
+          label={<span className="">Email</span>}
+          name="email"
+          rules={emailValidationRules}
+        >
           <Input />
         </Form.Item>
 
         <Form.Item
-          label="Password"
+          label={<span className="">Password</span>}
           name="password"
           rules={textInputValidationRules}
         >
