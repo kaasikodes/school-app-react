@@ -34,6 +34,13 @@ interface ICourse {
   breakdown: string;
   grade: string;
   total: number;
+  sessionLevelCourseStats?: {
+    classAverage: number;
+    highestScore: number;
+    lowestScore: number;
+    position: number;
+    totalStudents: number;
+  };
 }
 
 const StudentClasses = ({ studentId }: IProps) => {
@@ -86,6 +93,17 @@ const StudentClasses = ({ studentId }: IProps) => {
                   breakdown: item?.break_down,
                   grade: item.grade,
                   total: item.total,
+                  sessionLevelCourseStats: {
+                    classAverage:
+                      +item?.session_level_course_stats?.classAverage,
+
+                    highestScore:
+                      +item?.session_level_course_stats?.highestScore,
+                    lowestScore: +item?.session_level_course_stats?.lowestScore,
+                    position: +item?.session_level_course_stats?.position,
+                    totalStudents:
+                      +item?.session_level_course_stats?.totalStudents,
+                  },
                 })
               ),
               levelCoursesTakingCount: courses?.length ?? 0,
