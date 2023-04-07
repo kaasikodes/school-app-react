@@ -87,6 +87,36 @@ const StudentClassResultOverview = ({
             key: "total",
           },
           {
+            title: "Highest in Class",
+            dataIndex: "highestScore",
+            key: "highestScore",
+            width: 50,
+          },
+          {
+            title: "Lowest in Class",
+            dataIndex: "lowestScore",
+            key: "lowestScore",
+            width: 50,
+          },
+          {
+            title: "Class Average",
+            dataIndex: "classAverage",
+            key: "classAverage",
+            width: 50,
+          },
+          {
+            title: "Position",
+            dataIndex: "position",
+            key: "position",
+            width: 50,
+          },
+          {
+            title: "Out of",
+            dataIndex: "totalStudents",
+            key: "totalStudents",
+            width: 50,
+          },
+          {
             title: "Grade",
             dataIndex: "grade",
             key: "grade",
@@ -105,6 +135,11 @@ const StudentClassResultOverview = ({
       courseId: item.id,
       grade: item.grade,
       total: item.total,
+      classAverage: item.sessionLevelCourseStats?.classAverage,
+      highestScore: item.sessionLevelCourseStats?.highestScore,
+      lowestScore: item.sessionLevelCourseStats?.lowestScore,
+      position: item.sessionLevelCourseStats?.position,
+      totalStudents: item.sessionLevelCourseStats?.totalStudents,
       ...record,
     };
   });
@@ -124,6 +159,7 @@ const StudentClassResultOverview = ({
           columns={templateData.mergedColumns}
           loading={isFetching}
           dataSource={data}
+          scroll={{ x: "max-content" }}
         />
       )}
     </div>
