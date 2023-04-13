@@ -152,6 +152,28 @@ export const downloadBulkStudentsUploadTemplate = (
   return url;
 };
 
+interface IDownloadBulkStudentAcResultProps {
+  studentId: number;
+  sessionId: number;
+  levelId: number;
+  schoolId: number;
+}
+
+// TO DO: Add authentication to downloadStudentAcademicResult endpoint in backend
+export const downloadStudentAcademicResult = (
+  props: IDownloadBulkStudentAcResultProps
+): string => {
+  const { studentId, levelId, sessionId, schoolId } = props;
+  let url = `${process.env.REACT_APP_APP_URL}/api/student/academic-result`;
+  url += `?`;
+  url += `schoolId=${schoolId}&`;
+  url += `sessionId=${sessionId}&`;
+  url += `levelId=${levelId}&`;
+  url += `studentId=${studentId}`;
+
+  return url;
+};
+
 export interface ISaveStudentInBulkProps extends IStudentAuthProps {
   jsonData: string;
   adminId: string;
