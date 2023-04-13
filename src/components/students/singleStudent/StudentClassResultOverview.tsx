@@ -1,4 +1,4 @@
-import { PageHeader, Table } from "antd";
+import { Button, PageHeader, Table } from "antd";
 import React, { useContext } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
@@ -7,6 +7,7 @@ import { openNotification } from "../../../helpers/notifications";
 import { getCRTemplate } from "../../../helpers/schoolCRecordTemplates";
 import { useFetchSchoolSessionSetting } from "../../../helpersAPIHooks/sessions";
 import { ICGByLevel } from "./StudentClasses";
+import { downloadStudentAcademicResult } from "../../../helpers/students";
 
 interface IProps {
   classDetails: ICGByLevel;
@@ -146,12 +147,24 @@ const StudentClassResultOverview = ({
   return (
     <div className="flex flex-col gap-4">
       {/* title */}
-      <div>
+      <div className="flex justify-between">
         <PageHeader
           onBack={() => clearClassDetails()}
           title={classDetails.levelName}
           subTitle="Courses"
         />
+        <Button
+          type="primary"
+          href={downloadStudentAcademicResult({
+            studentId: +studentId,
+            sessionId: +sessionId,
+            levelId: +classDetails.levelId,
+            schoolId: +schoolId,
+          })}
+          target="_blank"
+        >
+          Download Result
+        </Button>
       </div>
       {/* content -> table */}
       {isSuccess && (
