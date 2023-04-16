@@ -12,12 +12,17 @@ import ComponentLoader from "../loaders/ComponentLoader";
 import AddCourseParticipantForm from "./AddCourseParticipantForm";
 import CourseOverview from "./CourseOverview";
 import CourseParticipantTable from "./CourseParticipantTable";
+import SubmitCourseAssessment4Compilation from "./SubmitCourseAssessment4Compilation";
 
 interface IProps {
-  courseId?: string;
-  classId?: string;
+  courseId: string;
+  classId: string;
 }
-type TComp = "Add Participant" | "Upload Assessmnet" | "";
+type TComp =
+  | "Add Participant"
+  | "Upload Assessmnet"
+  | "Submit Assessment for Compilation"
+  | "";
 const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
   const [showDrawer, setShowDrawer] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -99,6 +104,15 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
                   >
                     Add Participant
                   </Button>
+                  <Button
+                    onClick={() =>
+                      handleClick("Submit Assessment for Compilation")
+                    }
+                    type="primary"
+                  >
+                    Submit Assessment for Compilation
+                  </Button>
+
                   {/* <Button onClick={() => setShowDrawer(true)} type="ghost">
                     Upload Assessment
                   </Button>
@@ -188,6 +202,7 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
       </div>
 
       <Modal
+        style={{ top: 30 }}
         open={showDrawer}
         onCancel={() => setShowDrawer(false)}
         title={comp}
@@ -196,6 +211,12 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
         {comp === "Add Participant" && (
           <AddCourseParticipantForm
             {...{ courseId, levelId: classId }}
+            closeModal={() => setShowDrawer(false)}
+          />
+        )}
+        {comp === "Submit Assessment for Compilation" && (
+          <SubmitCourseAssessment4Compilation
+            {...{ courseId: +courseId, levelId: +classId }}
             closeModal={() => setShowDrawer(false)}
           />
         )}
