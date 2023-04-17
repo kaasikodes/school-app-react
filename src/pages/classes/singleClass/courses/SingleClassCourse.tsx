@@ -8,8 +8,8 @@ const SingleClassCourse = () => {
   return (
     <div>
       <SingleCourseWrapper
-        classId={params.classId}
-        courseId={params.courseId}
+        classId={params.classId as unknown as string}
+        courseId={params.courseId as unknown as string}
       />
     </div>
   );
