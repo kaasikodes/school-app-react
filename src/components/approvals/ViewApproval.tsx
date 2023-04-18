@@ -1,15 +1,71 @@
-import { Modal } from "antd";
+import { Button, Form, Modal, Radio } from "antd";
 import React from "react";
 import { BeatLoader } from "react-spinners";
 import moment from "moment";
 import { useFetchSingleApproval } from "../../helpersAPIHooks/approvals/useFetchSingleApproval";
+import { useQueryClient } from "react-query";
+import { openNotification } from "../../helpers/notifications";
+import { useApproveOrRejectRequisition } from "../../helpersAPIHooks/approvals/useApproveOrRejectRequisition";
+import { TApprovalStatus } from "../../helpersAPIHooks/approvals/useFetchApprovals";
 
+const APPROVAL_OPTIONS: { label: string; value: TApprovalStatus }[] = [
+  {
+    label: "Approve",
+    value: "approved",
+  },
+  {
+    label: "Reject",
+    value: "rejected",
+  },
+];
 export const ViewApproval: React.FC<{
   open: boolean;
   handleClose: () => void;
   id: number;
 }> = ({ open, handleClose, id }) => {
   const { data, isFetching, isSuccess } = useFetchSingleApproval({ id });
+  const queryClient = useQueryClient();
+
+  const [form] = Form.useForm();
+
+  const { mutate, isLoading } = useApproveOrRejectRequisition();
+
+  const handleFinish = (data: any) => {
+    mutate(
+      {
+        id,
+        status: data.status,
+      },
+      {
+        onError: (err: any) => {
+          openNotification({
+            state: "error",
+            title: "Error Occurred",
+            description:
+              err?.response.data.message ?? err?.response.data.error.message,
+          });
+        },
+        onSuccess: (res: any) => {
+          // const result = res.data.data;
+          console.log("BULK", res);
+
+          openNotification({
+            state: "success",
+
+            title: "Success",
+            description: res.data.message,
+            // duration: 0.4,
+          });
+          form.resetFields();
+
+          queryClient.invalidateQueries({
+            queryKey: ["approvals"],
+            // exact: true,
+          });
+        },
+      }
+    );
+  };
   return (
     <Modal
       open={open}
@@ -42,6 +98,23 @@ export const ViewApproval: React.FC<{
               {data?.requisition.content}
             </div>
           </div>
+          <Form form={form} onFinish={handleFinish}>
+            <Form.Item
+              name={"status"}
+              label={`Do you want to approve or reject this request?`}
+            >
+              <Radio.Group>
+                {APPROVAL_OPTIONS.map((item) => (
+                  <Radio value={item.value} key={item.value}>
+                    {item.label}
+                  </Radio>
+                ))}
+              </Radio.Group>
+            </Form.Item>
+            <Button type="primary" htmlType="submit" loading={isLoading}>
+              Save
+            </Button>
+          </Form>
         </div>
       ) : (
         <BeatLoader />
