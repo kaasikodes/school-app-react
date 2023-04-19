@@ -8,6 +8,7 @@ export type TUserType = "admin" | "staff" | "custodian" | "student";
 export type TApproveOrRejectProps = {
   status: TApprovalStatus;
   id: number;
+  comment?: string;
 };
 
 const approveOrRejectRequest = async (
