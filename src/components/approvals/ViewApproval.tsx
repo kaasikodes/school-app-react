@@ -1,4 +1,4 @@
-import { Button, Form, Modal, Radio } from "antd";
+import { Button, Form, Input, Modal, Radio } from "antd";
 import React from "react";
 import { BeatLoader } from "react-spinners";
 import moment from "moment";
@@ -35,6 +35,7 @@ export const ViewApproval: React.FC<{
       {
         id,
         status: data.status,
+        comment: data.comment,
       },
       {
         onError: (err: any) => {
@@ -46,9 +47,6 @@ export const ViewApproval: React.FC<{
           });
         },
         onSuccess: (res: any) => {
-          // const result = res.data.data;
-          console.log("BULK", res);
-
           openNotification({
             state: "success",
 
@@ -110,6 +108,9 @@ export const ViewApproval: React.FC<{
                   </Radio>
                 ))}
               </Radio.Group>
+            </Form.Item>
+            <Form.Item name="comment" label="Comment">
+              <Input.TextArea rows={3} />
             </Form.Item>
             <Button type="primary" htmlType="submit" loading={isLoading}>
               Save
