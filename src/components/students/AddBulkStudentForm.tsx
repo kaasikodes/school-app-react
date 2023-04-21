@@ -9,13 +9,7 @@ import { useQueryClient } from "react-query";
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";
 import { openNotification } from "../../helpers/notifications";
-import { useAddCoursesInBulk } from "../../helpersAPIHooks/courses";
-import {
-  downloadBulkCoursesUploadTemplate,
-  ISaveCourseInBulkProps,
-} from "../../helpers/courses";
-import { downloadBulkStaffUploadTemplate } from "../../helpers/staff";
-import { useAddStaffInBulk } from "../../helpersAPIHooks/staff";
+import { ISaveCourseInBulkProps } from "../../helpers/courses";
 import { downloadBulkStudentsUploadTemplate } from "../../helpers/students";
 import { useAddStudentInBulk } from "../../helpersAPIHooks/students";
 

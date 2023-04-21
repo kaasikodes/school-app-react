@@ -42,8 +42,8 @@ const Profile = ({ custodianId }: IProps) => {
   const auth = useAuthUser();
 
   const authDetails = auth() as unknown as IAuthDets;
-
-  const user = authDetails.user;
+  // TO DO
+  // Refactor to useApiAuth hook
   const token = authDetails.userToken;
   const schoolId = authDetails.choosenSchoolId;
   const { data: custodian, isFetching } = useQuery(
@@ -142,7 +142,12 @@ const Profile = ({ custodianId }: IProps) => {
         <Typography.Title level={4}>
           <span className="text-slate-400">Groups</span>{" "}
         </Typography.Title>
-        <Table dataSource={data} columns={columns} size="small" />
+        <Table
+          dataSource={data}
+          columns={columns}
+          size="small"
+          scroll={{ x: "max-content" }}
+        />
       </div>
     </div>
   );

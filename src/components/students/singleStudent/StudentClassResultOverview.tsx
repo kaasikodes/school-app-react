@@ -1,4 +1,4 @@
-import { PageHeader, Table } from "antd";
+import { Button, PageHeader, Table } from "antd";
 import React, { useContext } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
@@ -7,6 +7,7 @@ import { openNotification } from "../../../helpers/notifications";
 import { getCRTemplate } from "../../../helpers/schoolCRecordTemplates";
 import { useFetchSchoolSessionSetting } from "../../../helpersAPIHooks/sessions";
 import { ICGByLevel } from "./StudentClasses";
+import { downloadStudentAcademicResult } from "../../../helpers/students";
 
 interface IProps {
   classDetails: ICGByLevel;
@@ -87,6 +88,36 @@ const StudentClassResultOverview = ({
             key: "total",
           },
           {
+            title: "Highest in Class",
+            dataIndex: "highestScore",
+            key: "highestScore",
+            width: 50,
+          },
+          {
+            title: "Lowest in Class",
+            dataIndex: "lowestScore",
+            key: "lowestScore",
+            width: 50,
+          },
+          {
+            title: "Class Average",
+            dataIndex: "classAverage",
+            key: "classAverage",
+            width: 50,
+          },
+          {
+            title: "Position",
+            dataIndex: "position",
+            key: "position",
+            width: 50,
+          },
+          {
+            title: "Out of",
+            dataIndex: "totalStudents",
+            key: "totalStudents",
+            width: 50,
+          },
+          {
             title: "Grade",
             dataIndex: "grade",
             key: "grade",
@@ -105,18 +136,35 @@ const StudentClassResultOverview = ({
       courseId: item.id,
       grade: item.grade,
       total: item.total,
+      classAverage: item.sessionLevelCourseStats?.classAverage,
+      highestScore: item.sessionLevelCourseStats?.highestScore,
+      lowestScore: item.sessionLevelCourseStats?.lowestScore,
+      position: item.sessionLevelCourseStats?.position,
+      totalStudents: item.sessionLevelCourseStats?.totalStudents,
       ...record,
     };
   });
   return (
     <div className="flex flex-col gap-4">
       {/* title */}
-      <div>
+      <div className="flex justify-between">
         <PageHeader
           onBack={() => clearClassDetails()}
           title={classDetails.levelName}
           subTitle="Courses"
         />
+        <Button
+          type="primary"
+          href={downloadStudentAcademicResult({
+            studentId: +studentId,
+            sessionId: +sessionId,
+            levelId: +classDetails.levelId,
+            schoolId: +schoolId,
+          })}
+          target="_blank"
+        >
+          Download Result
+        </Button>
       </div>
       {/* content -> table */}
       {isSuccess && (
@@ -124,6 +172,7 @@ const StudentClassResultOverview = ({
           columns={templateData.mergedColumns}
           loading={isFetching}
           dataSource={data}
+          scroll={{ x: "max-content" }}
         />
       )}
     </div>

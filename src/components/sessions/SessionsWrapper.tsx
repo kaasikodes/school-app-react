@@ -50,7 +50,6 @@ const SessionsWrapper = () => {
 
   const authDetails = auth() as unknown as IAuthDets;
 
-  const user = authDetails.user;
   const globalCtx = useContext(GlobalContext);
   const { state: globalState } = globalCtx;
   const currentSchool = globalState.currentSchool;

@@ -11,7 +11,6 @@ const PaymentCategories = () => {
 
   const authDetails = auth() as unknown as IAuthDets;
 
-  const user = authDetails.user;
   const token = authDetails.userToken;
   const schoolId = authDetails.choosenSchoolId;
   const { data, isSuccess } = useQuery(

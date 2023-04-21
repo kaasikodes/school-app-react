@@ -14,12 +14,12 @@ const Payments = () => {
         <Breadcrumb>
           <Breadcrumb.Item>
             <Link to={`/classes/`}>
-              <a>dumm</a>
+              <a href="/">dumm</a>
             </Link>
           </Breadcrumb.Item>
           <Breadcrumb.Item>
             <Link to={`/classes/courses`}>
-              <a>Courses</a>
+              <a href="/">Courses</a>
             </Link>
           </Breadcrumb.Item>
         </Breadcrumb>

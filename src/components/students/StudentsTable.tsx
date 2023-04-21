@@ -53,19 +53,14 @@ const StudentsTable = () => {
   const schoolId = currentSchool?.id as string;
   const sessionId = currentSchool?.currentSessionId as string;
 
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm] = useState("");
   const [pagination, setPagination] = useState<TablePaginationConfig>({
     current: 1,
     pageSize: 4,
     total: 0,
     showSizeChanger: false,
   });
-  const { data, isLoading, isSuccess, error, refetch } = useQuery<
-    any,
-    any,
-    any,
-    any
-  >(
+  const { data, isLoading, isSuccess } = useQuery<any, any, any, any>(
     ["students", pagination.current],
     () => {
       return getAllStudents({
@@ -86,14 +81,14 @@ const StudentsTable = () => {
           description: `Oops, an err occured: ${err?.message}`,
         });
       },
-      onSuccess: (data) => {
-        setPagination((pag) => ({ ...pag, total: data?.total }));
+      onSuccess: (item) => {
+        setPagination((pag) => ({ ...pag, total: item?.total }));
       },
       select: (res: any) => {
         const result = res.data.data;
         console.log("student", result);
 
-        const data = result.map(
+        const ans = result.map(
           (item: any): IStudentEntry => ({
             id: item.data.id,
             name: item.user.name,
@@ -105,7 +100,7 @@ const StudentsTable = () => {
           })
         );
         return {
-          data: data,
+          data: ans,
           limit: 4,
           total: res.data?.meta?.total,
         };
@@ -227,7 +222,9 @@ const StudentsTable = () => {
                   key: "5",
                   label: (
                     <Link to={`/staff/${record.id}`}>
-                      <a className="w-full text-left">Student Profile</a>
+                      <a className="w-full text-left" href="/">
+                        Student Profile
+                      </a>
                     </Link>
                   ),
                 },
@@ -286,6 +283,7 @@ const StudentsTable = () => {
           pagination={pagination}
           loading={isLoading}
           size="small"
+          scroll={{ x: "max-content" }}
         />
       )}
     </div>

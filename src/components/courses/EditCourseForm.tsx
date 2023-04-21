@@ -51,8 +51,8 @@ const EditCourseForm = ({ closeDrawer, id }: IProps) => {
         // A UNIQUE KEY constraint is also emphasized on course_level on DB
         levels: data.levels.filter(
           //this is to prevent duplicate creations
-          (id: number) =>
-            course?.levels?.map((item) => item.id).indexOf(id) === -1
+          (val: number) =>
+            course?.levels?.map((item) => item.id).indexOf(val) === -1
         ),
         courseId: id,
       };
@@ -102,8 +102,7 @@ const EditCourseForm = ({ closeDrawer, id }: IProps) => {
 
   const {
     data: departmentData,
-    isError,
-    isFetching,
+
     isSuccess: isDeptSuccess,
   } = useFetchDepartments({
     schoolId,

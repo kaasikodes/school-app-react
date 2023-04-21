@@ -12,6 +12,7 @@ import {
   addSessionCourseTeacher,
   assignStaffToHandleSessionClasses,
   assignStaffToHandleSessionCourse,
+  assignStaffToLevelCoursesForSession,
   getCourse,
   getCourses,
   getSessionLevelCourseOverview,
@@ -346,6 +347,9 @@ export const useAddSessionCourseTeacher = () => {
 };
 export const useAssignStaffToHandleSessionCourse = () => {
   return useMutation(assignStaffToHandleSessionCourse);
+};
+export const useAssignStaffToLevelCoursesForSession = () => {
+  return useMutation(assignStaffToLevelCoursesForSession);
 };
 export const useAssignStaffToHandleSessionClasses = () => {
   return useMutation(assignStaffToHandleSessionClasses);

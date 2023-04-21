@@ -1,12 +1,8 @@
 import {
-  AutoComplete,
   Button,
   Form,
   Input,
-  InputNumber,
-  message,
   Select,
-  Upload,
   Collapse,
   Checkbox,
   Spin,
@@ -14,18 +10,14 @@ import {
 } from "antd";
 import React, { useContext, useState } from "react";
 
-import type { UploadProps } from "antd";
-
 import { useMutation, useQuery } from "react-query";
 
 import { useAuthUser } from "react-auth-kit";
 import { IAuthDets } from "../../appTypes/auth";
 import { enrollNewStudent, IEnrollStudentProps } from "../../helpers/students";
-import { UploadOutlined } from "@ant-design/icons";
 import { TPaymentCategry } from "../../appTypes/payments";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { openNotification } from "../../helpers/notifications";
-import PageLoader from "../loaders/PageLoader";
 import { getPaymentCategories } from "../../helpers/payments";
 import { useFetchClasses } from "../../helpersAPIHooks/classes";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
@@ -51,11 +43,11 @@ const AddSingleStudentForm = ({ closeDrawer }: IProps) => {
   const token = authDetails.userToken;
 
   const [form] = Form.useForm();
-  const [exStudent, setExStudent] = useState(false);
+  const [exStudent] = useState(false);
   const globalCtx = useContext(GlobalContext);
   const { state: globalState } = globalCtx;
   const schoolId = globalState?.currentSchool?.id as string;
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm] = useState("");
   const [levelId, setLevelId] = useState(0);
 
   // classes
@@ -68,23 +60,17 @@ const AddSingleStudentForm = ({ closeDrawer }: IProps) => {
     },
   });
   // courses
-  const { data: coursesData, isSuccess: isCSuccess } =
-    useFetchCoursesGroupedByLevel({
-      schoolId,
-      token,
+  const { data: coursesData } = useFetchCoursesGroupedByLevel({
+    schoolId,
+    token,
 
-      searchParams: {
-        name: searchTerm,
-      },
-      levelId,
-    });
+    searchParams: {
+      name: searchTerm,
+    },
+    levelId,
+  });
   // pcs
-  const {
-    data: paymentCategories,
-    isError,
-    isFetching,
-    isSuccess: isPCSuccess,
-  } = useQuery(
+  const { isSuccess: isPCSuccess } = useQuery(
     "payment-cats",
     () => getPaymentCategories({ schoolId: schoolId as string, token }),
     {
@@ -163,8 +149,6 @@ const AddSingleStudentForm = ({ closeDrawer }: IProps) => {
           });
         },
         onSuccess: (res: any) => {
-          const result = res.data.data;
-
           openNotification({
             state: "success",
 
@@ -180,33 +164,6 @@ const AddSingleStudentForm = ({ closeDrawer }: IProps) => {
     }
   };
 
-  const props: UploadProps = {
-    name: "file",
-    multiple: true,
-    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-    onChange(info) {
-      const { status } = info.file;
-      if (status !== "uploading") {
-        console.log(info.file, info.fileList);
-      }
-      if (status === "done") {
-        message.success(`${info.file.name} file uploaded successfully.`);
-      } else if (status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
-    onDrop(e) {
-      console.log("Dropped files", e.dataTransfer.files);
-    },
-  };
-
-  const normFile = (e: any) => {
-    console.log("Upload event:", e);
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e?.fileList;
-  };
   return (
     <div className="flex flex-col gap-4">
       {/* fill out the form ne student */}

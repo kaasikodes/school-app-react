@@ -90,14 +90,13 @@ const AddSingleCourseForm = ({ closeDrawer }: IProps) => {
   };
 
   const [searchTerm, setSearchTerm] = useState("");
-  const { data: classesData, isSuccess: isCSuccess } = useFetchClasses({
+  const { data: classesData } = useFetchClasses({
     schoolId,
     token,
   });
   const {
     data: departmentData,
-    isError,
-    isFetching,
+
     isSuccess,
   } = useFetchDepartments({
     schoolId,

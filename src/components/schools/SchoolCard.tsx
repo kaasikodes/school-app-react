@@ -138,7 +138,7 @@ const SchoolCard = ({ item, selected }: ISchoolCardEntry) => {
             openNotification({
               state: "success",
               title: "Success",
-              description: `${item.name}  is now the school you\'re currently on!`,
+              description: `${item.name}  is now the school you're currently on!`,
             });
           })
           .catch((err: any) => {

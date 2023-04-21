@@ -38,7 +38,7 @@ const ViewCourse = ({ closeDrawer, id }: IProps) => {
   const schoolId = globalState?.currentSchool?.id as string;
   // const adminId = globalState?.currentSchool?.adminId as string;
 
-  const { mutate, isLoading } = useUpdateSingleCourse();
+  const { mutate } = useUpdateSingleCourse();
 
   const handleFinish = (data: any) => {
     if (schoolId) {

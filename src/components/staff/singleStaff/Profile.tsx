@@ -44,7 +44,6 @@ const Profile = ({ staffId }: IProps) => {
 
   const authDetails = auth() as unknown as IAuthDets;
 
-  const user = authDetails.user;
   const token = authDetails.userToken;
   const schoolId = authDetails.choosenSchoolId;
   const { data: staff, isFetching } = useQuery(
@@ -159,7 +158,12 @@ const Profile = ({ staffId }: IProps) => {
         <Typography.Title level={4}>
           <span className="text-slate-400">Groups</span>{" "}
         </Typography.Title>
-        <Table dataSource={data} columns={columns} size="small" />
+        <Table
+          dataSource={data}
+          columns={columns}
+          size="small"
+          scroll={{ x: "max-content" }}
+        />
       </div>
     </div>
   );

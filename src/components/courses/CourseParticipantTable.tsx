@@ -345,7 +345,7 @@ const CourseParticipantTable = ({
 
         const fcolumns = columns
           .map((item: any) => ({
-            title: item.name,
+            title: `${item.name}(${item.value})`,
             dataIndex: item.name,
             key: item.name,
             editable: true,

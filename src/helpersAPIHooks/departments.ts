@@ -7,7 +7,6 @@ import {
   deleteDepartment,
   getDepartment,
   getDepartments,
-  IGetDepartmentProps,
   saveSchoolDepartment,
   saveSchoolDepartmentInBulk,
   updateSchoolDepartment,

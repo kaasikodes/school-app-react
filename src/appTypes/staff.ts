@@ -1,4 +1,5 @@
 import { TCourse } from "./courses";
+import { TLevel } from "./levels";
 
 export interface IStaffEntry {
   id: string;
@@ -19,6 +20,8 @@ export type TStaff = {
   createdAt: string;
   updatedAt: string;
   photo?: string;
+  sessionLevels?: TLevel[];
+  sessionLevelCount?: number;
 };
 export type TStaffCourseTeacherRecord = {
   id: number;

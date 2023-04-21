@@ -123,6 +123,33 @@ export interface IAStaffTHSClass extends ICourseAuthProps {
   classStaffIds: { levelId: number; staffId: number }[];
   sessionId: string;
 }
+export interface IASCStaffCourse extends ICourseAuthProps {
+  staffCourseIds: { staffId: string; courseId: string }[];
+  sessionId: string;
+  levelId: string;
+}
+export const assignStaffToLevelCoursesForSession = ({
+  token,
+  schoolId,
+  levelId,
+  staffCourseIds,
+  sessionId,
+}: IASCStaffCourse) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/courses/assign-staff-to-level-courses/${levelId}/${sessionId}`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  let data = {
+    staffCourseIds,
+  };
+
+  const res: any = axios.post(url, data, config);
+  return res;
+};
 export const assignStaffToHandleSessionCourse = ({
   token,
   schoolId,

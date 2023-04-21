@@ -53,6 +53,8 @@ const removeAuthLocalStorage = ({ key }: { key: string }) => {
   localStorage.removeItem("currentSchool");
 };
 
+console.log(removeAuthLocalStorage);
+
 const GlobalReducer = (state: IGlobalState, action: IAction): IGlobalState => {
   let newState: IGlobalState = state;
   switch (action.type) {

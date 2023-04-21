@@ -2,6 +2,7 @@ export const routes = {
   index: "/",
   login: "/login",
   settings: "/settings",
+  inviteUsers: "/invite-users",
   approvals: "/approvals",
   events: "/events",
   requisitions: "/requisitions",

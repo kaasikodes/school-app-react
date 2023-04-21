@@ -28,7 +28,7 @@ const CourseTeacherRecordsTable = ({
   const [showD, setShowD] = useState(false);
   const [action, setAction] = useState<EAction>(EAction.NONE);
   const [courseId, setCourseId] = useState("");
-
+  console.log(courseId);
   const handleAction = (props: { action: EAction; courseId: string }) => {
     setCourseId(props.courseId);
     setAction(props.action);
@@ -110,6 +110,7 @@ const CourseTeacherRecordsTable = ({
       <Table
         columns={columns}
         size="small"
+        scroll={{ x: "max-content" }}
         dataSource={records}
         loading={loading}
         pagination={pagination}

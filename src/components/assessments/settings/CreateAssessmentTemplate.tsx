@@ -24,7 +24,6 @@ const CreateAssessmentTemplate = ({ handleClose }: IProps) => {
 
   const authDetails = auth() as unknown as IAuthDets;
 
-  const user = authDetails.user;
   const token = authDetails.userToken;
   const schoolId = authDetails.choosenSchoolId;
   const { mutate } = useMutation(
@@ -74,7 +73,6 @@ const CreateAssessmentTemplate = ({ handleClose }: IProps) => {
     });
   };
   const [percentageLeft, setPercentageLeft] = useState(0);
-  const [currentPercent, setCurrentPercent] = useState(0);
   useEffect(() => {
     console.log("percent", percentageLeft);
   }, [percentageLeft]);

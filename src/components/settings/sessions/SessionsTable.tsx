@@ -239,6 +239,7 @@ const SessionsTable = ({ refresh, setRefresh, searchTerm }: IProps) => {
             pagination={pagination}
             loading={isFetching}
             size="small"
+            scroll={{ x: "max-content" }}
           />
           <Drawer
             open={showDrawer}

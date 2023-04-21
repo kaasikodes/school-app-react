@@ -9,7 +9,7 @@ import {
 } from "antd";
 import { ColumnsType } from "antd/lib/table";
 
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { useAuthUser } from "react-auth-kit";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
@@ -85,7 +85,7 @@ const CustodianWardsTable = ({ custodianId }: IProps) => {
       select: (res: any) => {
         const result = res.data.data;
 
-        const data = result.map(
+        const ans = result.map(
           (item: any): IStudentEntry => ({
             id: item.data.id,
             name: item.user.name,
@@ -97,7 +97,7 @@ const CustodianWardsTable = ({ custodianId }: IProps) => {
           })
         );
         return {
-          data: data,
+          data: ans,
         };
       },
     }
@@ -108,9 +108,7 @@ const CustodianWardsTable = ({ custodianId }: IProps) => {
     }));
   };
   const [openD, setOpenD] = useState(false);
-  const closeDrawer = () => {
-    setOpenD(false);
-  };
+
   const [comp, setComp] = useState<EComp>(EComp.NO_COMP);
   const [studentId, setStudentId] = useState("");
   const handleDrawerComp = (props: { id: string; comp: EComp }) => {
@@ -118,6 +116,8 @@ const CustodianWardsTable = ({ custodianId }: IProps) => {
     setComp(props.comp);
     setOpenD(true);
   };
+
+  console.log(comp, studentId, openD, handleDrawerComp);
   const columns: ColumnsType<IStudentEntry> = [
     {
       title: "",
@@ -188,7 +188,9 @@ const CustodianWardsTable = ({ custodianId }: IProps) => {
                   key: "5",
                   label: (
                     <Link to={`/staff/${record.id}`}>
-                      <a className="w-full text-left">Student Profile</a>
+                      <a className="w-full text-left" href="/">
+                        Student Profile
+                      </a>
                     </Link>
                   ),
                 },
@@ -216,6 +218,7 @@ const CustodianWardsTable = ({ custodianId }: IProps) => {
           pagination={pagination}
           loading={isLoading}
           size="small"
+          scroll={{ x: "max-content" }}
         />
       )}
     </div>
