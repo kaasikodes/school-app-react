@@ -5,6 +5,8 @@ import { IAuthProps } from "../../helpers/auth";
 import useApiAuth from "../../hooks/useApiAuth";
 import { useQuery } from "react-query";
 
+export const QUERY_KEY_FOR_REQUISITIONS = "requisitions";
+
 export type TRequisitionStatus = "pending" | "rejected" | "approved";
 
 export interface IGetRequisitionProps {
@@ -101,7 +103,7 @@ export const useFetchRequisitions = (props: IGetRequisitionProps) => {
   // as per user Type and as per session
   return useQuery(
     [
-      "requisitions",
+      QUERY_KEY_FOR_REQUISITIONS,
       props.type,
       props.status,
       props.pagination,

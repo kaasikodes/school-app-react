@@ -8,6 +8,7 @@ import {
 } from "../../helpersAPIHooks/requisitions/useFetchRequisitions";
 import moment from "moment";
 import { ViewRequisition } from "./ViewRequisition";
+import { AddRequisition } from "./AddRequisition";
 
 const requisitionTypes: {
   label: string;
@@ -31,6 +32,7 @@ const RequisitionsDataContainer: React.FC<{ status: TApprovalStatus }> = ({
   const [type, setType] = useState<TRequistionType>();
   const { data, isLoading } = useFetchRequisitions({ status, type });
   const [showM, setShowM] = useState(false);
+  const [showA, setShowA] = useState(false);
   const [id, setId] = useState<number>();
   const handleClick = (id: number) => {
     setId(id);
@@ -86,8 +88,12 @@ const RequisitionsDataContainer: React.FC<{ status: TApprovalStatus }> = ({
           id={id}
         />
       )}
+      <AddRequisition open={showA} handleClose={() => setShowM(false)} />
       <div className="flex flex-col gap-4">
-        <div className="flex justify-end">
+        <div className="flex gap-2 justify-end">
+          <Button type="primary" onClick={() => setShowA(true)}>
+            Make a request
+          </Button>
           <Select
             options={requisitionTypes}
             onSelect={(val: TRequistionType) => setType(val)}

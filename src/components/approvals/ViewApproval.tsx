@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Radio } from "antd";
+import { Button, Form, Input, Drawer, Radio } from "antd";
 import React from "react";
 import { BeatLoader } from "react-spinners";
 import moment from "moment";
@@ -65,13 +65,7 @@ export const ViewApproval: React.FC<{
     );
   };
   return (
-    <Modal
-      open={open}
-      onCancel={handleClose}
-      title="View Approval"
-      style={{ top: 30 }}
-      footer={null}
-    >
+    <Drawer open={open} onClose={handleClose} title="View Approval">
       {!isFetching && isSuccess ? (
         <div className="flex flex-col gap-4">
           <p className="capitalize">
@@ -120,6 +114,6 @@ export const ViewApproval: React.FC<{
       ) : (
         <BeatLoader />
       )}
-    </Modal>
+    </Drawer>
   );
 };
