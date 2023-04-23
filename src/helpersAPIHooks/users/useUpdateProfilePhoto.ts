@@ -2,20 +2,17 @@ import { useMutation } from "react-query";
 import { IAuthProps } from "../../helpers/auth";
 import axios from "axios";
 import useApiAuth from "../../hooks/useApiAuth";
-import { TRequistionType } from "../../components/courses/SubmitCourseAssessment4Compilation";
 
-export type TMakeRequestProps = {
-  content: string;
-  title: string;
-  type: TRequistionType;
-  staffId: number;
+export type TUpdatePhotoProps = {
+  photo: string;
+  userId: number;
 };
 
-const addRequest = async (
-  props: TMakeRequestProps &
+const updatePhoto = async (
+  props: TUpdatePhotoProps &
     IAuthProps & { schoolId: number; sessionId: number }
 ) => {
-  const url = `${process.env.REACT_APP_APP_URL}/api/requisitions/create`;
+  const url = `${process.env.REACT_APP_APP_URL}/api/users/${props.userId}/updateProfilePhoto`;
   const config = {
     headers: {
       Accept: "application/json",
@@ -26,12 +23,12 @@ const addRequest = async (
   // necessary to make immediate changes when in  a central place when schema changes
   const data: any = props;
 
-  const response = await axios.post(url, data, config);
+  const response = await axios.patch(url, data, config);
   return response;
 };
-export const useAddRequisition = () => {
+export const useUpdateProfilePhoto = () => {
   const { token, schoolId, sessionId } = useApiAuth();
-  return useMutation((props: TMakeRequestProps) =>
-    addRequest({ ...props, token, sessionId, schoolId })
+  return useMutation((props: TUpdatePhotoProps) =>
+    updatePhoto({ ...props, token, sessionId, schoolId })
   );
 };

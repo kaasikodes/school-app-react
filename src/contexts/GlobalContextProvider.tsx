@@ -18,11 +18,13 @@ export type TCSchool = {
 export interface IGlobalState {
   currentSchool: TCSchool | null;
   showInitialSetUp: boolean;
+  upLoadFileString: { key: string; value: string }[];
 }
 
 const initState: IGlobalState = {
   currentSchool: null,
   showInitialSetUp: true,
+  upLoadFileString: [],
 };
 
 interface IGlobalContext {
@@ -34,10 +36,12 @@ export enum EGlobalOps {
   setCurrentSchool,
   setRoleInCurrentSchool,
   setShowInitialSetup,
+  setUploadFileString,
+  clearUploadFileString,
 }
-
+type TUploadFile = { key: string; value: string };
 interface IAction {
-  payload?: TCSchool | ERole | boolean;
+  payload?: TCSchool | ERole | boolean | TUploadFile;
   type: EGlobalOps;
 }
 const updateLocalStorage = ({
@@ -55,7 +59,10 @@ const removeAuthLocalStorage = ({ key }: { key: string }) => {
 
 console.log(removeAuthLocalStorage);
 
-const GlobalReducer = (state: IGlobalState, action: IAction): IGlobalState => {
+const GlobalReducer = (
+  state: IGlobalState = initState,
+  action: IAction
+): IGlobalState => {
   let newState: IGlobalState = state;
   switch (action.type) {
     case EGlobalOps.setCurrentSchool:
@@ -88,7 +95,30 @@ const GlobalReducer = (state: IGlobalState, action: IAction): IGlobalState => {
         ...state,
         showInitialSetUp: action.payload as boolean,
       };
-
+    case EGlobalOps.setUploadFileString:
+      // delete the key if it exists
+      const updatedFileString = state.upLoadFileString.filter(
+        (item) => item.key !== (action.payload as TUploadFile).key
+      );
+      return {
+        ...state,
+        upLoadFileString: [
+          ...updatedFileString,
+          {
+            key: (action.payload as TUploadFile).key,
+            value: (action.payload as TUploadFile).value,
+          },
+        ],
+      };
+    case EGlobalOps.clearUploadFileString:
+      // delete the key if it exists
+      const clearedFileString = state.upLoadFileString.filter(
+        (item) => item.key !== (action.payload as TUploadFile).key
+      );
+      return {
+        ...state,
+        upLoadFileString: [...clearedFileString],
+      };
     default:
       return state;
   }
@@ -116,6 +146,7 @@ const GlobalContextProvider = ({ children }: IProps) => {
       return {
         currentSchool,
         showInitialSetUp: true,
+        upLoadFileString: [],
       };
     }
   );

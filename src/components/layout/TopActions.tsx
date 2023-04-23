@@ -23,6 +23,8 @@ import {
 } from "../../contexts/GlobalContextProvider";
 import { TSession } from "../../appTypes/sessions";
 import { routes } from "../../routes";
+import { useGetUserByEmail } from "../../helpersAPIHooks/users/useFetchSingleUser";
+import useApiAuth from "../../hooks/useApiAuth";
 
 interface IProps {
   setShowMobileMenu: Function;
@@ -43,6 +45,8 @@ const TopActions = ({
   const currentUserRole = currentSchool?.currentRole as string;
   const [isSwitchRoleModalOpen, setIsSwitchRoleModalOpen] = useState(false);
   const [selectedRole, setSelectedRole] = useState(ERole.NONE);
+  const { userEmail } = useApiAuth();
+  const { data: upToDateUser } = useGetUserByEmail({ email: userEmail });
 
   const handleRoleChange = (value: ERole) => {
     setSelectedRole(value);
@@ -176,7 +180,7 @@ const TopActions = ({
             </Badge>
             <Dropdown overlay={userMenu} trigger={["click"]}>
               <Avatar
-                src={user?.photo}
+                src={upToDateUser?.photo}
                 className=" border-sky-500 border-2 cursor-pointer"
               />
             </Dropdown>

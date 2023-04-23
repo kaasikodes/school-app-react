@@ -81,6 +81,7 @@ const LoginForm = () => {
               adminId: school.pivot.admin_id,
               currentRole: school.pivot.choosen_role,
               currentSessionId: school.current_session_id,
+              logo: school?.logo,
             };
           });
           const authData: IAuthDets = {

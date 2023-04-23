@@ -1,4 +1,4 @@
-import { Avatar, Divider, Skeleton, Space, Table, Tag, Typography } from "antd";
+import { Divider, Skeleton, Space, Table, Tag, Typography } from "antd";
 import { useContext } from "react";
 import { useAuthUser } from "react-auth-kit";
 import { useQuery } from "react-query";
@@ -6,6 +6,7 @@ import { IAuthDets } from "../../../appTypes/auth";
 import { GlobalContext } from "../../../contexts/GlobalContextProvider";
 import { getSingleAdmin } from "../../../helpers/admin";
 import { openNotification } from "../../../helpers/notifications";
+import { ProfileImage } from "./ProfileImage";
 
 interface IProps {
   adminId: string;
@@ -50,8 +51,8 @@ const Profile = ({ adminId }: IProps) => {
   const { state: globalState } = globalCtx;
 
   const schoolId = globalState.currentSchool?.id;
-  const { data: staff, isFetching } = useQuery(
-    ["single-staff", adminId],
+  const { data: admin, isFetching } = useQuery(
+    ["single-admin", adminId],
     () => {
       return getSingleAdmin({
         token,
@@ -59,7 +60,11 @@ const Profile = ({ adminId }: IProps) => {
         adminId,
       });
     },
+
     {
+      refetchInterval: false,
+      refetchIntervalInBackground: false,
+      refetchOnWindowFocus: false,
       onError: (err: any) => {
         openNotification({
           state: "error",
@@ -70,27 +75,27 @@ const Profile = ({ adminId }: IProps) => {
       onSuccess: (res: any) => {
         // const result = res.data.data;
 
-        console.log("staff concern", res);
+        console.log("admin concern", res);
       },
       select: (res: any) => {
         const result = res.data;
-        console.log("single-staff", result);
+        console.log("single-admin", result);
 
         interface IReturnProps {
           id: number;
           name: string;
           photo?: string;
           email: string;
-          staffNo: string;
+          adminNo: string;
           isActive: boolean;
         }
 
         const ans: IReturnProps = {
           id: result.data.id,
           name: result.user.name,
-          photo: result.user.profile_photo_url,
+          photo: result.user.profile_photo_path,
           email: result.user.email,
-          staffNo: result.data.staff_no,
+          adminNo: result.data.admin_no,
           isActive: result.data.isActive,
         };
         return ans;
@@ -98,7 +103,7 @@ const Profile = ({ adminId }: IProps) => {
     }
   );
 
-  // const ftch staff data
+  // const ftch admin data
   return (
     <div className="mt-4 flex flex-col gap-12">
       {isFetching ? (
@@ -109,7 +114,7 @@ const Profile = ({ adminId }: IProps) => {
           <div className="flex flex-col gap-6 col-span-4">
             <div>
               <h4 className="text-4xl text-sky-800 mb-0 capitalize">
-                {staff?.name}
+                {admin?.name}
               </h4>
             </div>
             <p>
@@ -139,8 +144,8 @@ const Profile = ({ adminId }: IProps) => {
           </div>
           {/* avatar */}
           <div className="md:col-start-5 col-span-2 md:pl-14 flex flex-col gap-4 border-l-2">
-            <Avatar shape="square" size={200} src={staff?.photo} />
-            <a href={`mailto:${staff?.email}`}>{staff?.email}</a>
+            <ProfileImage />
+            <a href={`mailto:${admin?.email}`}>{admin?.email}</a>
           </div>
         </div>
       )}

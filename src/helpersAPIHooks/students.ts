@@ -48,7 +48,7 @@ export const useFetchAllStudents = ({
             id: item.data.id,
             name: item.user.name,
             studentNo: item.data.id_number,
-            photo: item.user.profile_photo_url ?? "",
+            photo: item.user.profile_photo_path ?? "",
             currentClass: item.currentLevel.name,
             sessionPaymentStatus: "not paid",
             enrollmentStatus: item.currentSessionEnrollmentStatus,

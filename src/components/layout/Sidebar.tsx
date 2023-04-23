@@ -86,7 +86,11 @@ const Sidebar = ({
         to={routes.index}
         className="flex flex-col justify-center pt-3 pb-2 gap-1 pl-2 items-center border-0 border-b border-white"
       >
-        <Avatar src="" size={45} className="border-white border-2" />
+        <Avatar
+          src={currentSchool.logo}
+          size={45}
+          // className="border-white border-2"
+        />
         {!(
           (!!localStorage.getItem("isMenuCollapsed") &&
             JSON.parse(localStorage.getItem("isMenuCollapsed") as string)) ||

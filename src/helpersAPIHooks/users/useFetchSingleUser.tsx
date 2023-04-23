@@ -10,6 +10,7 @@ type TAppUser = {
   id: number;
   name: string;
   email: string;
+  photo?: string;
   // schoools -> role in school and all
 };
 
@@ -35,6 +36,7 @@ export const getUserByEmail = async ({
     id: data.user.id,
     email: data.user.email,
     name: data.user.name,
+    photo: data.user?.profile_photo_path ?? data.user?.profile_photo_url,
   };
 };
 

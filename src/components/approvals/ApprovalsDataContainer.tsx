@@ -8,26 +8,14 @@ import {
 } from "../../helpersAPIHooks/approvals/useFetchApprovals";
 import { ViewApproval } from "./ViewApproval";
 import moment from "moment";
+import { usePagination } from "../../hooks/usePagination";
+import { REQUISITION_TYPES_OPTIONS } from "../requisitions/AddRequisition";
 
-const requisitionTypes: {
-  label: string;
-  value: TRequistionType;
-  disabled?: boolean;
-}[] = [
-  {
-    label: "Course Result Compilation",
-    value: "course_result_compilation",
-  },
-  {
-    label: "Level Result Compilation",
-    value: "level_result_compilation",
-    // disabled: true, // if role is not admin
-  },
-];
 type TApprovalStatus = "pending" | "rejected" | "approved";
 const ApprovalsDataContainer: React.FC<{ status: TApprovalStatus }> = ({
   status,
 }) => {
+  const { onChange, pagination } = usePagination();
   const [type, setType] = useState<TRequistionType>();
   const [showM, setShowM] = useState(false);
   const [id, setId] = useState<number>();
@@ -35,7 +23,15 @@ const ApprovalsDataContainer: React.FC<{ status: TApprovalStatus }> = ({
     setId(id);
     setShowM(true);
   };
-  const { data, isLoading } = useFetchApprovals({ status, type });
+  const { data, isLoading } = useFetchApprovals({
+    status,
+    type,
+    pagination: {
+      limit: pagination.pageSize,
+
+      page: pagination.current,
+    },
+  });
 
   const columns: ColumnsType<TApproval> = [
     {
@@ -95,12 +91,18 @@ const ApprovalsDataContainer: React.FC<{ status: TApprovalStatus }> = ({
       <div className="flex flex-col gap-4">
         <div className="flex justify-end">
           <Select
-            options={requisitionTypes}
+            options={REQUISITION_TYPES_OPTIONS}
             onSelect={(val: TRequistionType) => setType(val)}
             placeholder="Filter Based by Requisition Type"
           />
         </div>
-        <Table columns={columns} dataSource={data?.data} loading={isLoading} />
+        <Table
+          columns={columns}
+          dataSource={data?.data}
+          loading={isLoading}
+          onChange={onChange}
+          pagination={{ ...pagination, total: data?.total }}
+        />
       </div>
     </>
   );

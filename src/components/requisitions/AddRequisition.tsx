@@ -4,17 +4,21 @@ import { TRequistionType } from "../courses/SubmitCourseAssessment4Compilation";
 import { useAddRequisition } from "../../helpersAPIHooks/requisitions/useAddRequisition";
 import { useQueryClient } from "react-query";
 import { openNotification } from "../../helpers/notifications";
+import { FormStaffInput } from "../../customFormComponents/FormStaffInput";
 
 const REQUISITION_TYPES: TRequistionType[] = [
   "course_result_compilation",
   "level_result_compilation",
   "other",
 ];
-const REQUISITION_TYPES_OPTIONS: { value: TRequistionType; label: string }[] =
-  REQUISITION_TYPES.map((item) => ({
-    value: item,
-    label: item.split("_").join(" "),
-  }));
+export const REQUISITION_TYPES_OPTIONS: {
+  value: TRequistionType;
+  label: string;
+  disabled?: boolean;
+}[] = REQUISITION_TYPES.map((item) => ({
+  value: item,
+  label: item.split("_").join(" "),
+}));
 
 export const AddRequisition: React.FC<{
   open: boolean;
@@ -30,6 +34,7 @@ export const AddRequisition: React.FC<{
         type: data.type,
         content: data.content,
         title: data.title,
+        staffId: data.staffId,
       },
       {
         onError: (err: any) => {
@@ -64,11 +69,20 @@ export const AddRequisition: React.FC<{
     );
   };
   return (
-    <Drawer open={open} onClose={handleClose} title="Make Requisition">
-      <Form labelCol={{ span: 24 }} form={form} onFinish={handleFinish}>
+    <Drawer open={open} onClose={() => handleClose()} title="Make Requisition">
+      <Form
+        labelCol={{ span: 24 }}
+        form={form}
+        onFinish={handleFinish}
+        requiredMark={false}
+      >
         <Form.Item name={"title"} label="Title">
           <Input placeholder="Title" />
         </Form.Item>
+        <FormStaffInput
+          Form={Form}
+          control={{ name: "staffId", label: "Approver" }}
+        />
         <Form.Item name={"type"} label="Type">
           <Select
             options={REQUISITION_TYPES_OPTIONS}

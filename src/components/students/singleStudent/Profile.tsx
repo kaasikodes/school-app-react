@@ -85,7 +85,7 @@ const Profile = ({ studentId }: IProps) => {
         const ans: IReturnProps = {
           id: result.data.id,
           name: result.user.name,
-          photo: result.user.profile_photo_url,
+          photo: result.user.profile_photo_path,
           email: result.user.email,
           studentNo: result.data.id_number,
           isActive: result.data.isActive,

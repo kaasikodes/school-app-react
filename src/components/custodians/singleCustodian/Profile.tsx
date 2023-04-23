@@ -83,7 +83,7 @@ const Profile = ({ custodianId }: IProps) => {
         const ans: IReturnProps = {
           id: result.id,
           name: result.user.name,
-          photo: result.user.profile_photo_url,
+          photo: result.user.profile_photo_path,
           email: result.user.email,
           isActive: result.isActive,
         };

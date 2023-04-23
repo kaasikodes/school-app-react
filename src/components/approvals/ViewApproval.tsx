@@ -1,5 +1,5 @@
 import { Button, Form, Input, Drawer, Radio } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import { BeatLoader } from "react-spinners";
 import moment from "moment";
 import { useFetchSingleApproval } from "../../helpersAPIHooks/approvals/useFetchSingleApproval";
@@ -55,6 +55,7 @@ export const ViewApproval: React.FC<{
             // duration: 0.4,
           });
           form.resetFields();
+          handleClose();
 
           queryClient.invalidateQueries({
             queryKey: ["approvals"],
@@ -64,6 +65,12 @@ export const ViewApproval: React.FC<{
       }
     );
   };
+  useEffect(() => {
+    form.setFieldsValue({
+      status: data?.status,
+      comment: data?.comment,
+    });
+  }, [data, form]);
   return (
     <Drawer open={open} onClose={handleClose} title="View Approval">
       {!isFetching && isSuccess ? (
@@ -90,7 +97,12 @@ export const ViewApproval: React.FC<{
               {data?.requisition.content}
             </div>
           </div>
-          <Form form={form} onFinish={handleFinish} labelCol={{ span: 24 }}>
+          <Form
+            form={form}
+            onFinish={handleFinish}
+            labelCol={{ span: 24 }}
+            disabled={data?.status !== "pending"}
+          >
             <Form.Item
               name={"status"}
               label={`Do you want to approve or reject this request?`}
@@ -106,9 +118,11 @@ export const ViewApproval: React.FC<{
             <Form.Item name="comment" label="Comment">
               <Input.TextArea rows={3} />
             </Form.Item>
-            <Button type="primary" htmlType="submit" loading={isLoading}>
-              Save
-            </Button>
+            {data?.status === "pending" && (
+              <Button type="primary" htmlType="submit" loading={isLoading}>
+                Save
+              </Button>
+            )}
           </Form>
         </div>
       ) : (

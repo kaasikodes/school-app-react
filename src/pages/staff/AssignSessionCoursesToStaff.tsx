@@ -80,7 +80,7 @@ const AssignSessionCoursesToStaff = () => {
           name: item.user.name,
           staffNo: item.staff_no,
           enrollmentStatus: true,
-          photo: item.user.profile_photo_url ?? "",
+          photo: item.user.profile_photo_path ?? "",
         };
 
         return data;

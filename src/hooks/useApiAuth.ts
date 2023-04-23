@@ -9,6 +9,8 @@ const useApiAuth = () => {
   const authDetails = auth() as unknown as IAuthDets;
 
   const token = authDetails.userToken;
+  const userId = +authDetails.user.id;
+  const userEmail = authDetails.user.email;
 
   const globalCtx = useContext(GlobalContext);
   const { state: globalState } = globalCtx;
@@ -20,6 +22,8 @@ const useApiAuth = () => {
     token,
     schoolId,
     sessionId,
+    userId,
+    userEmail,
   };
 };
 
