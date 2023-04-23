@@ -93,7 +93,7 @@ const StudentsTable = () => {
             id: item.data.id,
             name: item.user.name,
             studentNo: item.data.id_number,
-            photo: item.user.profile_photo_path ?? "",
+            photo: item.user.profile_photo_path ?? item.user.profile_photo_url,
             currentClass: item.currentLevel.name,
             sessionPaymentStatus: "not paid",
             enrollmentStatus: item.currentSessionEnrollmentStatus,

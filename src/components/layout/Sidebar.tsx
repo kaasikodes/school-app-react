@@ -1,4 +1,4 @@
-import { Avatar, MenuProps, Typography } from "antd";
+import { MenuProps, Typography } from "antd";
 import { Layout, Menu } from "antd";
 import React from "react";
 import { IconType } from "react-icons";
@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { TCSchool } from "../../contexts/GlobalContextProvider";
 import { ILink } from "../../data/dashboard";
 import { routes } from "../../routes";
+import SchoolLogo from "../schools/SchoolLogo";
 
 const { Sider } = Layout;
 
@@ -86,10 +87,9 @@ const Sidebar = ({
         to={routes.index}
         className="flex flex-col justify-center pt-3 pb-2 gap-1 pl-2 items-center border-0 border-b border-white"
       >
-        <Avatar
-          src={currentSchool.logo}
-          size={45}
-          // className="border-white border-2"
+        <SchoolLogo
+          schoolId={+currentSchool.id}
+          defaultSrc={currentSchool.logo}
         />
         {!(
           (!!localStorage.getItem("isMenuCollapsed") &&
