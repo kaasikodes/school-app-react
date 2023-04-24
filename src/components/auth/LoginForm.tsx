@@ -174,7 +174,7 @@ const LoginForm = () => {
           name="email"
           rules={emailValidationRules}
         >
-          <Input />
+          <Input name="email" />
         </Form.Item>
 
         <Form.Item
@@ -182,7 +182,7 @@ const LoginForm = () => {
           name="password"
           rules={textInputValidationRules}
         >
-          <Input.Password />
+          <Input.Password name="password" />
         </Form.Item>
 
         <Row gutter={20}>
