@@ -5,6 +5,7 @@ import { textInputValidationRulesOp } from "../../formValidation";
 import { openNotification } from "../../helpers/notifications";
 import { useQueryClient } from "react-query";
 import { useSubmitCourseAssesment4Compilation } from "../../helpersAPIHooks/courses/useSubmitCourseAssesment4Compilation";
+import { QUERY_KEY_FOR_SINGLE_REQUISITION_BY_PARAMS } from "helpersAPIHooks/requisitions/useFetchSingleRequisitionByParams";
 
 interface IProps {
   courseId: number;
@@ -59,6 +60,9 @@ const SubmitCourseAssessment4Compilation = ({
           });
           queryClient.invalidateQueries({
             queryKey: ["requisitions"],
+          });
+          queryClient.invalidateQueries({
+            queryKey: [QUERY_KEY_FOR_SINGLE_REQUISITION_BY_PARAMS],
           });
           //   TO DO : Also invalide approvals
 

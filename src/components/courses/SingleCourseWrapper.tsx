@@ -1,4 +1,4 @@
-import { Typography, Input, Button, Breadcrumb, Tabs, Modal } from "antd";
+import { Typography, Input, Button, Breadcrumb, Tabs, Modal, Tag } from "antd";
 
 import { useState, useContext } from "react";
 import { useAuthUser } from "react-auth-kit";
@@ -13,6 +13,7 @@ import AddCourseParticipantForm from "./AddCourseParticipantForm";
 import CourseOverview from "./CourseOverview";
 import CourseParticipantTable from "./CourseParticipantTable";
 import SubmitCourseAssessment4Compilation from "./SubmitCourseAssessment4Compilation";
+import { useFetchSingleRequisitionByParams } from "helpersAPIHooks/requisitions/useFetchSingleRequisitionByParams";
 
 interface IProps {
   courseId: string;
@@ -36,6 +37,13 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
   const { state: globalState } = globalCtx;
   const schoolId = globalState?.currentSchool?.id as string;
   const [comp, setComp] = useState<TComp>("");
+  const { data: courseAssRequest, isSuccess: isCourseAssRequestSuccess } =
+    useFetchSingleRequisitionByParams({
+      courseId: +courseId,
+      levelId: +classId,
+      type: "course_result_compilation",
+    });
+  console.log("courseAssRequest", courseAssRequest);
 
   const handleClick = (val: TComp) => {
     setComp(val);
@@ -97,29 +105,50 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
                     onChange={(e) => e.target.value === "" && setSearchTerm("")}
                   />
                 </div>
-                <div className="flex gap-4">
-                  <Button
-                    onClick={() => handleClick("Add Participant")}
-                    type="ghost"
-                  >
-                    Add Participant
-                  </Button>
-                  <Button
-                    onClick={() =>
-                      handleClick("Submit Assessment for Compilation")
-                    }
-                    type="primary"
-                  >
-                    Submit Assessment for Compilation
-                  </Button>
+                {/*  */}
+                {((isCourseAssRequestSuccess &&
+                  courseAssRequest &&
+                  courseAssRequest.status === "rejected") ||
+                  (isCourseAssRequestSuccess && !courseAssRequest)) && (
+                  <div className="flex gap-4">
+                    <Button
+                      onClick={() => handleClick("Add Participant")}
+                      type="ghost"
+                    >
+                      Add Participant
+                    </Button>
 
-                  {/* <Button onClick={() => setShowDrawer(true)} type="ghost">
+                    <Button
+                      onClick={() =>
+                        handleClick("Submit Assessment for Compilation")
+                      }
+                      type="primary"
+                    >
+                      Submit Assessment for Compilation
+                    </Button>
+
+                    {/* <Button onClick={() => setShowDrawer(true)} type="ghost">
                     Upload Assessment
                   </Button>
                   <Button onClick={() => setShowDrawer(true)} type="primary">
                     Submit Assessment
                   </Button> */}
-                </div>
+                  </div>
+                )}
+                {isCourseAssRequestSuccess &&
+                  courseAssRequest &&
+                  courseAssRequest.status === "approved" && (
+                    <Tag color="green">
+                      Course Assessment has been appoved for compilation
+                    </Tag>
+                  )}
+                {isCourseAssRequestSuccess &&
+                  courseAssRequest &&
+                  courseAssRequest.status === "pending" && (
+                    <Tag color="yellow">
+                      Course Assessment is pending approval
+                    </Tag>
+                  )}
               </div>
               <div>
                 <CourseParticipantTable
