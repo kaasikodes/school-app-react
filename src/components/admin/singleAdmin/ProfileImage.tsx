@@ -81,7 +81,7 @@ export const ProfileImage = () => {
         </div>
       ) : (
         <Skeleton loading={isLoading} active avatar>
-          <Avatar shape="square" size={200} src={user?.photo} />
+          <Avatar shape="circle" size={200} src={user?.photo} />
         </Skeleton>
       )}
     </>
