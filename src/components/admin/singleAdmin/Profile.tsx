@@ -74,12 +74,9 @@ const Profile = ({ adminId }: IProps) => {
       },
       onSuccess: (res: any) => {
         // const result = res.data.data;
-
-        console.log("admin concern", res);
       },
       select: (res: any) => {
         const result = res.data;
-        console.log("single-admin", result);
 
         interface IReturnProps {
           id: number;

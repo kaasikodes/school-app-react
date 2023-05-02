@@ -40,7 +40,6 @@ export const ProfileImage = () => {
           },
           onSuccess: (res: any) => {
             // const result = res.data.data;
-            console.log("BULK", res);
 
             openNotification({
               state: "success",

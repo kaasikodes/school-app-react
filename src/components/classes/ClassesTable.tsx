@@ -158,7 +158,6 @@ const ClassesTable = ({ refresh, setRefresh, searchTerm }: IProps) => {
             token,
             schoolId: schoolId,
           });
-          console.log("class", res);
           const result = res.data.data;
           setPagination((pagination) => ({
             ...pagination,
@@ -182,7 +181,6 @@ const ClassesTable = ({ refresh, setRefresh, searchTerm }: IProps) => {
           setFetching(false);
         }
       } catch (err: any) {
-        console.log(err);
         setFetching(false);
         setError(true);
       }

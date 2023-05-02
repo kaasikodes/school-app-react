@@ -53,7 +53,6 @@ const LoginForm = () => {
       },
       onSuccess: (res: any) => {
         // const result = res.data.data;
-        console.log(res.data, "server");
         const result = res.data;
         // save the token in local storage
 
@@ -149,9 +148,7 @@ const LoginForm = () => {
     });
   };
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
-  };
+  const onFinishFailed = (errorInfo: any) => {};
   return (
     <div>
       <Form

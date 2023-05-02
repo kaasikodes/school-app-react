@@ -37,7 +37,6 @@ const CreateAssessmentTemplate = ({ handleClose }: IProps) => {
     {
       onSuccess: (res: any) => {
         const result = res?.data;
-        console.log(result, "res");
         // queryClient.invalidateQueries("cr-templates");
 
         openNotification({
@@ -50,7 +49,6 @@ const CreateAssessmentTemplate = ({ handleClose }: IProps) => {
         handleClose();
       },
       onError: (err: any) => {
-        console.log(err);
         openNotification({
           state: "error",
           title: "Error occures",
@@ -66,16 +64,13 @@ const CreateAssessmentTemplate = ({ handleClose }: IProps) => {
       title: "Wait a minute",
       description: <LoadingOutlined />,
     });
-    console.log("Received data of form:", data);
     mutate({
       title: data.title,
       breakDown: data.breakDown,
     });
   };
   const [percentageLeft, setPercentageLeft] = useState(0);
-  useEffect(() => {
-    console.log("percent", percentageLeft);
-  }, [percentageLeft]);
+  useEffect(() => {}, [percentageLeft]);
   return (
     <div>
       <p>

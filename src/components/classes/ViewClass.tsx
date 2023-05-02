@@ -66,7 +66,6 @@ const ViewClass = ({ closeDrawer, id }: IProps) => {
         },
         onSuccess: (res: any) => {
           // const result = res.data.data;
-          console.log("BULK", res);
 
           openNotification({
             state: "success",

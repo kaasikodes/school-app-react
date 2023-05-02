@@ -1,10 +1,7 @@
 import { Form, Button, Input, InputNumber, Col, Row } from "antd";
 
 const GradingPolicy = () => {
-  const handleFinish = (data: any) => {
-    console.log("GPOLICY", data);
-    alert("GPLOCIY");
-  };
+  const handleFinish = (data: any) => {};
   return (
     <div>
       <div>

@@ -45,7 +45,6 @@ const SelectSchoolOnLogin = ({
         userId: authDetails.user.id,
       });
 
-      console.log("response =>", res);
       if (res.status === 200) {
         const result = res.data.data;
         const choosenSchoolId = result.choosen_school_id;
@@ -72,8 +71,6 @@ const SelectSchoolOnLogin = ({
           schools,
         };
         setAuthDetails(() => newAuth);
-        console.log("auth", authDetails);
-
         openNotification({
           state: "success",
           title: "Success",
@@ -98,7 +95,6 @@ const SelectSchoolOnLogin = ({
         }
       }
     } catch (err) {
-      console.log(err);
       openNotification({
         state: "error",
         title: "Problem Switching School",

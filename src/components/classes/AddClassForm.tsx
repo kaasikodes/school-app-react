@@ -38,7 +38,6 @@ const AddClassForm = ({ closeDrawer, setRefresh }: IProps) => {
     })
       .then((res: any) => {
         const result = res.data;
-        console.log(result, "res");
 
         openNotification({
           state: "success",
@@ -52,7 +51,6 @@ const AddClassForm = ({ closeDrawer, setRefresh }: IProps) => {
         closeDrawer();
       })
       .catch((err: any) => {
-        console.log(err);
         openNotification({
           state: "error",
           title: "Error occures",

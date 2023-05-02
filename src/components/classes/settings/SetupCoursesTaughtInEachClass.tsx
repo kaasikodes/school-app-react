@@ -3,9 +3,7 @@ import React from "react";
 import { ICourseEntry } from "../../courses/SchoolSessionCoursesTable";
 
 const SetupCoursesTaughtInEachClass = () => {
-  const handleSubmit = (data: any) => {
-    console.log("DATA TEACH", data);
-  };
+  const handleSubmit = (data: any) => {};
   const courses: ICourseEntry[] = [
     {
       id: "23",

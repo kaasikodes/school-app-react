@@ -20,7 +20,6 @@ const RegisterUserForm = () => {
 
     signupUser(props)
       .then((res: any) => {
-        console.log(res.data);
         const result = res.data;
         // save the token in local storage
         if (result.status) {
@@ -33,7 +32,6 @@ const RegisterUserForm = () => {
         }
       })
       .catch((err: any) => {
-        console.log(err);
         openNotification({
           state: "error",
           title: "Unsuccessful login attempt",
@@ -42,9 +40,7 @@ const RegisterUserForm = () => {
       });
   };
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
-  };
+  const onFinishFailed = (errorInfo: any) => {};
   return (
     <div>
       <Form

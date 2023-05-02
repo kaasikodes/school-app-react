@@ -57,7 +57,6 @@ const RegisterSchoolForm: React.FC<{ goBack: () => void }> = ({ goBack }) => {
       },
       onSuccess: (res: any) => {
         // const result = res.data.data;
-        console.log(res.data, "server");
         const result = res.data;
         // save the token in local storage
 
