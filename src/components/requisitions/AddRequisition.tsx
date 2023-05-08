@@ -1,10 +1,10 @@
 import { Button, Drawer, Form, Input, Select } from "antd";
 import React from "react";
-import { TRequistionType } from "../courses/SubmitCourseAssessment4Compilation";
 import { useAddRequisition } from "../../helpersAPIHooks/requisitions/useAddRequisition";
 import { useQueryClient } from "react-query";
 import { openNotification } from "../../helpers/notifications";
 import { FormStaffInput } from "../../customFormComponents/FormStaffInput";
+import { TRequistionType } from "helpersAPIHooks/requisitions/useFetchSingleRequisitionByParams";
 
 const REQUISITION_TYPES: TRequistionType[] = [
   "course_result_compilation",

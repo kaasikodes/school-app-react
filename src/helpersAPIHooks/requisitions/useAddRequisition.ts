@@ -2,7 +2,7 @@ import { useMutation } from "react-query";
 import { IAuthProps } from "../../helpers/auth";
 import axios from "axios";
 import useApiAuth from "../../hooks/useApiAuth";
-import { TRequistionType } from "../../components/courses/SubmitCourseAssessment4Compilation";
+import { TRequistionType } from "./useFetchSingleRequisitionByParams";
 
 export type TMakeRequestProps = {
   content: string;

@@ -38,6 +38,8 @@ import AcademicRecords from "./pages/AcademicRecords";
 import SingleCustodian from "./pages/custodians/SingleCustodian";
 import ComingSoon from "./components/general/ComingSoon";
 import InviteUsers from "./pages/InviteUsers";
+import Notifications from "pages/Notifications";
+import NotFound from "pages/NotFound";
 
 const queryClient = new QueryClient();
 
@@ -141,7 +143,14 @@ function App() {
                 <Route path={routes.settings} element={<Settings />} />
                 {/* invites */}
                 <Route path={routes.inviteUsers} element={<InviteUsers />} />
+                {/* notifications */}
+                <Route
+                  path={routes.notifications}
+                  element={<Notifications />}
+                />
               </Route>
+              {/* not found */}
+              <Route path={routes.notFound} element={<NotFound />} />
             </Routes>
           </Router>
         </GlobalContextProvider>

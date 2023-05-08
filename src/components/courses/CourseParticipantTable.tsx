@@ -129,12 +129,14 @@ interface IProps {
   courseId: string;
   levelId: string;
   searchParticipantTerm?: string;
+  disableActions?: boolean;
 }
 
 const CourseParticipantTable = ({
   courseId,
   levelId,
   searchParticipantTerm = "",
+  disableActions = false,
 }: IProps) => {
   const queryClient = useQueryClient();
 
@@ -158,8 +160,6 @@ const CourseParticipantTable = ({
 
   const [breakDownKeys, setbreakDownKeys] = useState<string[]>([]);
 
-  const [data, setData] = useState(originData);
-  console.log(data, "just so no t unused");
   const [editingKey, setEditingKey] = useState("");
 
   const isEditing = (record: IParticipantEntry) => record.key === editingKey;
@@ -173,7 +173,6 @@ const CourseParticipantTable = ({
   const handleSave = async (key: React.Key) => {
     try {
       const row = (await form.validateFields()) as IParticipantEntry;
-      console.log(row, "..............");
       openNotification({
         state: "info",
         title: "Wait a minute",
@@ -184,7 +183,6 @@ const CourseParticipantTable = ({
       );
       let total = 0;
       Object.entries(row).forEach((item) => (total += item[1]));
-      console.log("all rows", row, total);
       // check policy and identify the grade  here no do that backend and return
 
       if (schoolId) {
@@ -197,9 +195,6 @@ const CourseParticipantTable = ({
           token,
         })
           .then((res: any) => {
-            const result = res.data;
-            console.log(result, "res");
-
             openNotification({
               state: "success",
               title: "Success",
@@ -211,7 +206,6 @@ const CourseParticipantTable = ({
             });
           })
           .catch((err: any) => {
-            console.log(err);
             openNotification({
               state: "error",
               title: "Error occures",
@@ -225,7 +219,6 @@ const CourseParticipantTable = ({
       const newData = [...participants];
       const index = newData.findIndex((item) => key === item.key);
       if (index > -1) {
-        console.log("Tab is here");
         const item = newData[index];
         let total = 0;
         Object.entries(row).forEach((item) => {
@@ -238,18 +231,12 @@ const CourseParticipantTable = ({
           ...row,
           total,
         });
-        setData(() => newData);
         setEditingKey("");
       } else {
-        console.log(" Other Tab is here");
-
         newData.push(row);
-        setData(() => newData);
         setEditingKey("");
       }
-    } catch (errInfo) {
-      console.log("Validate Failed:", errInfo);
-    }
+    } catch (errInfo) {}
   };
   const handleCancel = () => {
     setEditingKey("");
@@ -329,17 +316,14 @@ const CourseParticipantTable = ({
       onSuccess: (data) => {
         const brkKeys: string[] = [];
         const { mergedColumns: columns } = data;
-        console.log("COL", columns);
         columns.forEach(
           (item: any) => item.editable && brkKeys.push(item.dataIndex)
         );
         setbreakDownKeys(brkKeys);
-        console.log("settled =>", brkKeys);
       },
       select: (res: any) => {
         const result = res.data.data;
 
-        console.log("CRT", JSON.parse(result.break_down));
         const columns = JSON.parse(result.break_down);
         const templateColumns = columns;
 
@@ -365,7 +349,7 @@ const CourseParticipantTable = ({
               }),
             };
           });
-        const mergedColumns = [
+        let mergedColumns = [
           {
             title: "Name",
             dataIndex: "studentName",
@@ -386,8 +370,10 @@ const CourseParticipantTable = ({
             key: "grade",
             editable: false,
           },
-          ...actColumns,
         ];
+        if (!disableActions) {
+          mergedColumns = [...mergedColumns, ...actColumns];
+        }
 
         return { mergedColumns, templateColumns };
       },

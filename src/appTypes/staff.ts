@@ -27,6 +27,8 @@ export type TStaffCourseTeacherRecord = {
   id: number;
   staff: TStaff;
   course: TCourse;
+  submitted_assessment_for_compilation?: "YES" | "NO";
+
   createdAt: string;
   updatedAt: string;
   canRecord: boolean;

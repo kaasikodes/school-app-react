@@ -27,6 +27,22 @@ export const getSession = ({ token, sessionId }: IGetSessProps) => {
   const res: any = axios.get(url, config);
   return res;
 };
+export const getSessionTaskCompletion = ({
+  token,
+  sessionId,
+}: IGetSessProps) => {
+  const url = `${process.env.REACT_APP_APP_URL}/api/sessions/${sessionId}/task-completion`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const res: any = axios.get(url, config);
+  return res;
+};
 export const getSessions = ({
   token,
   schoolId,

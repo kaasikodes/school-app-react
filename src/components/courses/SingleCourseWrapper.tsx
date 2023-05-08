@@ -1,10 +1,7 @@
 import { Typography, Input, Button, Breadcrumb, Tabs, Modal, Tag } from "antd";
-
-import { useState, useContext } from "react";
-import { useAuthUser } from "react-auth-kit";
+import { ExclamationCircleOutlined, LoadingOutlined } from "@ant-design/icons";
+import { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { IAuthDets } from "../../appTypes/auth";
-import { GlobalContext } from "../../contexts/GlobalContextProvider";
 import { useFetchSingleClass } from "../../helpersAPIHooks/classes";
 import { useFetchSingleCourse } from "../../helpersAPIHooks/courses";
 import { routes } from "../../routes";
@@ -12,8 +9,15 @@ import ComponentLoader from "../loaders/ComponentLoader";
 import AddCourseParticipantForm from "./AddCourseParticipantForm";
 import CourseOverview from "./CourseOverview";
 import CourseParticipantTable from "./CourseParticipantTable";
-import SubmitCourseAssessment4Compilation from "./SubmitCourseAssessment4Compilation";
-import { useFetchSingleRequisitionByParams } from "helpersAPIHooks/requisitions/useFetchSingleRequisitionByParams";
+
+import useApiAuth from "hooks/useApiAuth";
+import { openNotification } from "helpers/notifications";
+import { useSubmitCourseAssesment4Compilation } from "helpersAPIHooks/courses/useSubmitCourseAssesment4Compilation";
+import { useQueryClient } from "react-query";
+import {
+  QUERY_KEY_FOR_SINGLE_COURSE_TEACHER_RECORD,
+  useFetchSingleStaffSingleCourseTeacherRecord,
+} from "helpersAPIHooks/staff";
 
 interface IProps {
   courseId: string;
@@ -25,41 +29,91 @@ type TComp =
   | "Submit Assessment for Compilation"
   | "";
 const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
+  const queryClient = useQueryClient();
+
   const [showDrawer, setShowDrawer] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const auth = useAuthUser();
-
-  const authDetails = auth() as unknown as IAuthDets;
-
-  const token = authDetails.userToken;
-
-  const globalCtx = useContext(GlobalContext);
-  const { state: globalState } = globalCtx;
-  const schoolId = globalState?.currentSchool?.id as string;
+  const { currentSchool, token, schoolId, sessionId } = useApiAuth();
   const [comp, setComp] = useState<TComp>("");
-  const { data: courseAssRequest, isSuccess: isCourseAssRequestSuccess } =
-    useFetchSingleRequisitionByParams({
-      courseId: +courseId,
-      levelId: +classId,
-      type: "course_result_compilation",
-    });
-  console.log("courseAssRequest", courseAssRequest);
 
   const handleClick = (val: TComp) => {
     setComp(val);
     setShowDrawer(true);
   };
 
+  const { data: courseTeacher } = useFetchSingleStaffSingleCourseTeacherRecord({
+    courseId: +courseId,
+    levelId: classId,
+    sessionId: `${sessionId}`,
+    schoolId: `${schoolId}`,
+    token,
+    staffId: currentSchool?.staffId as unknown as string,
+  });
+
   const { isSuccess: isCSuccess, data: course } = useFetchSingleCourse({
     id: courseId as string,
-    schoolId,
+    schoolId: `${schoolId}`,
     token,
   });
   const { isSuccess: isLSuccess, data: level } = useFetchSingleClass({
     id: classId as string,
-    schoolId,
+    schoolId: `${schoolId}`,
+
     token,
   });
+  const { mutate, isLoading } = useSubmitCourseAssesment4Compilation();
+
+  const handleSubmit4Compilation = useCallback(() => {
+    if (course && level) {
+      openNotification({
+        state: "info",
+        title: "Wait a second ...",
+        description: <LoadingOutlined />,
+      });
+      mutate(
+        {
+          courseId: course?.id,
+          levelId: level?.id,
+          staffId: +(currentSchool?.staffId as unknown as number) ?? 0,
+        },
+        {
+          onError: (err: any) => {
+            openNotification({
+              state: "error",
+              title: "Error Occured",
+              description:
+                err?.response.data.message ?? err?.response.data.error.message,
+            });
+          },
+          onSuccess: (res: any) => {
+            openNotification({
+              state: "success",
+
+              title: "Success",
+              description: res.data.message,
+              // duration: 0.4,
+            });
+            queryClient.invalidateQueries({
+              queryKey: [QUERY_KEY_FOR_SINGLE_COURSE_TEACHER_RECORD],
+            });
+          },
+        }
+      );
+    }
+  }, [level, course, currentSchool, mutate, queryClient]);
+  const showModal4AssCompilation = () => {
+    Modal.confirm({
+      title: `Do you Want to submit assessment for compilation?`,
+      icon: <ExclamationCircleOutlined />,
+
+      content:
+        "This will submit assessment in its current state and will prevent you from making any changes",
+      width: 600,
+      onOk() {
+        handleSubmit4Compilation();
+      },
+    });
+  };
 
   if (!isCSuccess || !isLSuccess) {
     return <ComponentLoader />;
@@ -105,11 +159,9 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
                     onChange={(e) => e.target.value === "" && setSearchTerm("")}
                   />
                 </div>
-                {/*  */}
-                {((isCourseAssRequestSuccess &&
-                  courseAssRequest &&
-                  courseAssRequest.status === "rejected") ||
-                  (isCourseAssRequestSuccess && !courseAssRequest)) && (
+
+                {courseTeacher?.submitted_assessment_for_compilation ===
+                  "NO" && (
                   <div className="flex gap-4">
                     <Button
                       onClick={() => handleClick("Add Participant")}
@@ -119,10 +171,9 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
                     </Button>
 
                     <Button
-                      onClick={() =>
-                        handleClick("Submit Assessment for Compilation")
-                      }
+                      onClick={() => showModal4AssCompilation()}
                       type="primary"
+                      loading={isLoading}
                     >
                       Submit Assessment for Compilation
                     </Button>
@@ -135,26 +186,22 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
                   </Button> */}
                   </div>
                 )}
-                {isCourseAssRequestSuccess &&
-                  courseAssRequest &&
-                  courseAssRequest.status === "approved" && (
-                    <Tag color="green">
-                      Course Assessment has been appoved for compilation
-                    </Tag>
-                  )}
-                {isCourseAssRequestSuccess &&
-                  courseAssRequest &&
-                  courseAssRequest.status === "pending" && (
-                    <Tag color="yellow">
-                      Course Assessment is pending approval
-                    </Tag>
-                  )}
+                {courseTeacher?.submitted_assessment_for_compilation ===
+                  "YES" && (
+                  <Tag color="green">
+                    Course Assessment has been submitted for compilation
+                  </Tag>
+                )}
               </div>
               <div>
                 <CourseParticipantTable
                   courseId={courseId as string}
                   levelId={classId as string}
                   searchParticipantTerm={searchTerm}
+                  disableActions={
+                    courseTeacher?.submitted_assessment_for_compilation ===
+                    "YES"
+                  }
                 />
               </div>
             </div>
@@ -240,12 +287,6 @@ const SingleCourseWrapper = ({ courseId, classId }: IProps) => {
         {comp === "Add Participant" && (
           <AddCourseParticipantForm
             {...{ courseId, levelId: classId }}
-            closeModal={() => setShowDrawer(false)}
-          />
-        )}
-        {comp === "Submit Assessment for Compilation" && (
-          <SubmitCourseAssessment4Compilation
-            {...{ courseId: +courseId, levelId: +classId }}
             closeModal={() => setShowDrawer(false)}
           />
         )}

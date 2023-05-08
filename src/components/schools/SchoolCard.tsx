@@ -19,10 +19,11 @@ export interface ISchoolCardEntry {
     name: string;
     description?: string;
   };
+  disabled?: boolean;
   selected?: boolean;
 }
 
-const SchoolCard = ({ item, selected }: ISchoolCardEntry) => {
+const SchoolCard = ({ item, selected, disabled = false }: ISchoolCardEntry) => {
   const [showEditSchoolForm, setShowEditSchoolForm] = useState(false);
   const auth = useAuthUser();
   const signIn = useSignIn();
@@ -184,6 +185,7 @@ const SchoolCard = ({ item, selected }: ISchoolCardEntry) => {
                 className="text-red-800"
                 type="ghost"
                 onClick={handleDelete}
+                disabled={disabled}
               >
                 Delete
               </Button>

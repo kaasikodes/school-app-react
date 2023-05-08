@@ -1,4 +1,5 @@
 {
+  "window.zoomLevel": 1.03,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   }

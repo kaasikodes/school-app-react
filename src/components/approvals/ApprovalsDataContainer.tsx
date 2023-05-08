@@ -1,6 +1,5 @@
 import { Button, Select, Table } from "antd";
 import React, { useState } from "react";
-import { TRequistionType } from "../courses/SubmitCourseAssessment4Compilation";
 import { ColumnsType } from "antd/lib/table";
 import {
   TApproval,
@@ -10,6 +9,7 @@ import { ViewApproval } from "./ViewApproval";
 import moment from "moment";
 import { usePagination } from "../../hooks/usePagination";
 import { REQUISITION_TYPES_OPTIONS } from "../requisitions/AddRequisition";
+import { TRequistionType } from "helpersAPIHooks/requisitions/useFetchSingleRequisitionByParams";
 
 type TApprovalStatus = "pending" | "rejected" | "approved";
 const ApprovalsDataContainer: React.FC<{ status: TApprovalStatus }> = ({

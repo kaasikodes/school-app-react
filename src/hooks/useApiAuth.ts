@@ -15,6 +15,7 @@ const useApiAuth = () => {
   const globalCtx = useContext(GlobalContext);
   const { state: globalState } = globalCtx;
   const schoolId = globalState?.currentSchool?.id as unknown as number;
+  const currentSchool = globalState?.currentSchool;
   const sessionId = globalState?.currentSchool
     ?.currentSessionId as unknown as number;
   // TO DO: Potential redirect if auth not available
@@ -24,6 +25,7 @@ const useApiAuth = () => {
     sessionId,
     userId,
     userEmail,
+    currentSchool,
   };
 };
 

@@ -87,8 +87,6 @@ const SetupClassesTeacherForSession = () => {
         },
         onSuccess: (res: any) => {
           // const result = res.data.data;
-          console.log("TEST SSSS", res);
-
           openNotification({
             state: "success",
 

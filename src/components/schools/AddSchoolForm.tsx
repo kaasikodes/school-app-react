@@ -18,7 +18,6 @@ const AddSchoolForm = ({ closeDrawer }: IProps) => {
   const signIn = useSignIn();
 
   const handleFinish = (data: any) => {
-    console.log(data, "sasa");
     openNotification({
       state: "info",
       title: "Wait a minute",

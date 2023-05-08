@@ -6,7 +6,10 @@ import { Link } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
 import { IAuthDets } from "../../appTypes/auth";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
-import { useFetchSessions } from "../../helpersAPIHooks/sessions";
+import {
+  useFetchSessions,
+  useFetchSingleSessionTaskCompletion,
+} from "../../helpersAPIHooks/sessions";
 import { routes } from "../../routes";
 import CreateAssessmentTemplate from "../assessments/settings/CreateAssessmentTemplate";
 import GradingPolicy from "../assessments/settings/GradingPolicy";
@@ -64,6 +67,11 @@ const SessionsWrapper = () => {
   const currentSchoolSessionDetail = sessions?.data.find(
     (item) => item.id === +currentSchoolSessionId
   );
+
+  const { data: sessionTaskCompletion } = useFetchSingleSessionTaskCompletion({
+    token,
+    sessionId: currentSchoolSessionId,
+  });
   return (
     <>
       <Drawer
@@ -125,9 +133,12 @@ const SessionsWrapper = () => {
               <Typography.Title level={5}>
                 Tasks to be completed
               </Typography.Title>
-
               <div className="mt-4">
-                <Steps progressDot current={1} direction="vertical">
+                <Steps
+                  progressDot
+                  current={sessionTaskCompletion?.status}
+                  direction="vertical"
+                >
                   <Step
                     title={
                       <Typography.Text
@@ -222,24 +233,29 @@ const SessionsWrapper = () => {
                         <span className="text-[#109fff]">Enroll Students</span>
                       </Link>
                     }
-                    description="Assign staff to the courses they will be teaching this session.| OPTIONS: student, admin, custodian | the policy should also detect wether the course teacher needs to approve of a student participating in a course"
+                    description="Add students to your school."
                   />
 
                   <Step
-                    title={<Link to="/courses/id">Compile CA</Link>}
-                    description="Click on the compile button  to generate result (how to handle the queing of this like payroll) [you can download as well as roll back]"
+                    title={<span className="text-[#109fff]">Compile CA</span>}
+                    description="The compilation process begins the moment a teacher records the assessment of a student"
                   />
                   <Step
-                    title={<Link to="/courses/id">Review Compiled CA</Link>}
-                    description="Have all classes submitted their CA | Also applies to class teachers = Have all course taeacher submitted their CA"
+                    title={
+                      <span className="text-[#109fff]">Review Compiled CA</span>
+                    }
+                    description="This involves every course teacher reviewing the assessments recorded and signing off on the assessment in order for results to be issued."
                   />
                   <Step
-                    title={<Link to="/courses/id">Issue Result</Link>}
-                    description="for Disbursement to student, and those
-                    concerned(once clicked no going back cos it will be sent to parents)"
+                    title={<span className="text-[#109fff]">Issue Result</span>}
+                    description="This will issue out result to students, and copies of the result will also be available for concerned parties"
                   />
                   <Step
-                    title={<Link to="/courses/id">End Current Session</Link>}
+                    title={
+                      <span className="text-[#109fff]">
+                        End Current Session
+                      </span>
+                    }
                     description="This will end the current academic session"
                   />
                 </Steps>

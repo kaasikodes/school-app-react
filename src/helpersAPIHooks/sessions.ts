@@ -10,6 +10,7 @@ import {
 import {
   getSession,
   getSessions,
+  getSessionTaskCompletion,
   IGetSessProps,
   updateSchoolSession,
 } from "../helpers/sessions";
@@ -172,6 +173,47 @@ export const useFetchSingleSession = ({ sessionId, token }: IGetSessProps) => {
           description: item.description,
           starts: item.starts,
           ends: item.ends,
+        };
+
+        return data;
+      },
+    }
+  );
+
+  return queryData;
+};
+export const useFetchSingleSessionTaskCompletion = ({
+  sessionId,
+  token,
+}: IGetSessProps) => {
+  const queryData = useQuery(
+    ["session-task-completion", sessionId],
+    () =>
+      getSessionTaskCompletion({
+        token,
+        sessionId,
+      }),
+    {
+      // refetchInterval: false,
+      // refetchIntervalInBackground: false,
+      // refetchOnWindowFocus: false,
+      onError: (err: any) => {
+        // show notification
+        openNotification({
+          state: "error",
+          title: "Error Occurred",
+          description:
+            err?.response.data.message ?? err?.response.data.error.message,
+        });
+      },
+
+      select: (res: any) => {
+        const fetchedData = res.data.data;
+        const item = fetchedData;
+
+        const data: { status: number; sessionId: number } = {
+          sessionId: item.sessionId,
+          status: item.status,
         };
 
         return data;

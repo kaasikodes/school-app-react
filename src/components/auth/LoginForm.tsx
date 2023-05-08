@@ -57,7 +57,8 @@ const LoginForm = () => {
         // save the token in local storage
 
         if (result.status) {
-          const choosenSchoolId = result.user.choosen_school_id;
+          const choosenSchoolId =
+            result.user.choosen_school_id ?? result.schools[0].id;
           const possUserRolesInChoosenSchool = JSON.parse(
             result.schools.find((school: any) => school.id === choosenSchoolId)
               ?.pivot.school_user_roles ?? null

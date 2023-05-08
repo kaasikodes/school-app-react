@@ -172,11 +172,13 @@ const TopActions = ({
             )}
 
             <Badge dot size="small">
-              <IoIosNotifications
-                className="text-blue-400 font-bold "
-                style={{ color: "#072A6C", fontSize: "1.2rem" }}
-                size={23}
-              />
+              <Link to={routes.notifications}>
+                <IoIosNotifications
+                  className="text-blue-400 font-bold "
+                  style={{ color: "#072A6C", fontSize: "1.2rem" }}
+                  size={23}
+                />
+              </Link>
             </Badge>
             <Dropdown overlay={userMenu} trigger={["click"]}>
               <Avatar

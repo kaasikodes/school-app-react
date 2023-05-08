@@ -8,7 +8,7 @@ const StudentEnrollmentPolicyContainer = () => {
   return (
     <div className="flex flex-col gap-6">
       <Drawer
-        title="New Student Enrollment Policy"
+        title="Student Enrollment Policy"
         open={showD}
         onClose={() => setShowD(false)}
       >
@@ -18,7 +18,7 @@ const StudentEnrollmentPolicyContainer = () => {
         <div className="flex gap-2">
           <Button type="ghost">Assign policy to Session</Button>
           <Button type="primary" onClick={() => setShowD(true)}>
-            Create New Policy
+            Create Student Policy
           </Button>
         </div>
       </div>

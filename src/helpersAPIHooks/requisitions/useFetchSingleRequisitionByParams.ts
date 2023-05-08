@@ -3,7 +3,11 @@ import { IAuthProps } from "../../helpers/auth";
 import useApiAuth from "../../hooks/useApiAuth";
 import { useQuery } from "react-query";
 import { TRequisition } from "./useFetchRequisitions";
-import { TRequistionType } from "components/courses/SubmitCourseAssessment4Compilation";
+
+export type TRequistionType =
+  | "course_result_compilation"
+  | "level_result_compilation"
+  | "other";
 
 export interface IGetRequisitionProps {
   courseId?: number;

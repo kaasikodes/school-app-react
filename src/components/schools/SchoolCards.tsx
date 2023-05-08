@@ -39,11 +39,12 @@ const SchoolCards = ({
   return (
     <div className="flex flex-col gap-3">
       {total > 0 ? (
-        pschools.map((item) => (
+        pschools.map((item, index) => (
           <SchoolCard
             key={item.item.id}
             item={{ name: item.item.name, id: item.item.id }}
             selected={item.item.id === choosenSchoolId}
+            // disabled={index === 0}
           />
         ))
       ) : (

@@ -3,6 +3,12 @@
   "rules": {
     "eqeqeq": "error",
     "no-shadow": "off",
+    // for development
+    // "no-unused-vars": "error",
+    // "no-unused-labels": "error",
+    // "no-unused-expressions": "error",
+    // for development
+
     "@typescript-eslint/no-shadow": "off",
     "max-lines": [
       1,

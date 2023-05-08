@@ -1,9 +1,9 @@
 import axios from "axios";
 import { IPaginationProps } from "../../appTypes/requestParams";
-import { TRequistionType } from "../../components/courses/SubmitCourseAssessment4Compilation";
 import { IAuthProps } from "../../helpers/auth";
 import useApiAuth from "../../hooks/useApiAuth";
 import { useQuery } from "react-query";
+import { TRequistionType } from "./useFetchSingleRequisitionByParams";
 
 export const QUERY_KEY_FOR_REQUISITIONS = "requisitions";
 

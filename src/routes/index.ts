@@ -1,5 +1,7 @@
 export const routes = {
+  notFound: "*",
   index: "/",
+  notifications: "/notifications",
   login: "/login",
   settings: "/settings",
   inviteUsers: "/invite-users",

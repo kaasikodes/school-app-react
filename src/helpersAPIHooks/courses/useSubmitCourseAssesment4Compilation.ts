@@ -4,17 +4,17 @@ import { useMutation } from "react-query";
 import useApiAuth from "../../hooks/useApiAuth";
 
 interface ICreateProps {
-  comment: string;
   courseId: number;
+  staffId: number;
   levelId: number;
 }
 
 export const submitCourseAssesment4Compilation = async ({
-  comment,
   courseId,
   levelId,
   sessionId,
   schoolId,
+  staffId,
 }: ICreateProps & IAuthProps & { schoolId: number; sessionId: number }) => {
   let url = `${process.env.REACT_APP_APP_URL}/api/courses/submitAssessmentForCompilation`;
 
@@ -25,7 +25,7 @@ export const submitCourseAssesment4Compilation = async ({
     },
   };
   const data = {
-    comment,
+    staffId,
     courseId,
     levelId,
     sessionId,

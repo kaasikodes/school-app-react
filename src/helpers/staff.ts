@@ -119,6 +119,33 @@ export const getSingleStaffCourseTeacherRecords = ({
   const res: any = axios.get(url, config);
   return res;
 };
+export const getSingleStaffSingleCourseTeacherRecord = ({
+  token,
+  schoolId,
+  courseId,
+  staffId,
+  levelId,
+  sessionId,
+}: Omit<IGetStaffCourseTeacherRecordProps, "pagination" | "searchParams"> & {
+  courseId: number;
+}) => {
+  let url = `${process.env.REACT_APP_APP_URL}/api/schools/${schoolId}/staff/${staffId}/single-course-teacher-record`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    params: {
+      levelId,
+      courseId,
+      sessionId,
+    },
+  };
+
+  const res: any = axios.get(url, config);
+  return res;
+};
 export const getAllStaff = ({
   token,
   schoolId,
