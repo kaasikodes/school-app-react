@@ -101,7 +101,7 @@ const SessionsWrapper = () => {
     // only allow this to happen if the necessary steps have been completed
     if (sessionTaskCompletion?.status === 11) {
     } else {
-      // also validates from backend
+      // also validates from
       openNotification({
         state: "error",
         title: "Error Occured",
