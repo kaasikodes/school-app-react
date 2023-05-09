@@ -1,4 +1,13 @@
-import { Breadcrumb, Button, Card, Drawer, Steps, Typography } from "antd";
+import {
+  Breadcrumb,
+  Button,
+  Card,
+  Drawer,
+  Modal,
+  Steps,
+  Typography,
+} from "antd";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 
 import React, { useContext, useState } from "react";
 import { useAuthUser } from "react-auth-kit";
@@ -22,6 +31,7 @@ import SessionStudentEnrollmentPolicy from "../students/SessionStudentEnrollment
 import SessionStudentPromotionPolicy from "../students/SessionStudentPromotionPolicy";
 import AddSessionForm from "./AddSessionForm";
 import SetUpCurrentSessionForm from "./SetUpCurrentSessionForm";
+import { openNotification } from "helpers/notifications";
 
 const { Step } = Steps;
 
@@ -72,6 +82,45 @@ const SessionsWrapper = () => {
     token,
     sessionId: currentSchoolSessionId,
   });
+
+  const issueResult = () => {};
+  const handleIssueResult = () => {
+    Modal.confirm({
+      title: `Do you Want to issue academic results for this session?`,
+      icon: <ExclamationCircleOutlined />,
+
+      content:
+        "This will enable students to be able to view/downlaod their final academic results, as well as their custodians",
+      width: 600,
+      onOk() {
+        issueResult();
+      },
+    });
+  };
+  const endSession = () => {
+    // only allow this to happen if the necessary steps have been completed
+    if (sessionTaskCompletion?.status === 11) {
+    } else {
+      // also validates from backend
+      openNotification({
+        state: "error",
+        title: "Error Occured",
+        description: "Please complete the necessary steps to allow action",
+      });
+    }
+  };
+  const handleEndSession = () => {
+    Modal.confirm({
+      title: `Do you want to end this academic session?`,
+      icon: <ExclamationCircleOutlined />,
+
+      content: "This implies that all activities in this session will not be ",
+      width: 600,
+      onOk() {
+        endSession();
+      },
+    });
+  };
   return (
     <>
       <Drawer
@@ -247,12 +296,22 @@ const SessionsWrapper = () => {
                     description="This involves every course teacher reviewing the assessments recorded and signing off on the assessment in order for results to be issued."
                   />
                   <Step
-                    title={<span className="text-[#109fff]">Issue Result</span>}
+                    title={
+                      <span
+                        className="text-[#109fff] cursor-pointer"
+                        onClick={() => handleIssueResult()}
+                      >
+                        Issue Result
+                      </span>
+                    }
                     description="This will issue out result to students, and copies of the result will also be available for concerned parties"
                   />
                   <Step
                     title={
-                      <span className="text-[#109fff]">
+                      <span
+                        className="text-[#109fff] cursor-pointer"
+                        onClick={() => handleEndSession()}
+                      >
                         End Current Session
                       </span>
                     }
