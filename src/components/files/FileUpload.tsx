@@ -20,8 +20,8 @@ interface IFilesProps {
   fileKey: string;
 }
 
-const CLOUD_NAME = "dj5n1ggxp";
-const UPLOAD_PRESET = "qfxpy6pi";
+const CLOUD_NAME = `${process.env.REACT_APP_CLOUD_NAME}`;
+const UPLOAD_PRESET = `${process.env.REACT_APP_UPLOAD_PRESET}`;
 
 export const FileUpload = ({
   allowedFileTypes,
