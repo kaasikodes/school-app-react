@@ -85,8 +85,8 @@ const SessionsTable = ({ refresh, setRefresh, searchTerm }: IProps) => {
 
         endSchoolSession({
           token,
-          schoolId: schoolId as string,
-          sessionId: id,
+
+          sessionId: +id,
         })
           .then((res: any) => {
             console.log(res);

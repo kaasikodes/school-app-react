@@ -7,7 +7,7 @@ import {
   Steps,
   Typography,
 } from "antd";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { ExclamationCircleOutlined, LoadingOutlined } from "@ant-design/icons";
 
 import React, { useContext, useState } from "react";
 import { useAuthUser } from "react-auth-kit";
@@ -16,8 +16,11 @@ import { BeatLoader } from "react-spinners";
 import { IAuthDets } from "../../appTypes/auth";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
 import {
+  QUERY_KEY_FOR_SESSION_COMPLETION,
+  useEndSchoolSession,
   useFetchSessions,
   useFetchSingleSessionTaskCompletion,
+  useIssueResultForSession,
 } from "../../helpersAPIHooks/sessions";
 import { routes } from "../../routes";
 import CreateAssessmentTemplate from "../assessments/settings/CreateAssessmentTemplate";
@@ -32,6 +35,7 @@ import SessionStudentPromotionPolicy from "../students/SessionStudentPromotionPo
 import AddSessionForm from "./AddSessionForm";
 import SetUpCurrentSessionForm from "./SetUpCurrentSessionForm";
 import { openNotification } from "helpers/notifications";
+import { useQueryClient } from "react-query";
 
 const { Step } = Steps;
 
@@ -51,6 +55,8 @@ enum EAction {
 }
 
 const SessionsWrapper = () => {
+  const queryClient = useQueryClient();
+
   const [action, setAction] = useState<EAction>(EAction.NO_ACTION);
   const [showD, setShowD] = useState(false);
   const handleAction = (val: EAction) => {
@@ -82,8 +88,44 @@ const SessionsWrapper = () => {
     token,
     sessionId: currentSchoolSessionId,
   });
+  const { mutate: issResultMutate } = useIssueResultForSession();
+  const issueResult = () => {
+    openNotification({
+      state: "info",
+      title: "Wait a second ...",
+      description: <LoadingOutlined />,
+    });
+    issResultMutate(
+      {
+        sessionId: +currentSchoolSessionId,
+        token,
+      },
+      {
+        onError: (err: any) => {
+          openNotification({
+            state: "error",
+            title: "Error Occurred",
+            description:
+              err?.response.data.message ?? err?.response.data.error.message,
+          });
+        },
+        onSuccess: (res: any) => {
+          openNotification({
+            state: "success",
 
-  const issueResult = () => {};
+            title: "Success",
+            description: res.data.message,
+            // duration: 0.4,
+          });
+
+          queryClient.invalidateQueries({
+            queryKey: [QUERY_KEY_FOR_SESSION_COMPLETION],
+            // exact: true,
+          });
+        },
+      }
+    );
+  };
   const handleIssueResult = () => {
     Modal.confirm({
       title: `Do you Want to issue academic results for this session?`,
@@ -97,17 +139,44 @@ const SessionsWrapper = () => {
       },
     });
   };
+  const { mutate: endSessMutate } = useEndSchoolSession();
   const endSession = () => {
     // only allow this to happen if the necessary steps have been completed
-    if (sessionTaskCompletion?.status === 11) {
-    } else {
-      // also validates from
-      openNotification({
-        state: "error",
-        title: "Error Occured",
-        description: "Please complete the necessary steps to allow action",
-      });
-    }
+    openNotification({
+      state: "info",
+      title: "Wait a second ...",
+      description: <LoadingOutlined />,
+    });
+    endSessMutate(
+      {
+        sessionId: +currentSchoolSessionId,
+        token,
+      },
+      {
+        onError: (err: any) => {
+          openNotification({
+            state: "error",
+            title: "Error Occurred",
+            description:
+              err?.response.data.message ?? err?.response.data.error.message,
+          });
+        },
+        onSuccess: (res: any) => {
+          openNotification({
+            state: "success",
+
+            title: "Success",
+            description: res.data.message,
+            // duration: 0.4,
+          });
+
+          queryClient.invalidateQueries({
+            queryKey: [QUERY_KEY_FOR_SESSION_COMPLETION],
+            // exact: true,
+          });
+        },
+      }
+    );
   };
   const handleEndSession = () => {
     Modal.confirm({

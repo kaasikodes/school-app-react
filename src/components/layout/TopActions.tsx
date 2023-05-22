@@ -29,7 +29,7 @@ import useApiAuth from "../../hooks/useApiAuth";
 interface IProps {
   setShowMobileMenu: Function;
   currentSchool: TCSchool;
-  sessions: TSession[];
+  sessions?: TSession[];
   user: IUser;
   handleLogout: Function;
 }
@@ -151,7 +151,7 @@ const TopActions = ({
             <div className="hidden md:block">
               <Select
                 defaultValue={currentSchool.currentSessionId}
-                options={sessions.map((item) => ({
+                options={sessions?.map((item) => ({
                   label: item.name,
                   value: item.id,
                 }))}

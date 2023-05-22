@@ -1,5 +1,4 @@
 import axios from "axios";
-import moment from "moment";
 import { IPaginationProps, ISearchParams } from "../appTypes/requestParams";
 import { IAuthProps } from "./auth";
 
@@ -72,15 +71,15 @@ export const getSessions = ({
   const res: any = axios.get(url, config);
   return res;
 };
-interface IUpdateSessionProps extends ISchoolAuthProps {
-  sessionId: string;
-}
-export const endSchoolSession = ({
-  token,
-  schoolId,
-  sessionId,
-}: IUpdateSessionProps) => {
-  const url = `${process.env.REACT_APP_APP_URL}/api/sessions/${sessionId}/end-session`;
+// interface IUpdateSessionProps extends ISchoolAuthProps {
+//   sessionId: string;
+// }
+export const endSchoolSession = (props: {
+  sessionId: number;
+  token: string;
+}) => {
+  const { token } = props;
+  const url = `${process.env.REACT_APP_APP_URL}/api/sessions/${props.sessionId}/end-session`;
 
   const config = {
     headers: {
@@ -88,11 +87,28 @@ export const endSchoolSession = ({
       Authorization: `Bearer ${token}`,
     },
   };
-  const data = {
-    ends: moment().format("YYYY-MM-DD"),
-  };
+  const data = {};
 
-  const res: any = axios.patch(url, data, config);
+  const res: any = axios.post(url, data, config);
+  return res;
+};
+
+export const issueResultForSession = (props: {
+  sessionId: number;
+  token: string;
+}) => {
+  const { token } = props;
+  const url = `${process.env.REACT_APP_APP_URL}/api/sessions/${props.sessionId}/issue-result`;
+
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const data = {};
+
+  const res: any = axios.post(url, data, config);
   return res;
 };
 interface ICreateSessionProps extends ISchoolAuthProps {

@@ -8,10 +8,12 @@ import {
   saveSchoolSessionSetting,
 } from "../helpers/schools";
 import {
+  endSchoolSession,
   getSession,
   getSessions,
   getSessionTaskCompletion,
   IGetSessProps,
+  issueResultForSession,
   updateSchoolSession,
 } from "../helpers/sessions";
 
@@ -182,12 +184,13 @@ export const useFetchSingleSession = ({ sessionId, token }: IGetSessProps) => {
 
   return queryData;
 };
+export const QUERY_KEY_FOR_SESSION_COMPLETION = "session-task-completion";
 export const useFetchSingleSessionTaskCompletion = ({
   sessionId,
   token,
 }: IGetSessProps) => {
   const queryData = useQuery(
-    ["session-task-completion", sessionId],
+    [QUERY_KEY_FOR_SESSION_COMPLETION, sessionId],
     () =>
       getSessionTaskCompletion({
         token,
@@ -230,3 +233,7 @@ export const useUpdateSchoolsSession = () => {
 
 export const useSaveSchoolSessSettings = () =>
   useMutation(saveSchoolSessionSetting);
+
+export const useIssueResultForSession = () =>
+  useMutation(issueResultForSession);
+export const useEndSchoolSession = () => useMutation(endSchoolSession);

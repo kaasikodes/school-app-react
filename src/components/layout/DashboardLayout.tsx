@@ -87,15 +87,13 @@ const DashboardLayout: React.FC<Props> = ({ children }) => {
             isMenuCollapsed={isMenuCollapsed}
             setIsMenuCollapsed={setIsMenuCollapsed}
           />
-          {isSessSuccess && (
-            <TopActions
-              currentSchool={currentSchool as TCSchool}
-              user={user}
-              handleLogout={handleLogout}
-              sessions={sessions?.data}
-              setShowMobileMenu={setShowMobileMenu}
-            />
-          )}
+          <TopActions
+            currentSchool={currentSchool as TCSchool}
+            user={user}
+            handleLogout={handleLogout}
+            sessions={sessions?.data}
+            setShowMobileMenu={setShowMobileMenu}
+          />
 
           <Layout
             className={`site-layout   bg-stone-50   ${
