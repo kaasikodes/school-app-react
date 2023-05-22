@@ -42,7 +42,7 @@ const DashboardLayout: React.FC<Props> = ({ children }) => {
   const currentSchool = globalState.currentSchool;
 
   const token = authDetails.userToken;
-  const { data: sessions, isSuccess: isSessSuccess } = useFetchSessions({
+  const { data: sessions } = useFetchSessions({
     token,
     schoolId: currentSchool?.id as string,
   });
