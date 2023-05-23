@@ -127,8 +127,9 @@ export const RegisterStaffForm: React.FC<{
             if (
               signIn({
                 token: authData.userToken,
-                expiresIn: process.env
-                  .REACT_APP_SESSION_TIME as unknown as number,
+                expiresIn: process.env.REACT_APP_SESSION_TIME
+                  ? +process.env.REACT_APP_SESSION_TIME
+                  : 0,
 
                 tokenType: "Bearer",
                 authState: authData,
