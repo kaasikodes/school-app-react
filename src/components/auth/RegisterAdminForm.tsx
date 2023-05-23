@@ -129,7 +129,7 @@ export const RegisterAdminForm: React.FC<{
                 token: authData.userToken,
                 expiresIn: process.env.REACT_APP_SESSION_TIME
                   ? +process.env.REACT_APP_SESSION_TIME
-                  : 0,
+                  : 120,
 
                 tokenType: "Bearer",
                 authState: authData,
